@@ -1,0 +1,21 @@
+
+5-a.4) NACIONALIDAD EXTRANJERA x RANGO DE EDAD (>= 30 PERSONAS)
+
+consulta: org.apache.spark.sql.Dataset[org.apache.spark.sql.Row] = [nacionalidad: string, rango_edad: string ... 1 more field]
+
+5-a.4
+
+filas devueltas: 9
++------------+-------------+--------+
+|nacionalidad|rango_edad   |personas|
++------------+-------------+--------+
+|VENEZUELA   |12-17 AÑOS   |1009    |
+|VENEZUELA   |18-29 AÑOS   |595     |
+|VENEZUELA   |30-59 AÑOS   |328     |
+|VENEZUELA   |6-11 AÑOS    |103     |
+|VENEZUELA   |60 A MAS AÑOS|55      |
+|COLOMBIA    |18-29 AÑOS   |52      |
+|VENEZUELA   |NO ESPECIFICA|42      |
+|COLOMBIA    |30-59 AÑOS   |34      |
+|ECUADOR     |12-17 AÑOS   |31      |
++------------+-------------+--------+

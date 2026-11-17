@@ -1,0 +1,18 @@
+
+5-a.2) AÑOS CON MAS DE 5,000 MUJERES DESAPARECIDAS
+
+consulta: org.apache.spark.sql.Dataset[org.apache.spark.sql.Row] = [anio: int, sexo: string ... 2 more fields]
+
+5-a.2
+
+filas devueltas: 6
++----+----+--------+---------+
+|anio|sexo|personas|registros|
++----+----+--------+---------+
+|2019|F   |16451   |11037    |
+|2020|F   |11828   |8723     |
+|2021|F   |12984   |9534     |
+|2022|F   |11524   |8670     |
+|2023|F   |10817   |8233     |
+|2024|F   |11275   |8398     |
++----+----+--------+---------+

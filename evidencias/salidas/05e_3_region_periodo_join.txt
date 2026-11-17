@@ -1,0 +1,22 @@
+
+5-e.3) REGION x PERIODO CON JOIN TRIPLE (hechos + geografia + tiempo)
+
+consulta: org.apache.spark.sql.DataFrame = [region: string, periodo: string ... 3 more fields]
+
+5-e.3
+
+filas devueltas: 9
++------+-------------+--------+-----------------+---------------+
+|region|periodo      |personas|promedio_registro|pct_del_periodo|
++------+-------------+--------+-----------------+---------------+
+|COSTA |PANDEMIA     |24603   |1.335            |63.7           |
+|SIERRA|PANDEMIA     |11434   |1.209            |29.6           |
+|SELVA |PANDEMIA     |2585    |1.17             |6.69           |
+|COSTA |POST-PANDEMIA|37204   |1.305            |65.88          |
+|SIERRA|POST-PANDEMIA|15981   |1.189            |28.3           |
+|SELVA |POST-PANDEMIA|3289    |1.152            |5.82           |
+|COSTA |PRE-PANDEMIA |17859   |1.44             |67.82          |
+|SIERRA|PRE-PANDEMIA |6886    |1.31             |26.15          |
+|SELVA |PRE-PANDEMIA |1586    |1.241            |6.02           |
++------+-------------+--------+-----------------+---------------+
+[control] total de personas en la consulta (debe ser 121,427): 121427

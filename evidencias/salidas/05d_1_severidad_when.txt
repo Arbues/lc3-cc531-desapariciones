@@ -1,0 +1,15 @@
+
+5-d.1) CLASIFICACION DE SEVERIDAD CON when/otherwise
+
+consulta: org.apache.spark.sql.Dataset[org.apache.spark.sql.Row] = [severidad: string, registros: bigint ... 2 more fields]
+
+5-d.1
+
+filas devueltas: 3
++----------------+---------+--------+--------+
+|severidad       |registros|personas|promedio|
++----------------+---------+--------+--------+
+|INDIVIDUAL (1-2)|88182    |98236   |1.11    |
+|ALTO (3-4)      |4249     |14003   |3.3     |
+|FOCO (5 o mas)  |1400     |9188    |6.56    |
++----------------+---------+--------+--------+

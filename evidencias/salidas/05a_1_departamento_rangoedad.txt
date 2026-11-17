@@ -1,0 +1,42 @@
+
+5-a.1) DEPARTAMENTO x RANGO DE EDAD CON MAS DE 1,000 PERSONAS
+
+consulta: org.apache.spark.sql.Dataset[org.apache.spark.sql.Row] = [departamento: string, rango_edad: string ... 1 more field]
+
+5-a.1
+
+filas devueltas: 30
++------------------+-------------+--------+
+|departamento      |rango_edad   |personas|
++------------------+-------------+--------+
+|LIMA METROPOLITANA|12-17 AÑOS   |17901   |
+|LIMA METROPOLITANA|18-29 AÑOS   |7875    |
+|LIMA METROPOLITANA|30-59 AÑOS   |7007    |
+|LIMA METROPOLITANA|60 A MAS AÑOS|4399    |
+|JUNÍN             |12-17 AÑOS   |4169    |
+|CUSCO             |12-17 AÑOS   |3897    |
+|LAMBAYEQUE        |12-17 AÑOS   |3866    |
+|AREQUIPA          |12-17 AÑOS   |3218    |
+|PIURA             |12-17 AÑOS   |2819    |
+|HUÁNUCO           |12-17 AÑOS   |2628    |
+|LA LIBERTAD       |12-17 AÑOS   |2546    |
+|CALLAO            |12-17 AÑOS   |2299    |
+|AYACUCHO          |12-17 AÑOS   |2050    |
+|REGIÓN LIMA       |12-17 AÑOS   |2020    |
+|ÁNCASH            |12-17 AÑOS   |1814    |
+|PUNO              |12-17 AÑOS   |1741    |
+|CAJAMARCA         |12-17 AÑOS   |1581    |
+|LIMA METROPOLITANA|6-11 AÑOS    |1572    |
+|ICA               |12-17 AÑOS   |1566    |
+|LORETO            |12-17 AÑOS   |1485    |
+|APURIMAC          |12-17 AÑOS   |1418    |
+|SAN MARTÍN        |12-17 AÑOS   |1386    |
+|UCAYALI           |12-17 AÑOS   |1329    |
+|AREQUIPA          |18-29 AÑOS   |1290    |
+|JUNÍN             |18-29 AÑOS   |1280    |
+|AREQUIPA          |30-59 AÑOS   |1229    |
+|CUSCO             |18-29 AÑOS   |1215    |
+|TACNA             |12-17 AÑOS   |1179    |
+|LAMBAYEQUE        |18-29 AÑOS   |1100    |
+|CUSCO             |30-59 AÑOS   |1080    |
++------------------+-------------+--------+

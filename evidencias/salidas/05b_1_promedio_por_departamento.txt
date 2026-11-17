@@ -1,0 +1,38 @@
+
+5-b.1) PROMEDIO DE PERSONAS POR REGISTRO, POR DEPARTAMENTO
+
+consulta: org.apache.spark.sql.Dataset[org.apache.spark.sql.Row] = [departamento: string, registros: bigint ... 2 more fields]
+
+5-b.1
+
+filas devueltas: 26
++------------------+---------+--------+------------------------------+
+|departamento      |registros|personas|promedio_personas_por_registro|
++------------------+---------+--------+------------------------------+
+|CALLAO            |3033     |4565    |1.505                         |
+|LIMA METROPOLITANA|26600    |39490   |1.485                         |
+|LAMBAYEQUE        |4724     |6231    |1.319                         |
+|JUNÍN             |5630     |7256    |1.289                         |
+|TACNA             |1830     |2355    |1.287                         |
+|HUÁNUCO           |3268     |4149    |1.27                          |
+|AYACUCHO          |2750     |3454    |1.256                         |
+|PUNO              |2935     |3633    |1.238                         |
+|LORETO            |1944     |2393    |1.231                         |
+|PIURA             |3911     |4780    |1.222                         |
+|UCAYALI           |1746     |2126    |1.218                         |
+|CUSCO             |6003     |7214    |1.202                         |
+|APURIMAC          |2125     |2537    |1.194                         |
+|TUMBES            |878      |1030    |1.173                         |
+|ÁNCASH            |2723     |3195    |1.173                         |
+|MOQUEGUA          |549      |643     |1.171                         |
+|HUANCAVELICA      |1108     |1296    |1.17                          |
+|MADRE DE DIOS     |561      |655     |1.168                         |
+|AREQUIPA          |5682     |6633    |1.167                         |
+|LA LIBERTAD       |3962     |4546    |1.147                         |
+|REGIÓN LIMA       |2961     |3387    |1.144                         |
+|ICA               |2482     |2811    |1.133                         |
+|CAJAMARCA         |2243     |2488    |1.109                         |
+|AMAZONAS          |1178     |1292    |1.097                         |
+|SAN MARTÍN        |2092     |2286    |1.093                         |
+|PASCO             |913      |982     |1.076                         |
++------------------+---------+--------+------------------------------+

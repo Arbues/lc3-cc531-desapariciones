@@ -1,0 +1,41 @@
+
+5-c.4) FULL OUTER JOIN: MENORES vs ADULTOS POR DEPARTAMENTO
+
+menores: org.apache.spark.sql.DataFrame = [departamento: string, menores_18: bigint]
+adultos: org.apache.spark.sql.DataFrame = [departamento: string, adultos: bigint]
+consulta: org.apache.spark.sql.Dataset[org.apache.spark.sql.Row] = [departamento: string, menores_18: bigint ... 3 more fields]
+
+5-c.4 (full_outer) menores vs adultos por departamento
+
+filas devueltas: 26
++------------------+----------+-------+-----+-----------+
+|departamento      |menores_18|adultos|total|pct_menores|
++------------------+----------+-------+-----+-----------+
+|LIMA METROPOLITANA|19751     |19281  |39032|50.6       |
+|JUNÍN             |4525      |2688   |7213 |62.73      |
+|CUSCO             |4299      |2762   |7061 |60.88      |
+|AREQUIPA          |3467      |3102   |6569 |52.78      |
+|LAMBAYEQUE        |4106      |2074   |6180 |66.44      |
+|PIURA             |2982      |1762   |4744 |62.86      |
+|CALLAO            |2502      |2018   |4520 |55.35      |
+|LA LIBERTAD       |2782      |1715   |4497 |61.86      |
+|HUÁNUCO           |2842      |1279   |4121 |68.96      |
+|PUNO              |1911      |1660   |3571 |53.51      |
+|AYACUCHO          |2244      |1191   |3435 |65.33      |
+|REGIÓN LIMA       |2157      |1201   |3358 |64.23      |
+|ÁNCASH            |1945      |1205   |3150 |61.75      |
+|ICA               |1684      |1084   |2768 |60.84      |
+|APURIMAC          |1577      |926    |2503 |63.0       |
+|CAJAMARCA         |1716      |753    |2469 |69.5       |
+|LORETO            |1681      |688    |2369 |70.96      |
+|TACNA             |1274      |1058   |2332 |54.63      |
+|SAN MARTÍN        |1494      |782    |2276 |65.64      |
+|UCAYALI           |1504      |609    |2113 |71.18      |
+|HUANCAVELICA      |746       |534    |1280 |58.28      |
+|AMAZONAS          |814       |464    |1278 |63.69      |
+|TUMBES            |711       |306    |1017 |69.91      |
+|PASCO             |642       |332    |974  |65.91      |
+|MADRE DE DIOS     |473       |172    |645  |73.33      |
+|MOQUEGUA          |349       |290    |639  |54.62      |
++------------------+----------+-------+-----+-----------+
+[nota] departamentos presentes solo en un agregado: 0

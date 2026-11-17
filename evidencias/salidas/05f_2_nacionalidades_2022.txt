@@ -1,0 +1,24 @@
+
+5-f.2) NACIONALIDADES EXTRANJERAS 2022-2024 (ORDER BY + filtros)
+
+consulta: org.apache.spark.sql.DataFrame = [nacionalidad: string, anio: int ... 3 more fields]
+
+5-f.2
+
+filas devueltas: 12
++------------+----+--------+---------+--------+
+|nacionalidad|anio|personas|registros|promedio|
++------------+----+--------+---------+--------+
+|VENEZUELA   |2023|430     |424      |1.014   |
+|VENEZUELA   |2024|428     |420      |1.019   |
+|VENEZUELA   |2022|404     |394      |1.025   |
+|COLOMBIA    |2023|24      |24       |1.0     |
+|COLOMBIA    |2022|23      |23       |1.0     |
+|COLOMBIA    |2024|18      |18       |1.0     |
+|ECUADOR     |2022|15      |15       |1.0     |
+|ECUADOR     |2023|13      |13       |1.0     |
+|CHILE       |2024|11      |11       |1.0     |
+|CHILE       |2022|10      |10       |1.0     |
+|ECUADOR     |2024|10      |10       |1.0     |
+|BOLIVIA     |2024|10      |10       |1.0     |
++------------+----+--------+---------+--------+

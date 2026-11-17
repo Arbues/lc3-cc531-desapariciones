@@ -1,0 +1,17 @@
+
+5-c.2) LEFT JOIN: DIM_GEOGRAFIA x HECHOS -> UBIGEOS SIN REGISTROS
+
+hechosUbigeo: org.apache.spark.sql.DataFrame = [ubigeo: string, personas: bigint]
+consulta: org.apache.spark.sql.DataFrame = [ubigeo: string, departamento: string ... 3 more fields]
+sinRegistros: org.apache.spark.sql.Dataset[org.apache.spark.sql.Row] = [ubigeo: string, departamento: string ... 3 more fields]
+[control] ubigeos del catalogo          : 1506
+[control] ubigeos SIN ningun registro   : 0
+[control] ubigeos CON registros         : 1506
+
+5-c.2 (left_outer) ubigeos sin registros
+
+filas devueltas: 0
++------+------------+---------+--------+--------+
+|ubigeo|departamento|provincia|distrito|personas|
++------+------------+---------+--------+--------+
++------+------------+---------+--------+--------+

@@ -1,0 +1,17 @@
+
+5-c.3) RIGHT JOIN: HECHOS x CALENDARIO (72 meses) -> COBERTURA TEMPORAL
+
+hechosMes: org.apache.spark.sql.DataFrame = [anio: int, mes: int ... 1 more field]
+consulta: org.apache.spark.sql.Dataset[org.apache.spark.sql.Row] = [anio: int, mes: int ... 1 more field]
+sinDatos: org.apache.spark.sql.Dataset[org.apache.spark.sql.Row] = [anio: int, mes: int ... 1 more field]
+[control] meses en el calendario : 72
+[control] meses sin registros    : 0
+[control] personas en el periodo : 121427
+
+5-c.3 (right_outer) meses del calendario sin registros
+
+filas devueltas: 0
++----+---+--------+
+|anio|mes|personas|
++----+---+--------+
++----+---+--------+

@@ -1,0 +1,27 @@
+
+3-c.2) % DE PERSONAS EXTRANJERAS POR AÑO  (3 mapReduce encadenados)
+
+mr1Total: org.apache.spark.rdd.RDD[(Int, Int)] = ShuffledRDD[45] at reduceByKey at /home/arbues/macrodatos/PC3/code/rdd/03c_2_extranjeros_por_anio.scala:42
+[MR1] anios procesados: 6
+mr2Extranjeros: org.apache.spark.rdd.RDD[(Int, Int)] = ShuffledRDD[48] at reduceByKey at /home/arbues/macrodatos/PC3/code/rdd/03c_2_extranjeros_por_anio.scala:46
+[MR2] anios con extranjeros: 6
+mr3Porcentaje: Array[(Int, Int, Int, Double)] = Array((2019,26331,434,1.65), (2020,18481,316,1.71), (2021,20141,397,1.97), (2022,18862,499,2.65), (2023,18192,525,2.89), (2024,19420,528,2.72))
+[MR3] anio | total | extranjeros | % extranjeros | variacion (puntos porcentuales)
+anterior: Option[Double] = None
+  2019  total=26331   extranjeros=434    %=1.65    var=-
+  2020  total=18481   extranjeros=316    %=1.71    var=0.06
+  2021  total=20141   extranjeros=397    %=1.97    var=0.26
+  2022  total=18862   extranjeros=499    %=2.65    var=0.68
+  2023  total=18192   extranjeros=525    %=2.89    var=0.24
+  2024  total=19420   extranjeros=528    %=2.72    var=-0.17
+topNacionalidades: Array[(String, Int)] = Array((VENEZUELA,2151), (COLOMBIA,124), (ECUADOR,70), (CHILE,54), (ARGENTINA,46), (ESTADOS UNIDOS,43), (BOLIVIA,35), (ESPAÑA,19))
+[apoyo] top nacionalidades extranjeras (personas)
+  VENEZUELA           2151
+  COLOMBIA            124
+  ECUADOR             70
+  CHILE               54
+  ARGENTINA           46
+  ESTADOS UNIDOS      43
+  BOLIVIA             35
+  ESPAÑA              19
+[3-c.2] FIN

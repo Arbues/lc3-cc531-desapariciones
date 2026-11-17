@@ -1,0 +1,26 @@
+$ psql -h /tmp -p 5433 -U macrodatos -d denuncias
+ region_natural |    periodo    | personas 
+----------------+---------------+----------
+ COSTA          | PANDEMIA      |    24603
+ SIERRA         | PANDEMIA      |    11434
+ SELVA          | PANDEMIA      |     2585
+ COSTA          | POST-PANDEMIA |    37204
+ SIERRA         | POST-PANDEMIA |    15981
+ SELVA          | POST-PANDEMIA |     3289
+ COSTA          | PRE-PANDEMIA  |    17859
+ SIERRA         | PRE-PANDEMIA  |     6886
+ SELVA          | PRE-PANDEMIA  |     1586
+(9 rows)
+
+    departamento    | personas | promedio 
+--------------------+----------+----------
+ LIMA METROPOLITANA |    39490 |    1.485
+ JUNÍN              |     7256 |    1.289
+ CUSCO              |     7214 |    1.202
+ AREQUIPA           |     6633 |    1.167
+ LAMBAYEQUE         |     6231 |    1.319
+ PIURA              |     4780 |    1.222
+ CALLAO             |     4565 |    1.505
+ LA LIBERTAD        |     4546 |    1.147
+(8 rows)
+

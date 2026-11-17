@@ -1,0 +1,29 @@
+
+3-a) MAXIMO Y MINIMO DE CANTIDAD POR SEXO  (mapReduce / RDD)
+
+extremos: Array[(String, (Int, Int))] = Array((F,(18,1)), (M,(14,1)), (NO ESPECIFICA,(3,1)))
+[job 1] sexo | maximo | minimo
+  F              max=18  min=1
+  M              max=14  min=1
+  NO ESPECIFICA  max=3  min=1
+registroMax: Array[(String, (Int, String, String, String, Int, Int))] = Array((F,(18,LIMA METROPOLITANA,LIMA,VILLA MARIA DEL TRIUNFO,2019,11)), (M,(14,CUSCO,CUSCO,SANTIAGO,2019,10)), (NO ESPECIFICA,(3,LIMA METROPOLITANA,LIMA,SAN MARTIN DE PORRES,2019,12)))
+[job 2] registro con MAYOR cantidad por sexo:
+  F    cantidad=18  -> LIMA METROPOLITANA / LIMA / VILLA MARIA DEL TRIUNFO  (2019-11)
+  M    cantidad=14  -> CUSCO / CUSCO / SANTIAGO  (2019-10)
+  NO ESPECIFICA cantidad=3  -> LIMA METROPOLITANA / LIMA / SAN MARTIN DE PORRES  (2019-12)
+registroMin: Array[(String, (Int, String, String, String, Int, Int))] = Array((F,(1,ÁNCASH,SANTA,NUEVO CHIMBOTE,2024,11)), (M,(1,CUSCO,CUSCO,CUSCO,2019,3)), (NO ESPECIFICA,(1,HUÁNUCO,LEONCIO PRADO,RUPA-RUPA,2019,12)))
+[job 3] registro con MENOR cantidad por sexo:
+  F    cantidad=1  -> ÁNCASH / SANTA / NUEVO CHIMBOTE  (2024-11)
+  M    cantidad=1  -> CUSCO / CUSCO / CUSCO  (2019-3)
+  NO ESPECIFICA cantidad=1  -> HUÁNUCO / LEONCIO PRADO / RUPA-RUPA  (2019-12)
+distribucion: Array[(Int, Int)] = Array((1,78128), (2,10054), (3,2993), (4,1256), (5,603), (6,282), (7,180), (8,119))
+[apoyo] personas por registro -> cuantos registros existen
+  cantidad=1 -> registros=78128
+  cantidad=2 -> registros=10054
+  cantidad=3 -> registros=2993
+  cantidad=4 -> registros=1256
+  cantidad=5 -> registros=603
+  cantidad=6 -> registros=282
+  cantidad=7 -> registros=180
+  cantidad=8 -> registros=119
+[3-a] FIN

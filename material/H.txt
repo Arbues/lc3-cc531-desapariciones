@@ -1,0 +1,11 @@
+Ejercicios
+=====
+Usar el archivo "SalesJan2009.csv"
+y hacer las siguientes consultas para:
+ 
+1) ¿El numero de ventas por pais?
+2) Sumar las ventas
+3) Contar el numero de productos vendidos
+4) Contar el numero de productos pro tipo
+5) Obtener el producto mas vendido
+6) Sumar las ventas por cada tipo de producto

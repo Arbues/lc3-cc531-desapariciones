@@ -1,0 +1,17 @@
+
+5-a.3) REGION NATURAL x PERIODO CON MAS DE 10,000 PERSONAS
+
+consulta: org.apache.spark.sql.Dataset[org.apache.spark.sql.Row] = [region: string, periodo: string ... 2 more fields]
+
+5-a.3
+
+filas devueltas: 5
++------+-------------+--------+---------+
+|region|periodo      |personas|registros|
++------+-------------+--------+---------+
+|COSTA |POST-PANDEMIA|37204   |28505    |
+|COSTA |PANDEMIA     |24603   |18431    |
+|COSTA |PRE-PANDEMIA |17859   |12399    |
+|SIERRA|POST-PANDEMIA|15981   |13436    |
+|SIERRA|PANDEMIA     |11434   |9460     |
++------+-------------+--------+---------+

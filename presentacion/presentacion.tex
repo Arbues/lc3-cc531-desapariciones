@@ -1,0 +1,365 @@
+% ============================================================================
+% LC3 CC531 A — Presentación (10 minutos)
+% Compilar: latexmk -pdf presentacion.tex
+% ============================================================================
+\documentclass[10pt,aspectratio=169]{beamer}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[spanish]{babel}
+\usepackage{booktabs}
+\usepackage{tikz}
+\usepackage{pgfplots}
+\pgfplotsset{compat=1.18}
+
+\usetheme{default}
+\usecolortheme{beaver}
+\setbeamertemplate{navigation symbols}{}
+\setbeamertemplate{footline}[frame number]
+\setbeamerfont{frametitle}{size=\large,series=\bfseries}
+
+\definecolor{azul}{RGB}{20,60,110}
+\definecolor{naranja}{RGB}{214,96,15}
+\setbeamercolor{frametitle}{fg=azul}
+\setbeamercolor{structure}{fg=azul}
+\setbeamercolor{alerted text}{fg=naranja}
+
+\title[Desapariciones en el Perú 2019--2024]{Desapariciones de personas en el Perú (2019--2024)}
+\subtitle{Patrones territoriales, etarios y estacionales con Spark y PostgreSQL}
+\author[Pérez V. · Pezo]{Arbués Enrique Pérez Villanueva \and Sergio Pezo}
+\institute[UNI]{CC531 A --- Análisis en Macrodatos (2026-2)\\Universidad Nacional de Ingeniería}
+\date{Laboratorio Calificado 03 · Noviembre 2026}
+
+\begin{document}
+
+% ---------------------------------------------------------------- 1
+\begin{frame}
+  \titlepage
+\end{frame}
+
+% ---------------------------------------------------------------- 2
+\begin{frame}{El problema y la fuente de datos}
+  \begin{columns}[T]
+    \begin{column}{0.52\textwidth}
+      \textbf{Qué analizamos}\\[2pt]
+      Registro de \alert{denuncias por desaparición de personas} del Ministerio del Interior,
+      publicado en la Plataforma Nacional de Datos Abiertos (rubro Seguridad y Justicia).
+      \vspace{6pt}
+      \begin{itemize}
+        \item 93,831 registros · 121,427 personas
+        \item 13 columnas · 2019--2024 (72 meses)
+        \item Grano: mes × ubigeo × perfil de la víctima
+        \item Medida aditiva: \texttt{CANTIDAD}
+      \end{itemize}
+    \end{column}
+    \begin{column}{0.44\textwidth}
+      \centering
+      \begin{tikzpicture}[scale=0.82]
+        \node[draw, fill=blue!8, rounded corners, text width=4.4cm, align=left, font=\scriptsize] {
+          \textbf{Fecha}\\ AÑO, MES \vspace{3pt}\\
+          \textbf{Geografía}\\ UBIGEO, DPTO, PROV, DIST \vspace{3pt}\\
+          \textbf{Perfil}\\ SEXO, RANGO\_EDAD, EST\_CIVIL,\\ NACIONALIDAD, NIVEL\_EDUC., OCUPACIÓN \vspace{3pt}\\
+          \textbf{Medida}\\ CANTIDAD (1--18)
+        };
+      \end{tikzpicture}
+    \end{column}
+  \end{columns}
+\end{frame}
+
+% ---------------------------------------------------------------- 3
+\begin{frame}{Lo que se construyó}
+  \begin{columns}[T]
+    \begin{column}{0.48\textwidth}
+      \textbf{Tres capas de cómputo}\\[4pt]
+      \begin{enumerate}
+        \item \textbf{RDD + mapReduce}: 5 consultas (3a, 3b, 3c×3)
+        \item \textbf{DataFrame API}: 14 consultas (5a--5d)
+        \item \textbf{Vistas temporales + SQL}: 6 consultas (5e, 5f)
+      \end{enumerate}
+    \end{column}
+    \begin{column}{0.48\textwidth}
+      \textbf{Más la base de datos}\\[4pt]
+      \begin{itemize}
+        \item PostgreSQL 16 · modelo estrella de 9 tablas
+        \item ETL documentado: staging $\to$ dimensiones $\to$ hechos
+        \item 25 consultas con objetivos distintos
+        \item Exportación a Excel \alert{con Spark}
+      \end{itemize}
+    \end{column}
+  \end{columns}
+  \vspace{10pt}
+  \begin{center}
+    \small Spark 3.3.2 · Scala 2.12.15 · OpenJDK 11 · PostgreSQL 16.16 · JDBC 42.7.6
+  \end{center}
+\end{frame}
+
+% ---------------------------------------------------------------- 4
+\begin{frame}{El dato más importante: 1 registro $\neq$ 1 persona}
+  \begin{columns}[T]
+    \begin{column}{0.46\textwidth}
+      \centering
+      \begin{tabular}{lr}
+        \toprule
+        Concepto & Valor\\
+        \midrule
+        Filas del CSV & 93,831\\
+        \textbf{Personas} & \textbf{121,427}\\
+        Filas con 1 persona & 78,128 (83.3\%)\\
+        Promedio por hecho & 1.29\\
+        Mediana & 1\\
+        Máximo en un hecho & 18\\
+        \bottomrule
+      \end{tabular}
+      \vspace{6pt}
+      \\[-2pt]
+      {\footnotesize\color{azul} Toda consulta agrega con \texttt{SUM(CANTIDAD)}}
+    \end{column}
+    \begin{column}{0.50\textwidth}
+      \textbf{Por qué importa}\\[4pt]
+      \small
+      Si se cuentan filas se subestima el fenómeno en 27,596 personas.\\
+      \vspace{6pt}
+      El 7.6\,\% de las personas (9,188) está en solo 1,400 hechos con 5 o más víctimas: allí
+      deben activarse protocolos de búsqueda grupal.\\
+      \vspace{6pt}
+      Los campos de nivel educativo y ocupación faltan en el 65\,\% de las filas: se etiquetaron
+      como \texttt{NO ESPECIFICA}, sin imputar.
+    \end{column}
+  \end{columns}
+\end{frame}
+
+% ---------------------------------------------------------------- 5
+\begin{frame}{Hallazgo 1 · Cuatro de cada diez son adolescentes mujeres}
+  \begin{columns}[T]
+    \begin{column}{0.50\textwidth}
+      \centering
+      \begin{tabular}{llrr}
+        \toprule
+        Grupo etario & Sexo & Personas & \% total\\
+        \midrule
+        \alert{Adolescente} & \alert{F} & \alert{51,021} & \alert{42.0}\\
+        Adolescente & M & 13,309 & 11.0\\
+        Adulto & M & 12,389 & 10.2\\
+        Adulto joven & F & 12,042 & 9.9\\
+        Adulto joven & M & 10,125 & 8.3\\
+        Adulto mayor & M & 6,631 & 5.5\\
+        \bottomrule
+      \end{tabular}
+      \\[4pt]
+      {\scriptsize Fuente: consulta 5-e.2 (vistas temporales con dos joins)}
+    \end{column}
+    \begin{column}{0.46\textwidth}
+      \textbf{Lectura}\\[4pt]
+      \small
+      El fenómeno tiene un perfil de \alert{género y edad} muy definido: las adolescentes mujeres
+      concentran el 42\,\% de todos los casos del país.\\
+      \vspace{6pt}
+      La brecha con los adolescentes hombres es de casi \alert{4 a 1}.\\
+      \vspace{6pt}
+      La desviación del número de víctimas por hecho es 75\,\% mayor en mujeres (1.05 vs 0.60):
+      desaparecen en grupos, no solas.
+    \end{column}
+  \end{columns}
+\end{frame}
+
+% ---------------------------------------------------------------- 6
+\begin{frame}{Hallazgo 2 · El riesgo relativo de los menores crece con la ruralidad}
+  \centering
+  \begin{tikzpicture}
+    \begin{axis}[
+      ybar, width=13.2cm, height=5.8cm,
+      ymin=40, ymax=78, ylabel={\scriptsize \% de menores de 18},
+      symbolic x coords={MDD,UCA,LOR,TUM,CAJ,HCO,LAM,JUN,LIM},
+      xtick=data, x tick label style={font=\scriptsize},
+      nodes near coords, nodes near coords style={font=\tiny},
+      bar width=14pt, enlarge x limits=0.08,
+      axis line style={draw=gray!60}, tick style={draw=gray!60}
+    ]
+      \addplot[fill=azul!75] coordinates {(MDD,72.2) (UCA,70.7) (LOR,70.3) (TUM,69.0) (CAJ,69.0) (HCO,68.5) (LAM,65.9) (JUN,62.4) (LIM,50.6)};
+    \end{axis}
+  \end{tikzpicture}
+  \vspace{2pt}
+  {\scriptsize MDD = Madre de Dios · UCA = Ucayali · LOR = Loreto · TUM = Tumbes · CAJ = Cajamarca ·
+   HCO = Huánuco · LAM = Lambayeque · JUN = Junín · LIM = Lima Metropolitana}
+  \\[6pt]
+  \begin{columns}[T]
+    \begin{column}{0.48\textwidth}
+      \small Madre de Dios: 72.2\,\% de las desapariciones son de menores (473 de 655).
+    \end{column}
+    \begin{column}{0.48\textwidth}
+      \small Lima Metropolitana: 50.6\,\%. La brecha es de casi \alert{22 puntos porcentuales}.
+    \end{column}
+  \end{columns}
+\end{frame}
+
+% ---------------------------------------------------------------- 7
+\begin{frame}{Hallazgo 3 · Estacionalidad y el choque de 2020}
+  \begin{columns}[T]
+    \begin{column}{0.48\textwidth}
+      \textbf{Índice mensual} (100\,\% = 8.33\%)\\[4pt]
+      \centering
+      \begin{tabular}{lrr}
+        \toprule
+        Mes & \% del total & Índice\\
+        \midrule
+        Diciembre & 9.49 & \alert{1.14}\\
+        Febrero & 9.16 & 1.10\\
+        Noviembre & 8.85 & 1.06\\
+        Julio & 8.17 & 0.98\\
+        Abril & 7.25 & 0.87\\
+        \bottomrule
+      \end{tabular}
+      \\[4pt]
+      {\scriptsize Consulta 3-c.3 (tres mapReduce encadenados)}
+    \end{column}
+    \begin{column}{0.48\textwidth}
+      \textbf{2020: el quiebre}\\[4pt]
+      \small
+      El segundo trimestre de 2020 cae 65\,\% frente a 2019-T4: de 7,164 a 2,485 personas.\\
+      \vspace{6pt}
+      La serie \alert{no recupera} los niveles de 2019 en ningún trimestre posterior; el mejor
+      trimestre reciente es 2024-T4 con 5,613.\\
+      \vspace{6pt}
+      21 meses suben y 39 bajan respecto del mismo mes del año anterior: caídas frecuentes,
+      repuntes más fuertes.
+    \end{column}
+  \end{columns}
+\end{frame}
+
+% ---------------------------------------------------------------- 8
+\begin{frame}{Hallazgo 4 · La concentración territorial no se mueve}
+  \begin{columns}[T]
+    \begin{column}{0.52\textwidth}
+      \centering
+      \begin{tabular}{lrr}
+        \toprule
+        Distrito & Personas & \% del país\\
+        \midrule
+        San Juan de Lurigancho & 4,775 & 3.9\\
+        Lima & 3,153 & 2.6\\
+        San Martín de Porres & 2,646 & 2.2\\
+        Callao & 2,642 & 2.2\\
+        Ate & 2,637 & 2.2\\
+        Comas & 2,338 & 1.9\\
+        \bottomrule
+      \end{tabular}
+      \\[4pt]
+      {\scriptsize Consultas 5-b.2 (periodo completo) y 5-f.1 (2024)}
+    \end{column}
+    \begin{column}{0.44\textwidth}
+      \small
+      Costa: \alert{65.6\,\%} de las personas, pero solo 567 ubigeos con casos.\\
+      Sierra: 28.2\,\% con \alert{804 ubigeos}: el fenómeno está más repartido.\\
+      Selva: 6.1\,\% y la menor densidad por distrito.\\
+      \vspace{6pt}
+      El ranking de 2024 es casi idéntico al del periodo completo: la geografía del problema es
+      \alert{estable}, y se concentra en Lima Norte y Lima Este.
+    \end{column}
+  \end{columns}
+\end{frame}
+
+% ---------------------------------------------------------------- 9
+\begin{frame}{Modelo estrella y ETL en PostgreSQL 16}
+  \begin{columns}[T]
+    \begin{column}{0.42\textwidth}
+      \centering
+      \begin{tikzpicture}[scale=0.62, every node/.style={font=\tiny},
+        dim/.style={draw, fill=blue!8, rounded corners=1pt, inner sep=1.5pt, text width=2.1cm, align=center},
+        fac/.style={draw, fill=orange!15, rounded corners=1pt, inner sep=2.5pt, text width=2.6cm, align=center}]
+        \node[fac] (h) at (0,0) {\textbf{hecho\_desaparicion}\\ 93,831 filas\\ cantidad};
+        \node[dim] (t) at (-3.2,1.7) {dim\_tiempo};
+        \node[dim] (g) at (3.2,1.7) {dim\_geografia\\ 1,506};
+        \node[dim] (e) at (-3.2,0.6) {dim\_rango\_edad};
+        \node[dim] (s) at (-3.2,-0.5) {dim\_sexo};
+        \node[dim] (c) at (3.2,0.6) {dim\_estado\_civil};
+        \node[dim] (n) at (3.2,-0.5) {dim\_nacionalidad};
+        \node[dim] (v) at (-3.2,-1.6) {dim\_nivel\_educ.};
+        \node[dim] (o) at (3.2,-1.6) {dim\_ocupacion};
+        \draw[-latex, gray] (t) -- (h); \draw[-latex, gray] (g) -- (h);
+        \draw[-latex, gray] (e) -- (h); \draw[-latex, gray] (s) -- (h);
+        \draw[-latex, gray] (c) -- (h); \draw[-latex, gray] (n) -- (h);
+        \draw[-latex, gray] (v) -- (h); \draw[-latex, gray] (o) -- (h);
+      \end{tikzpicture}
+    \end{column}
+    \begin{column}{0.56\textwidth}
+      \textbf{ETL en tres pasos}\\[4pt]
+      \small
+      \textbf{1. Extracción}: \texttt{\textbackslash copy} del CSV a una tabla de staging
+      (93,831 filas).\\
+      \vspace{4pt}
+      \textbf{2. Transformación}: categóricas vacías $\to$ \texttt{NO ESPECIFICA}; ubigeo a 6
+      dígitos; región natural, periodo y grupo etario derivados.\\
+      \vspace{4pt}
+      \textbf{3. Llenado}: dimensiones por \texttt{DISTINCT} y hechos filtrando
+      \texttt{cantidad > 0}, todo en una transacción.\\
+      \vspace{6pt}
+      \alert{Hallazgo de calidad}: el ubigeo 150121 aparece con dos nombres (PUEBLO LIBRE y
+      MAGDALENA VIEJA); sin deduplicar, los joins duplicaban 82 personas.
+    \end{column}
+  \end{columns}
+\end{frame}
+
+% ---------------------------------------------------------------- 10
+\begin{frame}{Validación cruzada: la misma cifra en tres tecnologías}
+  \begin{center}
+    \begin{tabular}{llr}
+      \toprule
+      Capa & Consulta de control & Personas\\
+      \midrule
+      RDD / mapReduce & 3-b (suma y estadísticos) & \alert{121,427}\\
+      DataFrame API & 5-c.1 (join con dimensión geográfica) & \alert{121,427}\\
+      PostgreSQL 16 & \texttt{SUM(cantidad)} en la tabla de hechos & \alert{121,427}\\
+      \bottomrule
+    \end{tabular}
+  \end{center}
+  \vspace{10pt}
+  \begin{columns}[T]
+    \begin{column}{0.48\textwidth}
+      \small
+      \textbf{Top 5 departamentos, idéntico en Spark y en la vista SQL:}\\
+      Lima Metropolitana 39,490 · Junín 7,256 · Cusco 7,214 · Arequipa 6,633 · Lambayeque 6,231
+    \end{column}
+    \begin{column}{0.48\textwidth}
+      \small
+      \textbf{Cobertura verificada con joins externos:}\\
+      0 ubigeos sin registros (LEFT) · 0 meses sin datos (RIGHT) · 26 departamentos con víctimas
+      menores y adultas (FULL OUTER)
+    \end{column}
+  \end{columns}
+\end{frame}
+
+% ---------------------------------------------------------------- 11
+\begin{frame}{Conclusiones}
+  \begin{enumerate}
+    \item \textbf{El perfil del fenómeno es claro}: adolescentes mujeres, 42\,\% del total
+          nacional, con hechos de múltiples víctimas más frecuentes que en hombres.
+    \item \textbf{El riesgo relativo de los menores crece con la ruralidad}: 72\,\% en Madre de
+          Dios frente a 51\,\% en Lima. Priorizar la búsqueda por riesgo relativo, no solo por
+          volumen.
+    \item \textbf{2020 rompió la serie} y no se recuperó: la pandemia redujo las denuncias 62\,\%
+          en un trimestre y el nivel posterior quedó por debajo de 2019.
+    \item \textbf{La geografía es estable}: los mismos distritos de Lima Norte y Este encabezan
+          el ranking en 2024 y en el acumulado.
+    \item \textbf{Técnicamente}, las tres capas cuadran en 121,427 personas, y el modelo estrella
+          en PostgreSQL reproduce los resultados de Spark consulta por consulta.
+  \end{enumerate}
+  \vspace{8pt}
+  \begin{center}
+    \small
+    \textbf{Reproducible}: \texttt{bin/ejecutar.sh} corre cualquier consulta;
+    \texttt{bin/correr\_todas.sh} regenera las 25 salidas.
+  \end{center}
+\end{frame}
+
+% ---------------------------------------------------------------- 12
+\begin{frame}{Gracias}
+  \centering
+  \vspace{18pt}
+  {\Large Preguntas}\\[16pt]
+  \small
+  Arbués Enrique Pérez Villanueva · Sergio Pezo\\
+  CC531 A --- Análisis en Macrodatos · UNI\\[10pt]
+  \textit{Dataset: Denuncias por desaparición de personas [MININTER], 2019--2024\\
+  Plataforma Nacional de Datos Abiertos del Perú}
+\end{frame}
+
+\end{document}

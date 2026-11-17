@@ -1,0 +1,225 @@
+% ============================================================================
+% LC3 CC531 A Analisis en Macrodatos 2026-2 — Informe
+% Dataset: Denuncias por desaparicion de personas [MININTER] 2019-2024
+% Compilar:  latexmk -pdf informe.tex     (o pdflatex 3 veces)
+% ============================================================================
+\documentclass[10pt,a4paper]{article}
+\usepackage[spanish,english]{babel}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{indentfirst}
+\usepackage{anysize}
+\marginsize{2.5cm}{1.8cm}{1.5cm}{1.7cm}
+\usepackage{amssymb}
+\usepackage{amsfonts}
+\usepackage{amsmath}
+\usepackage{amsthm}
+\usepackage{multicol}
+\usepackage{multirow}
+\usepackage{graphicx}
+\usepackage[hidelinks]{hyperref}
+\usepackage[htt]{hyphenat}
+\usepackage{caption}
+\usepackage{subcaption}
+\usepackage{tocloft}
+\usepackage{longtable}
+\usepackage{booktabs}
+\usepackage{array}
+\usepackage{listings}
+\usepackage{xcolor}
+\usepackage{float}
+\usepackage{tikz}
+
+\renewcommand{\cftsecleader}{\cftdotfill{\cftdotsep}}
+\theoremstyle{definition}
+\renewcommand{\thefootnote}{\fnsymbol{footnote}}
+
+\lstdefinestyle{scala}{
+  language=Java,
+  basicstyle=\ttfamily\scriptsize,
+  keywordstyle=\color{blue!70!black},
+  commentstyle=\color{green!40!black}\itshape,
+  stringstyle=\color{red!60!black},
+  numbers=left, numberstyle=\tiny\color{gray},
+  breaklines=true, frame=single, rulecolor=\color{gray!50},
+  backgroundcolor=\color{gray!5},
+  showstringspaces=false, tabsize=2
+}
+\lstdefinestyle{sql}{
+  language=SQL,
+  basicstyle=\ttfamily\scriptsize,
+  keywordstyle=\color{blue!70!black}\bfseries,
+  commentstyle=\color{green!40!black}\itshape,
+  numbers=left, numberstyle=\tiny\color{gray},
+  breaklines=true, frame=single, rulecolor=\color{gray!50},
+  backgroundcolor=\color{gray!5},
+  showstringspaces=false
+}
+
+\title{Detecci\'on de patrones en las denuncias por desaparici\'on de personas en el Per\'u (2019--2024) con Spark y PostgreSQL}
+\date{Noviembre 2026}
+\hypersetup{pdftitle={LC3 CC531 - Denuncias por desaparicion de personas},pdfauthor={Arbues Perez, Sergio Pezo}}
+
+\begin{document}
+\sloppy
+
+\maketitle
+
+\begin{center}
+  Estudiantes:\\
+  \vspace{5pt}
+  {\large Arbu\'es Enrique P\'erez Villanueva \quad Sergio Pezo}\\
+  Universidad Nacional de Ingenier\'ia, Facultad de Ciencias,\\
+  e-mail: arbues.perez.v@uni.pe
+\end{center}
+\vspace{5pt}
+\begin{center}
+  Curso:\\
+  \vspace{5pt}
+  {\large CC531 A -- An\'alisis en Macrodatos (2026-2)}\\
+  {\large Laboratorio 03}
+\end{center}
+\vspace{20pt}
+
+\begin{abstract}
+{\small
+\hspace*{0.5cm}
+Se analizan 93,831 registros de denuncias por desaparici\'on de personas publicados por el
+Ministerio del Interior en la Plataforma Nacional de Datos Abiertos, correspondientes a las
+121,427 personas reportadas como desaparecidas entre enero de 2019 y diciembre de 2024. El
+trabajo cubre las tres capas exigidas: (i) cinco consultas implementadas con la API de RDD de
+Spark y el paradigma mapReduce, (ii) un modelo estrella cargado en PostgreSQL 16 mediante un
+proceso ETL documentado, y (iii) veinte consultas con la API de DataFrame de Spark SQL, seis de
+ellas con vistas temporales y \texttt{spark.sql}, cuyos resultados se exportan a Excel usando
+Spark. Cada consulta declara su objetivo, la pregunta de negocio que responde, la soluci\'on
+implementada, las columnas empleadas y la interpretaci\'on del resultado.
+
+\textbf{Palabras clave:} Spark, RDD, mapReduce, Spark SQL, PostgreSQL, datos abiertos, seguridad ciudadana.
+}
+\end{abstract}
+
+\pagenumbering{arabic}
+\tableofcontents
+
+\vspace{20pt}
+\hrule
+\vspace{10pt}
+
+% ============================================================================
+\section{Introducci\'on}
+% ============================================================================
+La desaparici\'on de personas es uno de los delitos que m\'as afecta la confianza en las
+instituciones: cada denuncia implica una familia que busca a alguien y un aparato estatal que
+debe priorizar la b\'usqueda. El Ministerio del Interior (MININTER) publica el registro de estas
+denuncias en la Plataforma Nacional de Datos Abiertos (PNDA), con detalle de fecha, ubigeo del
+hecho y perfil de la persona (sexo, rango de edad, estado civil, nacionalidad, nivel educativo y
+ocupaci\'on).
+
+El objetivo del laboratorio es recorrer el ciclo completo de un proyecto de macrodatos sobre ese
+registro: describir la fuente, almacenarla en una base relacional con un modelo definido por el
+grupo, y responder 25 preguntas distintas con tres tecnolog\'ias de c\'omputo distribuidas ---
+RDD con mapReduce, la API de DataFrame y SQL sobre vistas temporales --- verificando en cada caso
+que el resultado sea interpretable.
+
+\section{Marco te\'orico}
+
+\subsection{El fen\'omeno y su teor\'ia de datos}
+El dataset describe \emph{hechos} de desaparici\'on, no personas individuales. Cada fila es una
+combinaci\'on \'unica de \emph{dimensi\'on temporal} (a\~no y mes), \emph{dimensi\'on
+geogr\'afica} (ubigeo, departamento, provincia, distrito) y \emph{dimensiones del perfil de la
+v\'ictima} (sexo, rango de edad, estado civil, nacionalidad, nivel educativo, ocupaci\'on), con
+una \emph{medida} aditiva: la cantidad de personas denunciadas en ese cruce. La teor\'ia
+subyacente es la de un modelo multidimensional (Kimball): un hecho central y dimensiones que lo
+describen, con la cantidad como medida y las jerarqu\'ias geogr\'afica y etaria como ejes de
+an\'alisis. Esta estructura es la que permite responder tanto preguntas de agregaci\'on simple
+(cu\'antas personas por departamento) como de composici\'on (qu\'e porcentaje son menores) y de
+cobertura (qu\'e territorios o meses no tienen registros).
+
+\subsection{RDD, mapReduce y DataFrame}
+Un RDD (\emph{Resilient Distributed Dataset}) es una colecci\'on inmutable y particionada de
+objetos, tolerante a fallos por linaje. El paradigma \emph{mapReduce} se implementa con
+\texttt{map} (transformar cada elemento en un par clave-valor) y \texttt{reduceByKey} (agregar
+por clave), lo que obliga a un \emph{shuffle} para reunir las claves. La API de DataFrame, en
+cambio, describe la consulta como un \'arbol l\'ogico que el optimizador Catalyst reescribe y
+convierte en c\'odigo (Tungsten), con lo que se obtiene el mismo resultado con menos c\'odigo y
+mejor plan f\'isico. Las vistas temporales permiten registar un DataFrame en el cat\'alogo de la
+sesi\'on y consultarlo con SQL est\'andar.
+
+\input{secciones/02-dataset}
+
+\input{secciones/04-etl}
+
+\section{Metodolog\'ia}
+
+\subsection{Entorno y versiones}
+El trabajo se ejecut\'o en una m\'aquina con WSL2 (Ubuntu) usando exactamente las versiones de
+clase: Spark 3.3.2 con Scala 2.12.15 y OpenJDK 11, PostgreSQL 16 y el driver JDBC
+\texttt{postgresql-42.7.6}. Las 25 consultas se ejecutan con \texttt{spark-shell} en modo
+\texttt{local[*]}, es decir, con paralelismo sobre los n\'ucleos de la m\'aquina.
+
+\subsection{Organizaci\'on del c\'odigo}
+\begin{center}
+\begin{tabular}{ll}
+\toprule
+Ruta & Contenido\\
+\midrule
+\texttt{code/comun/esquema.scala} & lectura, limpieza, dimensiones y vistas temporales\\
+\texttt{code/rdd/*.scala} & consultas 3a, 3b y 3c (mapReduce)\\
+\texttt{code/sql/*.scala} & consultas 5a--5g (DataFrame, vistas y Excel)\\
+\texttt{sql/01\_ddl.sql} & arquitectura de tablas en PostgreSQL\\
+\texttt{sql/02\_etl.sql} & proceso ETL completo (staging $\to$ dimensiones $\to$ hechos)\\
+\texttt{excel/*.xlsx} & resultados de 5e y 5f exportados con Spark\\
+\texttt{evidencias/salidas/*.txt} & salida real de cada consulta\\
+\texttt{bin/ejecutar.sh} & ejecutor: \texttt{:load esquema.scala} + consulta\\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\subsection{Tratamiento de datos vac\'ios}
+Cinco campos categ\'oricos llegan vac\'ios en una parte de los registros: \texttt{NIVEL\_EDUCATIVO}
+(64.7\,\%), \texttt{OCUPACION} (64.8\,\%), \texttt{EST\_CIVIL} (14.4\,\%), \texttt{RANGO\_EDAD}
+(1.3\,\%) y \texttt{SEXO} (0.08\,\%). No se imput\'o ning\'un valor: se cre\'o la categor\'ia
+expl\'icita \texttt{NO ESPECIFICA}, que se conserva en todos los agregados y se declara en cada
+interpretaci\'on para no sesgar los porcentajes. Un solo registro no tiene \texttt{UBIGEO\_HECHO};
+se mantiene en la tabla de hechos con geograf\'ia nula, lo que se refleja en el LEFT JOIN de la
+consulta 5c.2.
+
+\input{secciones/06-consultas}
+
+\section{Conclusiones}
+
+\begin{enumerate}
+  \item El registro del MININTER es un dataset de \emph{hechos agregados}: 83.3\,\% de los
+        93,831 registros corresponden a una sola persona, de modo que los an\'alisis con sentido
+        se hacen sobre la medida \texttt{CANTIDAD} y no sobre el conteo de filas.
+  \item Lima Metropolitana concentra 39,490 de las 121,427 personas (32.5\,\%), seguida por
+        Jun\'in, Cusco, Arequipa y Lambayeque; la sierra sur (Puno, Cusco, Ayacucho, Apur\'imac)
+        tiene una participaci\'on de menores de edad superior al promedio nacional.
+  \item La serie mensual muestra un patr\'on estacional moderado: diciembre (9.49\,\%) y febrero
+        (9.16\,\%) superan el esperado de 8.33\,\%, mientras abril (7.25\,\%) y junio (7.33\,\%)
+        quedan por debajo.
+  \item Las tres tecnolog\'ias producen los mismos totales (121,427 personas), lo que valida la
+        limpieza y el modelo; la API de DataFrame expresa las mismas agregaciones con menos
+        c\'odigo y mejor plan f\'isico que mapReduce.
+  \item El modelo estrella en PostgreSQL permite responder las mismas preguntas con SQL y
+        sirve de respaldo para auditor\'ia: la vista \texttt{v\_desaparicion} reproduce los
+        totales de Spark.
+\end{enumerate}
+
+\appendix
+\section{Anexo: c\'odigo fuente}
+Los archivos \texttt{.scala} completos, el DDL, el ETL y las salidas se entregan en el zip del
+laboratorio, en la misma estructura de la tabla de la secci\'on de metodolog\'ia. El ejecutor
+\texttt{bin/ejecutar.sh} reproduce cualquier consulta:
+
+\begin{lstlisting}[style=scala]
+./bin/ejecutar.sh code/rdd/03a_max_min_por_sexo.scala
+./bin/ejecutar.sh code/sql/05e_1_variacion_interanual.scala
+\end{lstlisting}
+
+\section{Anexo: documentaci\'on de la fuente}
+Ficha del dataset publicada por la PNDA, diccionario de datos y metadatos del MININTER, junto con
+las capturas de la base de datos en funcionamiento, se incluyen en la carpeta
+\texttt{evidencias/}.
+
+\end{document}

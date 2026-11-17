@@ -1,0 +1,30 @@
+
+5-e.2) GRUPO ETARIO x SEXO (dos joins con vistas temporales)
+
+consulta: org.apache.spark.sql.DataFrame = [grupo_etario: string, sexo: string ... 4 more fields]
+
+5-e.2
+
+filas devueltas: 18
++----------------+-------------+--------+---------+---------------------+------------+
+|grupo_etario    |sexo         |personas|registros|promedio_por_registro|pct_nacional|
++----------------+-------------+--------+---------+---------------------+------------+
+|ADOLESCENTE     |F            |51021   |34218    |1.491                |42.02       |
+|ADOLESCENTE     |M            |13309   |11076    |1.202                |10.96       |
+|ADULTO          |M            |12389   |10265    |1.207                |10.2        |
+|ADULTO JOVEN    |F            |12042   |9595     |1.255                |9.92        |
+|ADULTO JOVEN    |M            |10125   |8141     |1.244                |8.34        |
+|ADULTO MAYOR    |M            |6631    |5974     |1.11                 |5.46        |
+|ADULTO          |F            |5933    |5233     |1.134                |4.89        |
+|NINEZ           |M            |2829    |2576     |1.098                |2.33        |
+|ADULTO MAYOR    |F            |2746    |2564     |1.071                |2.26        |
+|NINEZ           |F            |1838    |1735     |1.059                |1.51        |
+|NO ESPECIFICA   |F            |748     |712      |1.051                |0.62        |
+|PRIMERA INFANCIA|M            |621     |599      |1.037                |0.51        |
+|NO ESPECIFICA   |M            |565     |531      |1.064                |0.47        |
+|PRIMERA INFANCIA|F            |551     |538      |1.024                |0.45        |
+|ADULTO JOVEN    |NO ESPECIFICA|37      |36       |1.028                |0.03        |
+|ADULTO          |NO ESPECIFICA|21      |18       |1.167                |0.02        |
+|ADULTO MAYOR    |NO ESPECIFICA|12      |11       |1.091                |0.01        |
+|ADOLESCENTE     |NO ESPECIFICA|9       |9        |1.0                  |0.01        |
++----------------+-------------+--------+---------+---------------------+------------+

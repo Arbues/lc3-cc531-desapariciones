@@ -1,0 +1,39 @@
+
+3-c.1) % DE MENORES DE 18 AÑOS POR DEPARTAMENTO  (3 mapReduce encadenados)
+
+mr1Total: org.apache.spark.rdd.RDD[(String, Int)] = ShuffledRDD[45] at reduceByKey at /home/arbues/macrodatos/PC3/code/rdd/03c_1_menores_por_departamento.scala:42
+[MR1] departamentos con total calculado: 26
+mr2Menores: org.apache.spark.rdd.RDD[(String, Int)] = ShuffledRDD[48] at reduceByKey at /home/arbues/macrodatos/PC3/code/rdd/03c_1_menores_por_departamento.scala:46
+[MR2] departamentos con menores calculados: 26
+mr3Porcentaje: Array[(String, Int, Int, Double)] = Array((MADRE DE DIOS,655,473,72.21), (UCAYALI,2126,1504,70.74), (LORETO,2393,1681,70.25), (TUMBES,1030,711,69.03), (CAJAMARCA,2488,1716,68.97), (HUÁNUCO,4149,2842,68.5), (LAMBAYEQUE,6231,4106,65.9), (PASCO,982,642,65.38), (SAN MARTÍN,2286,1494,65.35), (AYACUCHO,3454,2244,64.97), (REGIÓN LIMA,3387,2157,63.68), (AMAZONAS,1292,814,63.0), (PIURA,4780,2982,62.38), (JUNÍN,7256,4525,62.36), (APURIMAC,2537,1577,62.16), (LA LIBERTAD,4546,2782,61.2), (ÁNCASH,3195,1945,60.88), (ICA,2811,1684,59.91), (CUSCO,7214,4299,59.59), (HUANCAVELICA,1296,746,57.56), (CALLAO,4565,2502,54.81), (MOQUEGUA,643,349,54.28), (TACNA,2355,1274,54.1), (PUNO,3633,1911,52.6), (AREQUIPA,6633,3467,52.27), (LIMA METROPOLITANA,39490,19751,50.02))
+[MR3] departamento | total | menores de 18 | % menores
+  MADRE DE DIOS          total=655     menores=473     %=72.21
+  UCAYALI                total=2126    menores=1504    %=70.74
+  LORETO                 total=2393    menores=1681    %=70.25
+  TUMBES                 total=1030    menores=711     %=69.03
+  CAJAMARCA              total=2488    menores=1716    %=68.97
+  HUÁNUCO                total=4149    menores=2842    %=68.5
+  LAMBAYEQUE             total=6231    menores=4106    %=65.9
+  PASCO                  total=982     menores=642     %=65.38
+  SAN MARTÍN             total=2286    menores=1494    %=65.35
+  AYACUCHO               total=3454    menores=2244    %=64.97
+  REGIÓN LIMA            total=3387    menores=2157    %=63.68
+  AMAZONAS               total=1292    menores=814     %=63.0
+  PIURA                  total=4780    menores=2982    %=62.38
+  JUNÍN                  total=7256    menores=4525    %=62.36
+  APURIMAC               total=2537    menores=1577    %=62.16
+  LA LIBERTAD            total=4546    menores=2782    %=61.2
+  ÁNCASH                 total=3195    menores=1945    %=60.88
+  ICA                    total=2811    menores=1684    %=59.91
+  CUSCO                  total=7214    menores=4299    %=59.59
+  HUANCAVELICA           total=1296    menores=746     %=57.56
+  CALLAO                 total=4565    menores=2502    %=54.81
+  MOQUEGUA               total=643     menores=349     %=54.28
+  TACNA                  total=2355    menores=1274    %=54.1
+  PUNO                   total=3633    menores=1911    %=52.6
+  AREQUIPA               total=6633    menores=3467    %=52.27
+  LIMA METROPOLITANA     total=39490   menores=19751   %=50.02
+totalNacional: Int = 121427
+menoresNacional: Int = 70178
+[control] total nacional=121427  menores=70178  % nacional=57.79
+[3-c.1] FIN

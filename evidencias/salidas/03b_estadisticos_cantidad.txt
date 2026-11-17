@@ -1,0 +1,33 @@
+
+3-b) PROMEDIO, MEDIANA, DESVIACION, MAYOR Y MENOR DE CANTIDAD  (mapReduce)
+
+sumaConteo: (Double, Long) = (121427.0,93831)
+n: Long = 93831
+suma: Double = 121427.0
+promedio: Double = 1.2941032281442166
+sumaCuadrados: Double = 231561.0
+varianzaPoblacional: Double = 0.793148610972197
+varianzaMuestral: Double = 0.793157064010788
+desvPoblacional: Double = 0.8905889124462515
+desvMuestral: Double = 0.8905936581914269
+ordenados: org.apache.spark.rdd.RDD[(Double, Long)] = ZippedWithIndexRDD[52] at zipWithIndex at /home/arbues/macrodatos/PC3/code/rdd/03b_estadisticos_cantidad.scala:42
+medios: Array[Double] = Array(1.0)
+mediana: Double = 1.0
+mayor: Int = 18
+menor: Int = 1
+[resultado global sobre CANTIDAD]
+  registros (n)           : 93831
+  suma total de personas  : 121427
+  promedio                : 1.2941
+  mediana (media)         : 1.0
+  desviacion poblacional  : 0.8906
+  desviacion muestral     : 0.8906
+  varianza poblacional    : 0.7931
+  mayor                   : 18
+  menor                   : 1
+porSexo: Array[(String, (Double, Long, Double))] = Array((F,(74879.0,54595,162369.0)), (M,(46469.0,39162,69101.0)), (NO ESPECIFICA,(79.0,74,91.0)))
+[apoyo] por sexo: n | promedio | desviacion poblacional
+  F              n=54595  promedio=1.3715  desv=1.0454
+  M              n=39162  promedio=1.1866  desv=0.5971
+  NO ESPECIFICA  n=74  promedio=1.0676  desv=0.3
+[3-b] FIN

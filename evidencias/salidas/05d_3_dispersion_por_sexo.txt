@@ -1,0 +1,15 @@
+
+5-d.3) DISPERSION DE LA CANTIDAD POR REGISTRO SEGUN SEXO
+
+consulta: org.apache.spark.sql.Dataset[org.apache.spark.sql.Row] = [sexo: string, registros: bigint ... 6 more fields]
+
+5-d.3
+
+filas devueltas: 3
++-------------+---------+--------+--------+----------------+-----------------+------+------+
+|sexo         |registros|personas|promedio|desv_poblacional|varianza_muestral|minimo|maximo|
++-------------+---------+--------+--------+----------------+-----------------+------+------+
+|F            |54595    |74879   |1.3715  |1.0454          |1.093            |1     |18    |
+|M            |39162    |46469   |1.1866  |0.5971          |0.3565           |1     |14    |
+|NO ESPECIFICA|74       |79      |1.0676  |0.3             |0.0913           |1     |3     |
++-------------+---------+--------+--------+----------------+-----------------+------+------+

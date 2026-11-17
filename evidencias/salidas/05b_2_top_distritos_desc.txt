@@ -1,0 +1,27 @@
+
+5-b.2) TOP 15 DISTRITOS POR PERSONAS DESAPARECIDAS (orden descendente)
+
+consulta: org.apache.spark.sql.Dataset[org.apache.spark.sql.Row] = [departamento: string, provincia: string ... 3 more fields]
+
+5-b.2
+
+filas devueltas: 15
++------------------+---------+-----------------------+--------+---------+
+|departamento      |provincia|distrito               |personas|registros|
++------------------+---------+-----------------------+--------+---------+
+|LIMA METROPOLITANA|LIMA     |SAN JUAN DE LURIGANCHO |4775    |2341     |
+|LIMA METROPOLITANA|LIMA     |LIMA                   |3153    |2069     |
+|LIMA METROPOLITANA|LIMA     |SAN MARTIN DE PORRES   |2646    |1621     |
+|CALLAO            |CALLAO   |CALLAO                 |2642    |1585     |
+|LIMA METROPOLITANA|LIMA     |ATE                    |2637    |1417     |
+|LIMA METROPOLITANA|LIMA     |COMAS                  |2338    |1424     |
+|LIMA METROPOLITANA|LIMA     |VILLA MARIA DEL TRIUNFO|2053    |1235     |
+|LIMA METROPOLITANA|LIMA     |VILLA EL SALVADOR      |2006    |1279     |
+|LIMA METROPOLITANA|LIMA     |CARABAYLLO             |1929    |1170     |
+|LAMBAYEQUE        |CHICLAYO |CHICLAYO               |1888    |1187     |
+|LIMA METROPOLITANA|LIMA     |LOS OLIVOS             |1734    |1216     |
+|LIMA METROPOLITANA|LIMA     |SAN JUAN DE MIRAFLORES |1594    |1078     |
+|LIMA METROPOLITANA|LIMA     |PUENTE PIEDRA          |1529    |995      |
+|PUNO              |SAN ROMAN|JULIACA                |1372    |964      |
+|AYACUCHO          |HUAMANGA |AYACUCHO               |1346    |867      |
++------------------+---------+-----------------------+--------+---------+

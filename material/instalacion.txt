@@ -1,0 +1,10 @@
+descargar desde la página la versión 15.13, debe ser máximo versión 16
+https://www.enterprisedb.com/downloads/postgres-postgresql-downloads
+
+descargar el controlador para java (jar) PostgreSQL 42.7.6.jar
+https://jdbc.postgresql.org/download/
+
+instalar postgres
+Para que se vea el comando en cmd editar variables de entorno y poner su ruta (ejem: C:\Program Files\PostgreSQL\15\bin) en path
+
+

@@ -1,0 +1,130 @@
+% ============================================================================
+% Seccion 2 — Descripcion del dataset (punto 2 del enunciado)
+% ============================================================================
+\section{Descripci\'on del dataset}
+
+\subsection{Ficha t\'ecnica}
+
+\begin{center}
+\begin{tabular}{p{4.2cm}p{10.5cm}}
+\toprule
+\textbf{Nombre} & Denuncias por desaparici\'on de personas \\
+\textbf{Organizaci\'on} & Ministerio del Interior del Per\'u (MININTER) \\
+\textbf{Rubro PNDA} & Seguridad y Justicia \\
+\textbf{Fuente} & Plataforma Nacional de Datos Abiertos
+  (\url{https://www.datosabiertos.gob.pe/dataset/denuncias-por-desaparici\%C3\%B3n-de-personas-mininter}) \\
+\textbf{Recurso analizado} & \texttt{BD\_DESAPARICIONES\_ENERO\_2019\_DICIEMBRE\_2024.csv} (8.1 MB) \\
+\textbf{Actualizaci\'on del recurso} & 18 de setiembre de 2026 \\
+\textbf{Cobertura} & enero 2019 -- diciembre 2024 (72 meses) \\
+\textbf{Grano} & a\~no $\times$ mes $\times$ ubigeo del hecho $\times$ perfil de la v\'ictima \\
+\textbf{Registros} & 93,831 filas \\
+\textbf{Columnas} & 13 \\
+\textbf{Medida} & \texttt{CANTIDAD}: personas denunciadas en ese cruce (1 a 18; total 121,427) \\
+\textbf{Formato} & CSV separado por comas, codificaci\'on UTF-8 con BOM, fin de l\'inea CRLF \\
+\textbf{Recursos complementarios} & diccionario de datos (\texttt{.xlsx}) y metadatos (\texttt{.docx}) \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\subsection{Teor\'ia que implican los datos}
+El registro no contiene personas identificables: contiene \emph{hechos de desaparici\'on
+agregados}. Cada fila es el cruce de una fecha (a\~no y mes), una ubicaci\'on del hecho (ubigeo,
+departamento, provincia, distrito) y un perfil de la v\'ictima (sexo, rango de edad, estado
+civil, nacionalidad, nivel educativo y ocupaci\'on), con la cantidad de personas denunciadas en
+ese cruce como medida. Es, por tanto, un cubo de datos en forma plana: el hecho es la
+desaparici\'on, las dimensiones describen el cu\'ando, el d\'onde y el qui\'en, y la medida es
+aditiva, lo que permite totalizar por cualquiera de las dimensiones sin recalcular el dataset.
+
+Desde la pol\'itica p\'ublica, los datos responden a la teor\'ia de la \emph{b\'usqueda urgente}:
+la probabilidad de encontrar a una persona desaparecida cae r\'apidamente con las horas, por lo
+que el inter\'es anal\'itico se concentra en la distribuci\'on territorial (d\'onde se denuncia
+m\'as), en el perfil etario (las y los adolescentes son el grupo m\'as expuesto) y en la
+estacionalidad (meses con m\'as carga operativa para las comisar\'ias).
+
+\subsection{Campos, cardinalidad y valores vac\'ios}
+
+\begin{center}
+\small
+\begin{tabular}{llrp{6.6cm}}
+\toprule
+\textbf{Campo} & \textbf{Tipo} & \textbf{Valores} & \textbf{Descripci\'on y observaciones}\\
+\midrule
+A\~NO & entero & 6 & 2019 a 2024. Distribuci\'on de registros: 18,934 / 14,373 / 15,728 / 14,916 / 14,607 / 15,273.\\
+MES & entero & 12 & 1 a 12. Los 72 cruces a\~no-mes tienen registros.\\
+UBIGEO\_HECHO & texto & 1,506 & C\'odigo de 6 d\'igitos (departamento-provincia-distrito), con ceros a la izquierda que se conservan como texto. Un mismo ubigeo (150121) aparece con dos nombres de distrito: PUEBLO LIBRE y MAGDALENA VIEJA (su nombre antiguo).\\
+DPTO\_HECHO & texto & 26 & Incluye ``LIMA METROPOLITANA'' y ``REGI\'ON LIMA'' como unidades separadas, y ``CALLAO'' como departamento.\\
+PROV\_HECHO & texto & 195 & Nombre de la provincia del hecho.\\
+DIST\_HECHO & texto & 1,506 & Nombre del distrito del hecho.\\
+SEXO & texto & 3 & F (54,595), M (39,162) y 74 vac\'ios (0.08\,\%).\\
+RANGO\_EDAD & texto & 7 & 0-5, 6-11, 12-17 (45,303 registros, el 48.3\,\%), 18-29, 30-59, 60 a m\'as y 1,243 vac\'ios (1.3\,\%).\\
+EST\_CIVIL & texto & 7 & Soltero(a) 63,583; NO INDICA 8,286; casado(a) 6,147; conviviente, divorciado(a), viudo(a); 13,480 vac\'ios (14.4\,\%).\\
+NACIONALIDAD & texto & 57 & Per\'u 91,171 (97.2\,\%), Venezuela 2,118, Colombia 123, Ecuador 70, Chile 54.\\
+NIVEL\_EDUCATIVO & texto & 6 & Secundaria 21,782, primaria 9,195, superior 1,157, t\'ecnica, sin instrucci\'on; 60,731 vac\'ios (64.7\,\%).\\
+OCUPACION & texto & 289 & Estudiante 20,894 (22.3\,\%), ama de casa 2,808, independiente 1,272; 60,790 vac\'ios (64.8\,\%).\\
+CANTIDAD & entero & 18 & Personas denunciadas en el registro: 1 (78,128 registros, 83.3\,\%), 2, 3, \dots hasta 18 como m\'aximo.\\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\subsection{Reglas de los datos identificadas}
+\begin{enumerate}
+  \item \textbf{La medida es positiva y acotada.} \texttt{CANTIDAD} toma valores entre 1 y 18; no
+        hay ceros ni negativos, por lo que la suma de la columna es directamente el total de
+        personas (121,427).
+  \item \textbf{Un registro no equivale a una persona.} El 83.3\,\% de las filas tiene
+        \texttt{CANTIDAD} = 1; contar filas (93,831) subestimar\'ia el fen\'omeno en 27,596
+        personas. Toda consulta del informe agrega con \texttt{SUM(CANTIDAD)}.
+  \item \textbf{El ubigeo es un identificador textual y tiene una excepci\'on.} Tiene ceros a la
+        izquierda (por ejemplo \texttt{021809} para Nuevo Chimbote, \'Ancash); leerlo como
+        n\'umero lo corromper\'ia. El ubigeo \texttt{150121} aparece con dos nombres de distrito
+        (PUEBLO LIBRE y su antiguo nombre, MAGDALENA VIEJA), lo que obliga a colapsar la
+        dimensi\'on geogr\'afica a una fila por ubigeo antes de hacer joins.
+  \item \textbf{Las ausencias son informativas, no aleatorias.} Nivel educativo y ocupaci\'on
+        faltan en cerca del 65\,\% de los registros, y faltan juntos (mismo patr\'on de 60,731 y
+        60,790 vac\'ios), lo que sugiere un formulario que solo se completa en algunas
+        comisar\'ias. No se imput\'o: se etiquet\'o como \texttt{NO ESPECIFICA}.
+  \item \textbf{Nacionalidad no es sin\'onimo de migrante.} ``PER\'U'' es un valor m\'as de la
+        columna; para analizar poblaci\'on extranjera hay que excluirlo expl\'citamente.
+  \item \textbf{El territorio es jer\'arquico.} Los 1,506 ubigeos se agrupan en 195 provincias y
+        26 unidades departamentales, lo que permite clasificarlas por regi\'on natural (costa,
+        sierra, selva) sin informaci\'on externa.
+  \item \textbf{No hay duplicados exactos de la llave completa.} Las 93,831 filas son
+        combinaciones distintas de fecha, ubigeo y perfil.
+\end{enumerate}
+
+\subsection{Identidad del dataset y no duplicidad}
+El registro se publica en la PNDA como un \emph{dataset independiente}: tiene su propia URL,
+su propio identificador en el portal, su diccionario de datos (\texttt{.xlsx}) y su documento de
+metadatos (\texttt{.docx}), y no figura como subconjunto declarado de otro dataset del cat\'alogo.
+Su sistema de origen es el SIDPOL del MININTER, que alimenta tambi\'en otros registros policiales
+publicados por separado (denuncias policiales, indicadores de seguridad ciudadana); lo que se
+analiza aqu\'i es el registro de desapariciones publicado como tal, con su propia cobertura
+(enero 2019 -- diciembre 2024) y sus 13 campos.
+
+Se deja constancia de dos decisiones para que el trabajo sea trazable:
+\begin{itemize}
+  \item Se usa \textbf{un solo recurso} (el de 13 columnas, 2019--2024). El portal publica
+        adem\'as un recurso 2019--2025 de 10 columnas que, en los seis a\~nos comparables, suma
+        exactamente lo mismo por a\~no (0.00 de diferencia). Apilar ambos duplicar\'ia todos los
+        casos, de modo que se eligi\'o el recurso con mayor detalle de columnas.
+  \item No se imputan valores ni se excluyen filas por tener campos vac\'ios; esas ausencias se
+        documentan como regla del dato (secci\'on 2.4) y se conservan como categor\'ia
+        \texttt{NO ESPECIFICA}.
+\end{itemize}
+
+\subsection{Informaci\'on que se puede obtener}
+Con este registro se pueden responder, entre otras, las siguientes l\'ineas de an\'alisis, que
+son las que estructuran las 25 consultas del laboratorio:
+\begin{itemize}
+  \item \textbf{Concentraci\'on territorial}: qu\'e distritos, provincias y departamentos acumulan
+        m\'as personas desaparecidas y cu\'al es su peso relativo.
+  \item \textbf{Perfil de la v\'ictima}: distribuci\'on por sexo, grupo etario, estado civil,
+        nivel educativo y ocupaci\'on, y combinaciones entre ellos.
+  \item \textbf{Vulnerabilidad de menores}: proporci\'on de menores de 18 a\~nos por departamento
+        y comparaci\'on con la poblaci\'on adulta.
+  \item \textbf{Tendencia y estacionalidad}: evoluci\'on anual, variaci\'on interanual mes a mes e
+        \'indice de cada mes frente al esperado.
+  \item \textbf{Migraci\'on}: peso y evoluci\'on de las personas de nacionalidad extranjera.
+  \item \textbf{Calidad y cobertura}: meses o territorios sin registros, integridad referencial
+        del cat\'alogo geogr\'afico y efecto del periodo pand\'emico (2020--2021).
+\end{itemize}

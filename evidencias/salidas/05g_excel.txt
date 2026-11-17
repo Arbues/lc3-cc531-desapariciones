@@ -1,0 +1,19 @@
+
+5-g) EXPORTACION A EXCEL CON SPARK-EXCEL
+
+carpetaExcel: String = /home/arbues/macrodatos/PC3/excel
+res5e1: org.apache.spark.sql.DataFrame = [anio: int, mes: int ... 3 more fields]
+res5e2: org.apache.spark.sql.DataFrame = [grupo_etario: string, sexo: string ... 3 more fields]
+res5e3: org.apache.spark.sql.DataFrame = [region: string, periodo: string ... 3 more fields]
+res5f1: org.apache.spark.sql.DataFrame = [departamento: string, provincia: string ... 3 more fields]
+res5f2: org.apache.spark.sql.DataFrame = [nacionalidad: string, anio: int ... 3 more fields]
+res5f3: org.apache.spark.sql.DataFrame = [mes: int, personas: bigint ... 1 more field]
+guardarExcel: (df: org.apache.spark.sql.DataFrame, archivo: String, hoja: String)Unit
+[5-g] escribiendo libros Excel...
+  guardado: /home/arbues/macrodatos/PC3/excel/05e_1_variacion_interanual.xlsx  (hoja '5e1_variacion', 60 filas)
+  guardado: /home/arbues/macrodatos/PC3/excel/05e_2_grupoetario_sexo.xlsx  (hoja '5e2_perfil', 18 filas)
+  guardado: /home/arbues/macrodatos/PC3/excel/05e_3_region_periodo.xlsx  (hoja '5e3_region', 9 filas)
+  guardado: /home/arbues/macrodatos/PC3/excel/05f_1_distritos_mujeres2024.xlsx  (hoja '5f1_distritos', 10 filas)
+  guardado: /home/arbues/macrodatos/PC3/excel/05f_2_nacionalidades.xlsx  (hoja '5f2_nacionalidad', 12 filas)
+  guardado: /home/arbues/macrodatos/PC3/excel/05f_3_meses_estudiantes.xlsx  (hoja '5f3_meses', 12 filas)
+[5-g] FIN: revisar la carpeta /home/arbues/macrodatos/PC3/excel

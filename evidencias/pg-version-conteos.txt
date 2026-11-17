@@ -1,0 +1,41 @@
+$ psql -h /tmp -p 5433 -U macrodatos -d denuncias
+                                                            version                                                             
+--------------------------------------------------------------------------------------------------------------------------------
+ PostgreSQL 16.16 (Ubuntu 16.16-1.pgdg26.04+1) on x86_64-pc-linux-gnu, compiled by gcc (Ubuntu 15.2.0-16ubuntu1) 15.2.0, 64-bit
+(1 row)
+
+           server_version           
+------------------------------------
+ 16.16 (Ubuntu 16.16-1.pgdg26.04+1)
+(1 row)
+
+                 List of relations
+ Schema |        Name         | Type  |   Owner    
+--------+---------------------+-------+------------
+ public | dim_estado_civil    | table | macrodatos
+ public | dim_geografia       | table | macrodatos
+ public | dim_nacionalidad    | table | macrodatos
+ public | dim_nivel_educativo | table | macrodatos
+ public | dim_ocupacion       | table | macrodatos
+ public | dim_rango_edad      | table | macrodatos
+ public | dim_sexo            | table | macrodatos
+ public | dim_tiempo          | table | macrodatos
+ public | hecho_desaparicion  | table | macrodatos
+ public | stg_desaparicion    | table | macrodatos
+(10 rows)
+
+ ubigeos 
+---------
+    1506
+(1 row)
+
+ hechos 
+--------
+  93831
+(1 row)
+
+ personas 
+----------
+   121427
+(1 row)
+

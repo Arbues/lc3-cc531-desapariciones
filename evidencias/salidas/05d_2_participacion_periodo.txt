@@ -1,0 +1,17 @@
+
+5-d.2) PARTICIPACION PORCENTUAL DE CADA PERIODO SOBRE EL TOTAL NACIONAL
+
+totalNacional: Long = 121427
+[base] total nacional de personas: 121427
+consulta: org.apache.spark.sql.Dataset[org.apache.spark.sql.Row] = [periodo: string, personas: bigint ... 3 more fields]
+
+5-d.2
+
+filas devueltas: 3
++-------------+--------+---------+------------+---------------------+
+|periodo      |personas|registros|pct_nacional|personas_por_registro|
++-------------+--------+---------+------------+---------------------+
+|POST-PANDEMIA|56474   |44796    |46.51       |1.261                |
+|PANDEMIA     |38622   |30101    |31.81       |1.283                |
+|PRE-PANDEMIA |26331   |18934    |21.68       |1.391                |
++-------------+--------+---------+------------+---------------------+

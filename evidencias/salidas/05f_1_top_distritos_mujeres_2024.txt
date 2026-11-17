@@ -1,0 +1,22 @@
+
+5-f.1) TOP 10 DISTRITOS - MUJERES 2024 (ORDER BY + WHERE)
+
+consulta: org.apache.spark.sql.DataFrame = [departamento: string, provincia: string ... 3 more fields]
+
+5-f.1
+
+filas devueltas: 10
++------------------+---------+-----------------------+--------+---------+
+|departamento      |provincia|distrito               |personas|registros|
++------------------+---------+-----------------------+--------+---------+
+|LIMA METROPOLITANA|LIMA     |SAN JUAN DE LURIGANCHO |379     |181      |
+|LIMA METROPOLITANA|LIMA     |LIMA                   |284     |185      |
+|LIMA METROPOLITANA|LIMA     |ATE                    |271     |117      |
+|CALLAO            |CALLAO   |CALLAO                 |265     |143      |
+|LIMA METROPOLITANA|LIMA     |SAN MARTIN DE PORRES   |248     |142      |
+|LIMA METROPOLITANA|LIMA     |COMAS                  |199     |99       |
+|LAMBAYEQUE        |CHICLAYO |CHICLAYO               |197     |121      |
+|LIMA METROPOLITANA|LIMA     |VILLA MARIA DEL TRIUNFO|191     |109      |
+|LIMA METROPOLITANA|LIMA     |VILLA EL SALVADOR      |190     |111      |
+|LIMA METROPOLITANA|LIMA     |CARABAYLLO             |178     |101      |
++------------------+---------+-----------------------+--------+---------+

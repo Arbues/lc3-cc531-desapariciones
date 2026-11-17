@@ -1,0 +1,15 @@
+$ psql -h /tmp -p 5433 -U macrodatos -d denuncias
+       tabla        | count 
+--------------------+-------
+ dim_ocupacion      |   288
+ dim_nacionalidad   |    57
+ dim_geografia      |  1506
+ hecho_desaparicion | 93831
+ stg_desaparicion   | 93831
+(5 rows)
+
+ personas_totales 
+------------------
+           121427
+(1 row)
+

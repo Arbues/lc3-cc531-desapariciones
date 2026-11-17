@@ -1,0 +1,17 @@
+
+5-c.1) INNER JOIN: HECHOS x DIM_GEOGRAFIA -> TOTAL POR REGION NATURAL
+
+hechosUbigeo: org.apache.spark.sql.DataFrame = [ubigeo: string, personas: bigint ... 1 more field]
+consulta: org.apache.spark.sql.Dataset[org.apache.spark.sql.Row] = [region: string, personas: bigint ... 2 more fields]
+
+5-c.1 (inner)
+
+filas devueltas: 3
++------+--------+---------+-------+
+|region|personas|registros|ubigeos|
++------+--------+---------+-------+
+|COSTA |79666   |59335    |567    |
+|SIERRA|34301   |28153    |804    |
+|SELVA |7460    |6343     |135    |
++------+--------+---------+-------+
+[nota] los registros con ubigeo nulo quedan fuera del INNER JOIN: 0 registro(s)

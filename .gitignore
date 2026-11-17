@@ -1,0 +1,28 @@
+# Datos de sondeo y pesados que no van al repo
+data/_sondeo/
+lib/spark-excel_2.12-3.3.1_0.18.7.jar
+lib/spark-excel_2.12-3.3.2_0.19.0.jar
+
+# Logs crudos de las corridas
+logs/
+
+# Auxiliares de LaTeX
+*.aux
+*.log
+*.out
+*.toc
+*.fls
+*.fdb_latexmk
+*.synctex.gz
+informe/plantilla/
+
+# Zips de entrega (se generan con bin/empaquetar.sh)
+entrega/
+
+# Basura del sistema
+.DS_Store
+__pycache__/
+*.pyc
+
+# Contexto del agente (local, no del proyecto)
+.hermes.md

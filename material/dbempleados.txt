@@ -1,0 +1,38 @@
+\l: ver base de datos
+créate database empleados
+\c empleados
+
+
+
+-- Crear tabla de departamentos
+CREATE TABLE departamentos (
+  id SERIAL PRIMARY KEY,
+  nombre VARCHAR(100)
+);
+
+-- Insertar departamentos
+INSERT INTO departamentos (nombre) VALUES
+  ('Recursos Humanos'),
+  ('Tecnología'),
+  ('Contabilidad');
+
+-- Crear tabla de empleados                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              
+CREATE TABLE empleados (
+  id SERIAL PRIMARY KEY,
+  nombre VARCHAR(100),
+  salario INT,
+  departamento_id INT REFERENCES departamentos(id)
+);
+
+
+
+
+
+-- Insertar empleados
+INSERT INTO empleados (nombre, salario, departamento_id) VALUES
+  ('Ana', 3000, 1),
+  ('Luis', 4000, 2),
+  ('Marta', 3500, 2),
+  ('Pedro', 2800, 3),
+  ('Pamela',1000,3),
+  ('Miguel',3000,1);

@@ -1,0 +1,35 @@
+$ psql -d denuncias -c "\d+ hecho_desaparicion"
+                                                                   Table "public.hecho_desaparicion"
+     Column      |         Type          | Collation | Nullable |                    Default                     | Storage  | Compression | Stats target | Description 
+-----------------+-----------------------+-----------+----------+------------------------------------------------+----------+-------------+--------------+-------------
+ id              | bigint                |           | not null | nextval('hecho_desaparicion_id_seq'::regclass) | plain    |             |              | 
+ anio            | integer               |           | not null |                                                | plain    |             |              | 
+ mes             | smallint              |           | not null |                                                | plain    |             |              | 
+ ubigeo          | character(6)          |           |          |                                                | extended |             |              | 
+ sexo            | character varying(15) |           | not null |                                                | extended |             |              | 
+ rango_edad      | character varying(20) |           | not null |                                                | extended |             |              | 
+ estado_civil    | character varying(25) |           | not null |                                                | extended |             |              | 
+ nacionalidad    | character varying(60) |           | not null |                                                | extended |             |              | 
+ nivel_educativo | character varying(25) |           | not null |                                                | extended |             |              | 
+ ocupacion       | character varying(80) |           | not null |                                                | extended |             |              | 
+ cantidad        | smallint              |           | not null |                                                | plain    |             |              | 
+Indexes:
+    "hecho_desaparicion_pkey" PRIMARY KEY, btree (id)
+    "ix_hecho_anio" btree (anio)
+    "ix_hecho_nacional" btree (nacionalidad)
+    "ix_hecho_perfil" btree (sexo, rango_edad)
+    "ix_hecho_ubigeo" btree (ubigeo)
+Check constraints:
+    "hecho_desaparicion_cantidad_check" CHECK (cantidad > 0)
+    "hecho_desaparicion_mes_check" CHECK (mes >= 1 AND mes <= 12)
+Foreign-key constraints:
+    "hecho_desaparicion_anio_fkey" FOREIGN KEY (anio) REFERENCES dim_tiempo(anio)
+    "hecho_desaparicion_estado_civil_fkey" FOREIGN KEY (estado_civil) REFERENCES dim_estado_civil(estado_civil)
+    "hecho_desaparicion_nacionalidad_fkey" FOREIGN KEY (nacionalidad) REFERENCES dim_nacionalidad(nacionalidad)
+    "hecho_desaparicion_nivel_educativo_fkey" FOREIGN KEY (nivel_educativo) REFERENCES dim_nivel_educativo(nivel_educativo)
+    "hecho_desaparicion_ocupacion_fkey" FOREIGN KEY (ocupacion) REFERENCES dim_ocupacion(ocupacion)
+    "hecho_desaparicion_rango_edad_fkey" FOREIGN KEY (rango_edad) REFERENCES dim_rango_edad(rango_edad)
+    "hecho_desaparicion_sexo_fkey" FOREIGN KEY (sexo) REFERENCES dim_sexo(sexo)
+    "hecho_desaparicion_ubigeo_fkey" FOREIGN KEY (ubigeo) REFERENCES dim_geografia(ubigeo)
+Access method: heap
+

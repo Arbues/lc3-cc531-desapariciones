@@ -1,0 +1,8 @@
+$ createdb denuncias_restore && psql -f sql/dump-denuncias.sql
+
+-- el dump se restaura en una base vacia y se verifica el contenido:
+ hechos | personas | ubigeos | nacionalidades 
+--------+----------+---------+----------------
+  93831 |   121427 |    1506 |             57
+(1 row)
+

@@ -9,6 +9,81 @@ columnas y filas involucradas, las partes importantes del c\'odigo y la interpre
 resultado. Todas las cifras provienen de la ejecuci\'on real registrada en
 \texttt{evidencias/salidas/}.
 
+\subsection{Panorama general de la serie}
+Antes de entrar consulta por consulta, las tres series que resumen el fen\'omeno. Todas salen de
+las consultas 5-e.3 (total por a\~no), 3-c.3 (estacionalidad) y 3-c.1 (menores por departamento).
+
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}
+\begin{axis}[
+  width=12.4cm, height=4.6cm, ybar, bar width=16pt,
+  ymin=0, ymax=30000, ylabel={\small personas desaparecidas},
+  scaled y ticks=false, ytick={0,10000,20000,30000}, yticklabels={0,10\,000,20\,000,30\,000},
+  xtick={2019,2020,2021,2022,2023,2024}, xtick=data,
+  nodes near coords,
+  nodes near coords style={font=\scriptsize,/pgf/number format/1000 sep={}},
+  yticklabel style={/pgf/number format/1000 sep={}},
+  axis line style={draw=gray!60}, tick style={draw=gray!60},
+  enlarge x limits=0.12
+]
+\addplot[fill=blue!70] coordinates {(2019,26331) (2020,18481) (2021,20141) (2022,18862) (2023,18192) (2024,19420)};
+\end{axis}
+\end{tikzpicture}
+\caption{Personas desaparecidas por a\~no (2019--2024). El total del periodo es 121,427 y el
+punto m\'inimo es 2020, con 18,481 personas: 29.8\,\% menos que 2019. La serie no recupera el
+nivel inicial en ning\'un a\~no posterior.}
+\label{fig:anual}
+\end{figure}
+
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}
+\begin{axis}[
+  width=12.4cm, height=4.6cm,
+  ymin=6.8, ymax=10.0, ylabel={\small \% del total},
+  xtick={1,2,3,4,5,6,7,8,9,10,11,12},
+  xticklabels={E,F,M,A,M,J,J,A,S,O,N,D}, xtick=data,
+  nodes near coords, nodes near coords style={font=\tiny},
+  axis line style={draw=gray!60}, tick style={draw=gray!60},
+  enlarge x limits=0.06
+]
+\addplot[mark=*, thick, color=orange!80!black] coordinates {(1,7.89) (2,9.16) (3,8.81) (4,7.25) (5,7.72) (6,7.33) (7,8.17) (8,8.39) (9,8.39) (10,8.55) (11,8.85) (12,9.49)};
+\addplot[dashed, gray, domain=1:12] {8.333};
+\end{axis}
+\end{tikzpicture}
+\caption{Participaci\'on de cada mes en el total del periodo (l\'inea punteada: 8.33\,\%, el valor
+esperado si no hubiera estacionalidad). Diciembre y febrero superan el esperado; abril y junio
+quedan por debajo.}
+\label{fig:mensual}
+\end{figure}
+
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}
+\begin{axis}[
+  width=12.4cm, height=7.4cm, xbar, bar width=7pt,
+  xmin=45, xmax=76, xlabel={\small \% de menores de 18 a\~nos},
+  symbolic y coords={LIMA MET.,AREQUIPA,PUNO,TACNA,MOQUEGUA,CALLAO,HUANCAVELICA,CUSCO,ICA,\'ANCASH,LA LIBERTAD,APUR\'IMAC,JUN\'IN,PIURA,AMAZONAS,REGI\'ON LIMA,AYACUCHO,SAN MART\'IN,PASCO,LAMBAYEQUE,HU\'ANUCO,CAJAMARCA,TUMBES,LORETO,UCAYALI,MADRE DE DIOS},
+  ytick=data, y tick label style={font=\tiny},
+  nodes near coords, nodes near coords style={font=\tiny},
+  axis line style={draw=gray!60}, tick style={draw=gray!60},
+  enlarge y limits=0.03
+]
+\addplot[fill=blue!60] coordinates {
+ (50.02,LIMA MET.) (52.27,AREQUIPA) (52.60,PUNO) (54.10,TACNA) (54.28,MOQUEGUA) (54.81,CALLAO)
+ (57.56,HUANCAVELICA) (59.59,CUSCO) (59.91,ICA) (60.88,\'ANCASH) (61.20,LA LIBERTAD)
+ (62.16,APUR\'IMAC) (62.36,JUN\'IN) (62.38,PIURA) (63.00,AMAZONAS) (63.68,REGI\'ON LIMA)
+ (64.97,AYACUCHO) (65.35,SAN MART\'IN) (65.38,PASCO) (65.90,LAMBAYEQUE) (68.50,HU\'ANUCO)
+ (68.97,CAJAMARCA) (69.03,TUMBES) (70.25,LORETO) (70.74,UCAYALI) (72.21,MADRE DE DIOS)};
+\end{axis}
+\end{tikzpicture}
+\caption{Porcentaje de v\'ictimas menores de 18 a\~nos por departamento (26 unidades, ordenadas de
+menor a mayor). La brecha entre Lima Metropolitana (50.02\,\%) y Madre de Dios (72.21\,\%) es de
+22.19 puntos porcentuales.}
+\label{fig:menores}
+\end{figure}
+
 \subsection{Consultas con mapReduce (punto 3)}
 
 \subsubsection*{3-a \textbar{} M\'aximo y m\'inimo de personas por sexo}

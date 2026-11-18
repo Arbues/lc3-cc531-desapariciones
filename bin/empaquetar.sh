@@ -4,23 +4,31 @@
 # importantes a OneDrive.
 #   ./bin/empaquetar.sh            solo zips
 #   ./bin/empaquetar.sh --onedrive zips + copia a la carpeta del curso
+#
+# Se ejecuta desde cualquier ubicación: la raíz del repositorio se deduce de la
+# ruta del script. La carpeta destino se puede cambiar con
+#   LC3_ONEDRIVE="/ruta/a/pc3" ./bin/empaquetar.sh --onedrive
 # ---------------------------------------------------------------------------
-set -uo pipefail
-cd /home/arbues/macrodatos/PC3 || exit 1
+set -euo pipefail
+ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
+cd "$ROOT"
 
-ONEDRIVE="/mnt/c/Users/HP/OneDrive/Documentos/Arbués Enrique PV/CIENCIAS DE LA COMPUTACION 2022/9 CICLO/MACRODATOS/pc3"
+# zip no viene instalado por defecto en Ubuntu.
+command -v zip > /dev/null || { echo "Falta el paquete zip: sudo apt install zip"; exit 1; }
+
+ONEDRIVE="${LC3_ONEDRIVE:-/mnt/c/Users/harus/OneDrive/Documentos/Arbués Enrique PV/CIENCIAS DE LA COMPUTACION 2022/9 CICLO/MACRODATOS/pc3}"
 
 mkdir -p entrega
-rm -f entrega/*.zip excel/.*.crc 2>/dev/null
+rm -f entrega/*.zip
 
+# presentacion/ e informe/ van completos: las láminas y el guion se arman con
+# \input de subcarpetas (estilo.tex, consultas/, secciones/, guion/), así que
+# copiar solo los .tex de entrada deja fuentes que no compilan.
 zip -r -q entrega/LC3_Arbues_Perez.zip \
   README.md AGENTS.md docs code sql data/denuncias_desaparicion_2019_2024.csv \
-  excel evidencias \
-  informe/informe.tex informe/informe.pdf informe/secciones \
-  presentacion/presentacion.tex presentacion/presentacion.pdf \
-  presentacion/guion-exposicion.tex presentacion/guion-exposicion.pdf \
-  bin lib/postgresql-42.7.6.jar \
-  -x '*/plantilla/*' '*.aux' '*.log' '*.out' '*.toc' '*.fls' '*.fdb_latexmk' '*.bak'
+  excel evidencias informe presentacion bin lib/postgresql-42.7.6.jar \
+  -x '*/plantilla/*' '*.aux' '*.log' '*.out' '*.toc' '*.fls' '*.fdb_latexmk' \
+     '*.nav' '*.snm' '*.vrb' '*.synctex.gz' '*.bak'
 
 cp entrega/LC3_Arbues_Perez.zip entrega/LC3_Sergio_Pezo.zip
 

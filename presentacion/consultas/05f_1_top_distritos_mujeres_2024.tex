@@ -1,0 +1,28 @@
+\begin{frame}[label=q5f1]{5f.1 · Vistas: ORDER BY con WHERE y HAVING}
+  \small
+  \pregunta{¿Qué diez distritos reúnen más mujeres reportadas en 2024 con rango de edad especificado?}
+  \entrada{Vista \texttt{denuncias}. Filtrar \texttt{anio=2024}, \texttt{sexo='F'} y edad especificada; mínimo 20 personas por distrito.}
+  \flujo{\texttt{WHERE}\\Año, sexo y edad}{\texttt{GROUP BY}\\Departamento, provincia, distrito}{\texttt{HAVING SUM >= 20}\\\texttt{ORDER BY personas DESC}}{\texttt{LIMIT 10}\\10 distritos}
+  \begin{columns}[T,onlytextwidth]
+    \column{0.55\textwidth}
+    \textbf{Código Scala original (fragmento)}
+    \codigo{sql/05f_1_top_distritos_mujeres_2024}{16}{22}
+    \column{0.42\textwidth}
+    \textbf{Salida}\\[5pt]
+    {\footnotesize
+\begin{tabular}{@{}ll@{}}
+\toprule
+Distrito & Personas\\
+\midrule
+San Juan de Lurigancho & 379\\
+Lima & 284\\
+Ate & 271\\
+Callao & 265\\
+\bottomrule
+\end{tabular}
+    }
+  \end{columns}
+  \respuesta{San Juan de Lurigancho encabeza este universo con 379. Los filtros definen un subconjunto distinto del ranking general de 5b.2.}
+  \origen{sql}{05f_1_top_distritos_mujeres_2024}
+  \note{25 s. Diferenciar WHERE, que filtra filas, de HAVING, que filtra grupos ya sumados.}
+\end{frame}

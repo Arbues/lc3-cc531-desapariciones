@@ -1,0 +1,68 @@
+\begin{frame}[label=etl]{Ítem 4 · Modelo estrella y proceso ETL}
+  \small
+  \pregunta{¿Cómo almacenamos el dataset en PostgreSQL conservando el grano y los totales?}
+  \begin{columns}[T,onlytextwidth]
+    \column{0.53\textwidth}
+    \centering
+    \begin{tikzpicture}[
+      dim/.style={paso,text width=1.85cm,font=\tiny,minimum height=0.63cm,inner sep=3pt},
+      hecho/.style={resultado,text width=2.3cm,font=\scriptsize,inner sep=3pt}]
+      \node[hecho] (h) at (0,0) {\textbf{hecho\_desaparicion}\\PK: id\\8 claves foráneas\\mes, cantidad\\93\,831 filas};
+      \node[dim] (t) at (-2.6,1.6) {\texttt{dim\_tiempo}\\PK: anio};
+      \node[dim] (e) at (-2.6,0.55) {\texttt{dim\_rango\_edad}\\PK: rango\_edad};
+      \node[dim] (s) at (-2.6,-0.5) {\texttt{dim\_sexo}\\PK: sexo};
+      \node[dim] (v) at (-2.6,-1.55) {\texttt{dim\_nivel\_educativo}\\PK: nivel\_educativo};
+      \node[dim] (g) at (2.6,1.6) {\texttt{dim\_geografia}\\PK: ubigeo · 1\,506};
+      \node[dim] (c) at (2.6,0.55) {\texttt{dim\_estado\_civil}\\PK: estado\_civil};
+      \node[dim] (n) at (2.6,-0.5) {\texttt{dim\_nacionalidad}\\PK: nacionalidad};
+      \node[dim] (o) at (2.6,-1.55) {\texttt{dim\_ocupacion}\\PK: ocupacion};
+      \foreach \d in {t,e,s,v,g,c,n,o} \draw[flecha,thin] (\d) -- (h);
+    \end{tikzpicture}
+    \par\footnotesize PK: clave primaria. Cada dimensión se relaciona 1:N con los hechos.
+    Ocho dimensiones y una tabla de hechos, más la tabla temporal de carga.
+    \column{0.44\textwidth}
+    \footnotesize
+    \textbf{1. Extraer.} \texttt{\textbackslash copy} carga las 93\,831 filas del CSV a
+    \texttt{stg\_desaparicion}.\\[6pt]
+    \textbf{2. Transformar.} Vacíos a NO ESPECIFICA, ubigeo a seis dígitos
+    y una fila de catálogo por clave.\\[6pt]
+    \textbf{3. Cargar.} Insertar dimensiones y después los hechos, con
+    \texttt{cantidad > 0}, dentro de una transacción.\\[6pt]
+    \textbf{Control.} El ubigeo 150121 tiene dos nombres.
+    Agrupar por ubigeo antes de unir evita multiplicar filas.\\[6pt]
+    \textcolor{verde}{\textbf{SUM(cantidad) = 121\,427}}\\
+    Tanto en la base cargada como en la evidencia de restauración del dump.
+  \end{columns}
+  \fuente{Arquitectura: sql/01\_ddl.sql. Carga: sql/02\_etl.sql. Evidencia: pg-conteos.txt y pg-restauracion.txt.
+    \enlace{captura-pg}{Ver captura de la base}.}
+  \note{60 s. Definir grano, claves y relación 1:N. Explicar extraer, transformar y cargar. Mostrar el control del ubigeo sin cambiar la suma.}
+\end{frame}
+
+\begin{frame}[label=excel]{5g · Exportar las consultas 5e y 5f con Spark}
+  \small
+  \pregunta{¿Cómo entregamos los resultados de las seis consultas de vistas temporales en Excel?}
+  \flujo{\texttt{spark.sql}\\Consultas 5e y 5f}{DataFrame de resultado\\\texttt{coalesce(1)}}{\texttt{write.format}\\Proveedor spark-excel}{6 libros \texttt{.xlsx}\\Una hoja por consulta}
+  \begin{columns}[T,onlytextwidth]
+    \column{0.52\textwidth}
+    \textbf{Escritura real con Spark}
+    \codigo{sql/05g_excel}{102}{110}
+    \column{0.45\textwidth}
+    \textbf{Salida}\\[5pt]
+    \footnotesize
+    \begin{tabular}{@{}llr@{}}
+      \toprule Consulta & Hoja & Filas\\\midrule
+      5e.1 & \texttt{5e1\_variacion} & 60\\
+      5e.2 & \texttt{5e2\_perfil} & 18\\
+      5e.3 & \texttt{5e3\_region} & 9\\
+      5f.1 & \texttt{5f1\_distritos} & 10\\
+      5f.2 & \texttt{5f2\_nacionalidad} & 12\\
+      5f.3 & \texttt{5f3\_meses} & 12\\\bottomrule
+    \end{tabular}
+    \par\vspace{5pt}Destino: carpeta \texttt{excel/}.\\
+    Proveedor: \texttt{com.crealytics.spark.excel}.
+  \end{columns}
+  \respuesta{El registro de ejecución documenta seis libros escritos desde DataFrames.
+    En 5e.2, el export conserva totales y promedio, pero no incluye la columna de porcentaje nacional de la consulta individual.}
+  \origen{sql}{05g_excel}
+  \note{40 s. Explicar proveedor, cabecera, hoja y archivo. El código recalcula los seis resultados; no transforma archivos de texto en Excel.}
+\end{frame}

@@ -1,0 +1,118 @@
+\begin{frame}[plain]
+  \titlepage
+  \centering\small
+  93\,831 registros agregados · 121\,427 personas contabilizadas\\[4pt]
+  \textcolor{azul}{25 preguntas resueltas con Scala, Spark SQL y PostgreSQL}
+  \note{15 s. Presentar la fuente y distinguir registros de personas contabilizadas.}
+\end{frame}
+
+\begin{frame}[label=mapa]{Qué ítem resuelve cada grupo de consultas}
+  \small
+  \begin{tabularx}{\linewidth}{@{}lXl@{}}
+    \toprule
+    \textbf{Ítem} & \textbf{Operación solicitada} & \textbf{Ir a las consultas}\\
+    \midrule
+    1--2 & Fuente, campos y reglas & \enlace{dataset}{Dataset} · \enlace{campos}{13 columnas}\\
+    3a--3b & Extremos y estadísticos con Scala/RDD & \enlace{q3a}{3a} · \enlace{q3b}{3b}\\
+    3c & Tres consultas decimales, al menos tres MapReduce por consulta & \enlace{q3c1}{3c.1} · \enlace{q3c2}{3c.2} · \enlace{q3c3}{3c.3}\\
+    4 & PostgreSQL y proceso ETL & \enlace{etl}{Modelo y carga}\\
+    5a & Cuatro \texttt{groupBy + filter}, dos o más columnas & \enlace{q5a1}{a.1} · \enlace{q5a2}{a.2} · \enlace{q5a3}{a.3} · \enlace{q5a4}{a.4}\\
+    5b & Un promedio y un orden descendente & \enlace{q5b1}{b.1} · \enlace{q5b2}{b.2}\\
+    5c & INNER, LEFT, RIGHT y FULL OUTER & \enlace{q5c1}{c.1} · \enlace{q5c2}{c.2} · \enlace{q5c3}{c.3} · \enlace{q5c4}{c.4}\\
+    5d & Cuatro usos de \texttt{functions.\_} & \enlace{q5d1}{d.1} · \enlace{q5d2}{d.2} · \enlace{q5d3}{d.3} · \enlace{q5d4}{d.4}\\
+    5e & Tres selecciones con JOIN sobre vistas & \enlace{q5e1}{e.1} · \enlace{q5e2}{e.2} · \enlace{q5e3}{e.3}\\
+    5f & Tres \texttt{ORDER BY} con filtros & \enlace{q5f1}{f.1} · \enlace{q5f2}{f.2} · \enlace{q5f3}{f.3}\\
+    5g & Exportar 5e y 5f con Spark & \enlace{excel}{Seis libros Excel}\\
+    \bottomrule
+  \end{tabularx}
+  \vspace{5pt}
+  \footnotesize\textbf{Puntos 6--7:} cada consulta tiene pregunta, entrada, operación, código y respuesta.
+  El recorrido oral muestra ejemplos de 5a--5f. Los enlaces abren el detalle restante en anexos.
+  \note{20 s. Explicar el recorrido y que están las 25 fichas, aunque no se leen todos los anexos.}
+\end{frame}
+
+\begin{frame}[label=dataset]{Ítems 1--2 · Qué representa el dataset}
+  \begin{columns}[T,onlytextwidth]
+    \column{0.49\textwidth}
+    \begin{block}{Fuente y alcance}
+      \small Ministerio del Interior (MININTER). Plataforma Nacional de Datos Abiertos (PNDA),
+      rubro Seguridad y Justicia.
+      \begin{itemize}
+        \item Enero de 2019 a diciembre de 2024: 72 meses.
+        \item 93\,831 filas, 13 campos y 1\,506 ubigeos observados.
+        \item 26 unidades departamentales, con Lima Metropolitana y Región Lima separadas.
+      \end{itemize}
+    \end{block}
+    \column{0.48\textwidth}
+    \begin{block}{Unidad de análisis}
+      \small Una fila contiene un conteo para el cruce de \textbf{año, mes, territorio y perfil}.
+      \[
+        \text{personas contabilizadas}=\sum\texttt{CANTIDAD}
+      \]
+      \centering\alert{121\,427}\par
+      \raggedright\vspace{4pt}
+      \texttt{count(*)} cuenta filas. \texttt{SUM(CANTIDAD)} suma personas reportadas.
+    \end{block}
+  \end{columns}
+  \begin{alertblock}{Qué podemos interpretar}
+    \footnotesize Describir distribución y evolución de denuncias agregadas. No hay identificadores para
+    deduplicar personas ni datos para afirmar desapariciones conjuntas, causas o riesgo poblacional.
+  \end{alertblock}
+  \fuente{Fuente local: informe, sección 2; control de filas y suma: salida 03b. Un solo CSV, sin apilar el recurso 2019--2025.}
+  \note{30 s. La diferencia entre contar filas y sumar personas sostiene todas las preguntas posteriores.}
+\end{frame}
+
+\begin{frame}[label=campos]{Ítem 2 · Columnas, tipos y reglas de lectura}
+  \footnotesize
+  \begin{tabularx}{\linewidth}{@{}p{3.8cm}p{1.3cm}X@{}}
+    \toprule
+    \textbf{Campo original} & \textbf{Tipo} & \textbf{Uso en las consultas}\\
+    \midrule
+    AÑO, MES & Entero & Agrupar años, meses y trimestres. La fecha derivada usa día 01.\\
+    UBIGEO\_HECHO & Texto & Clave geográfica de seis dígitos. Conservar ceros iniciales.\\
+    DPTO\_HECHO, PROV\_HECHO, DIST\_HECHO & Texto & Localizar departamentos, provincias y distritos.\\
+    SEXO & Texto & F, M o NO ESPECIFICA para comparar perfiles.\\
+    RANGO\_EDAD & Texto & Menores: 0--5, 6--11 y 12--17 años.\\
+    EST\_CIVIL, NACIONALIDAD & Texto & Perfil civil y nacionalidad. Extranjero excluye PERÚ y NO ESPECIFICA.\\
+    NIVEL\_EDUCATIVO, OCUPACION & Texto & Perfil educativo y ocupacional, con vacíos etiquetados.\\
+    CANTIDAD & Entero & Medida aditiva, entre 1 y 18 en las salidas guardadas.\\
+    \bottomrule
+  \end{tabularx}
+  \vspace{6pt}
+  \begin{columns}[T,onlytextwidth]
+    \column{0.49\textwidth}
+    \textbf{Limpieza.} Vacíos categóricos se conservan como \texttt{NO ESPECIFICA}.
+    No se imputan edad, sexo, educación ni ocupación.
+    \column{0.48\textwidth}
+    \textbf{Derivadas.} \texttt{region} usa una clasificación por departamento del código.
+    \texttt{periodo}: 2019, 2020--2021 y 2022--2024.
+  \end{columns}
+  \fuente{Los nombres Scala normalizados son anio, mes, ubigeo, departamento, provincia, distrito, sexo, rango\_edad,
+    estado\_civil, nacionalidad, nivel\_educativo, ocupacion y cantidad. Fuente: code/comun/esquema.scala.}
+  \note{25 s. Son 13 campos originales. La región es una agrupación por departamento, no una medición de ruralidad.}
+\end{frame}
+
+\begin{frame}{Cómo llegamos del CSV a cada respuesta}
+  \centering
+  \begin{tikzpicture}
+    \node[paso,text width=2.25cm] (csv) at (0,0) {\textbf{CSV MININTER}\\13 campos · 93\,831 filas};
+    \node[paso,text width=2.6cm] (rdd) at (4.0,1.35) {\textbf{RDD: colección distribuida}\\Parseo en \texttt{Lc3.parsear}};
+    \node[paso,text width=2.6cm] (df) at (4.0,-0.15) {\textbf{DataFrame: tabla con esquema}\\Limpieza y dimensiones};
+    \node[paso,text width=2.6cm] (pg) at (4.0,-1.65) {\textbf{PostgreSQL 16}\\Extracción, transformación\\y carga (ETL)};
+    \node[resultado,text width=3.2cm] (mr) at (9.3,1.35) {\textbf{3a--3c: Scala y MapReduce}\\\texttt{map}, \texttt{reduceByKey}, \texttt{reduce}};
+    \node[resultado,text width=3.2cm] (api) at (9.3,-0.15) {\textbf{5a--5d: API de DataFrame}\\\texttt{groupBy}, \texttt{filter}, \texttt{join}, funciones};
+    \node[resultado,text width=3.2cm] (sql) at (9.3,-1.65) {\textbf{5e--5f: vistas y spark.sql}\\Registrar vistas y consultar en SQL\\\textbf{5g:} escribir resultados en Excel};
+    \draw[flecha] (csv.east) -- ++(0.4,0) |- (rdd.west);
+    \draw[flecha] (csv.east) -- (df.west);
+    \draw[flecha] (csv.east) -- ++(0.4,0) |- (pg.west);
+    \draw[flecha] (rdd) -- (mr);\draw[flecha] (df) -- (api);
+    \draw[flecha] (df.east) -- ++(0.7,0) |- (sql.west);
+  \end{tikzpicture}
+  \begin{block}{Cómo leer los diagramas de MapReduce}
+    \footnotesize \textbf{Map} crea claves y valores. \textbf{Reduce} combina los valores, con suma,
+    máximo o mínimo. \texttt{join} reúne agregados por clave. El porcentaje final usa \texttt{map}.
+  \end{block}
+  \fuente{RDD y DataFrame leen el mismo CSV mediante rutas de carga distintas dentro de esquema.scala.
+    Spark 3.3.2 y PostgreSQL 16 son las versiones declaradas en la solución.}
+  \note{25 s. Seguir una rama y explicar que PostgreSQL se carga desde el CSV, no desde una salida RDD.}
+\end{frame}

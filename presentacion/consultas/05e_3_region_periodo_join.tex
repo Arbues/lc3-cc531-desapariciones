@@ -1,0 +1,26 @@
+\begin{frame}[label=q5e3]{5e.3 · Vistas temporales: región y periodo}
+  \small
+  \pregunta{¿Cuál es el peso de cada región dentro de cada periodo tras unir geografía y tiempo?}
+  \entrada{Vistas \texttt{denuncias}, \texttt{dim\_geografia}, \texttt{dim\_tiempo}; claves \texttt{ubigeo} y \texttt{anio}.}
+  \flujo{Denuncias y dimensiones}{Dos \texttt{JOIN}\\Ubigeo y año}{\texttt{GROUP BY} región, periodo\\Ventana por periodo}{9 combinaciones\\Total 121\,427}
+  \begin{columns}[T,onlytextwidth]
+    \column{0.55\textwidth}
+    \textbf{Código Scala original (fragmento)}
+    \codigo{sql/05e_3_region_periodo_join}{18}{25}
+    \column{0.42\textwidth}
+    \textbf{Salida}\\[5pt]
+    {\footnotesize
+\begin{tabular}{@{}llll@{}}
+\toprule
+Región & 2019 & 2020--21 & 2022--24\\
+\midrule
+Costa & 67.82\% & 63.70\% & 65.88\%\\
+Sierra & 26.15\% & 29.60\% & 28.30\%\\
+Selva & 6.02\% & 6.69\% & 5.82\%\\
+\bottomrule
+\end{tabular}
+    }
+  \end{columns}
+  \respuesta{Costa concentra la mayor participación en cada periodo. Se unen tres tablas mediante DOS JOIN. La ventana normaliza dentro de cada periodo, no sobre todo el país.}
+  \origen{sql}{05e_3_region_periodo_join}
+\end{frame}

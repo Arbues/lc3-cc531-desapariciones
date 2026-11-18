@@ -1,0 +1,49 @@
+name: lc3-demo
+
+services:
+  spark:
+    image: apache/spark:v3.3.2
+    user: "${LC3_UID:?Exporta LC3_UID}:${LC3_GID:?Exporta LC3_GID}"
+    working_dir: /home/arbues/macrodatos/PC3
+    environment:
+      JAVA_TOOL_OPTIONS: "-XX:-UseContainerSupport"
+    configs:
+      - source: demo-passwd
+        target: /etc/passwd
+    volumes:
+      # Conserva las rutas de los scripts sin modificar las consultas entregadas.
+      - ../..:/home/arbues/macrodatos/PC3:ro
+    ports:
+      - "127.0.0.1:4041:4040"
+    command:
+      - /opt/spark/bin/spark-shell
+      - --master
+      - local[2]
+      - --conf
+      - spark.sql.codegen.wholeStage=false
+      - --conf
+      - spark.sql.codegen.factoryMode=NO_CODEGEN
+    stdin_open: true
+    tty: true
+
+  postgres:
+    image: postgres:16
+    profiles: [postgres]
+    environment:
+      POSTGRES_USER: macrodatos
+      POSTGRES_DB: denuncias_demo
+      POSTGRES_PASSWORD: "${LC3_PG_PASSWORD:?Exporta LC3_PG_PASSWORD}"
+    # La base de ensayo se descarta al detener el contenedor.
+    tmpfs:
+      - /var/lib/postgresql/data
+    healthcheck:
+      test: [CMD-SHELL, "pg_isready -U macrodatos -d denuncias_demo"]
+      interval: 2s
+      timeout: 3s
+      retries: 30
+
+configs:
+  demo-passwd:
+    content: |
+      root:x:0:0:root:/root:/bin/bash
+      spark:x:${LC3_UID}:${LC3_GID}:Spark:/tmp:/bin/bash

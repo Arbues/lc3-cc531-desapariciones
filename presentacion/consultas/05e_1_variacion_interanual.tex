@@ -1,0 +1,26 @@
+\begin{frame}[label=q5e1]{5e.1 · Vistas temporales: self-join}
+  \small
+  \pregunta{¿Cómo cambia cada mes frente al mismo mes del año anterior y cuántos meses suben o bajan?}
+  \entrada{Vista \texttt{denuncias}. Dos subconsultas agregan por \texttt{anio, mes}; 2019 es la base inicial.}
+  \flujo{\texttt{SUM} por año y mes\\Dos copias del agregado}{\texttt{JOIN} consigo misma\\Mismo mes, año anterior}{$100\,\frac{actual-previo}{previo}$}{60 comparaciones\\21 suben, 39 bajan}
+  \begin{columns}[T,onlytextwidth]
+    \column{0.55\textwidth}
+    \textbf{Código Scala original (fragmento)}
+    \codigo{sql/05e_1_variacion_interanual}{19}{24}
+    \column{0.42\textwidth}
+    \textbf{Salida}\\[5pt]
+    {\footnotesize
+\begin{tabular}{@{}llll@{}}
+\toprule
+Mes & Actual & Previo & Variación\\
+\midrule
+2020-01 & 1\,165 & 2\,086 & $-44.15\%$\\
+2020-02 & 2\,725 & 2\,324 & $+17.25\%$\\
+2020-04 & 643 & 1\,996 & $-67.79\%$\\
+\bottomrule
+\end{tabular}
+    }
+  \end{columns}
+  \respuesta{Abril de 2020 registra 67.79\% menos que abril de 2019. El join compara meses equivalentes, en lugar de comparar meses consecutivos.}
+  \origen{sql}{05e_1_variacion_interanual}
+\end{frame}

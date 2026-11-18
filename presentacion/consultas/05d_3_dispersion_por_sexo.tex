@@ -1,0 +1,28 @@
+\begin{frame}[label=q5d3]{5d.3 · Funciones: dispersión por sexo}
+  \small
+  \pregunta{¿Cómo varía la dispersión de CANTIDAD por registro entre mujeres y hombres?}
+  \entrada{93\,831 filas. \texttt{sexo}, \texttt{cantidad}. Conservar también NO ESPECIFICA.}
+  \flujo{Registros por sexo}{\texttt{groupBy(sexo)}}{\texttt{avg}, \texttt{stddev\_pop}\\\texttt{variance}, \texttt{min}, \texttt{max}}{3 grupos\\Medias y dispersiones}
+  \begin{columns}[T,onlytextwidth]
+    \column{0.55\textwidth}
+    \textbf{Código Scala original (fragmento)}
+    \codigo{sql/05d_3_dispersion_por_sexo}{12}{14}
+    \codigo{sql/05d_3_dispersion_por_sexo}{17}{21}
+    \column{0.42\textwidth}
+    \textbf{Salida}\\[5pt]
+    {\footnotesize
+\begin{tabular}{@{}lll@{}}
+\toprule
+Sexo & Promedio & Desv. pob.\\
+\midrule
+F & 1.3715 & 1.0454\\
+M & 1.1866 & 0.5971\\
+No especifica & 1.0676 & 0.3000\\
+\bottomrule
+\end{tabular}
+    }
+  \end{columns}
+  \respuesta{Los conteos de las filas F presentan mayor dispersión. El código calcula desviación poblacional y varianza muestral: son estadísticos con denominadores distintos.}
+  \origen{sql}{05d_3_dispersion_por_sexo}
+  \note{25 s. La mayor desviación describe filas agregadas. No afirmar que las mujeres desaparecen en grupos.}
+\end{frame}

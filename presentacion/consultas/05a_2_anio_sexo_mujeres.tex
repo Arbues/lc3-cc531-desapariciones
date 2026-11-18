@@ -1,0 +1,26 @@
+\begin{frame}[label=q5a2]{5a.2 · DataFrame: año, sexo y filtro agregado}
+  \small
+  \pregunta{¿En qué años el total reportado de mujeres supera las 5\,000 personas?}
+  \entrada{93\,831 filas. \texttt{anio}, \texttt{sexo}, \texttt{cantidad}; salida filtrada a F.}
+  \flujo{Todos los registros}{\texttt{groupBy(anio,sexo)}}{\texttt{SUM(cantidad)}\\Sexo F y total > 5000}{6 años\\Orden ascendente}
+  \begin{columns}[T,onlytextwidth]
+    \column{0.55\textwidth}
+    \textbf{Código Scala original (fragmento)}
+    \codigo{sql/05a_2_anio_sexo_mujeres}{10}{16}
+    \column{0.42\textwidth}
+    \textbf{Salida}\\[5pt]
+    {\footnotesize
+\begin{tabular}{@{}lll@{}}
+\toprule
+Año & Personas F & Registros\\
+\midrule
+2019 & 16\,451 & 11\,037\\
+2020 & 11\,828 & 8\,723\\
+2024 & 11\,275 & 8\,398\\
+\bottomrule
+\end{tabular}
+    }
+  \end{columns}
+  \respuesta{Los seis años cumplen el umbral. En 2024 se contabilizan 11\,275 mujeres en 8\,398 filas, dos medidas distintas.}
+  \origen{sql}{05a_2_anio_sexo_mujeres}
+\end{frame}

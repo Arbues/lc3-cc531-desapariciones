@@ -1,0 +1,33 @@
+\begin{frame}[label=q3c3]{3c.3 · Decimales: distribución mensual e índice}
+  \small
+  \pregunta{¿Qué meses superan una distribución uniforme y cómo se concentra el total por trimestre?}
+  \entrada{RDD; $m$ = mes, $t$ = trimestre, $c$ = cantidad. Periodo 2019--2024; referencia: $100/12=8.33\%$.}
+  \begin{columns}[T,onlytextwidth]
+    \column{0.55\textwidth}
+    \textbf{Map y Reduce de cada operación}
+    \parmr{A: mes}{$(m,c)$\\Clave: mes}
+      {\texttt{reduceByKey(\_+\_)}\\$(m,T_m)$: total mensual}
+    \parmr{B: nacional}{$(\texttt{TOTAL},c)$\\La misma clave para todas las filas}
+      {\texttt{reduceByKey(\_+\_)}\\$T=121\,427$}
+    \parmr{C: apoyo}{$(t,c)$\\Calcular trimestre desde el mes}
+      {\texttt{reduceByKey(\_+\_)}\\$(t,S_t)$: total trimestral}
+    \column{0.42\textwidth}
+    \textbf{Salida}\\[5pt]
+    \footnotesize
+    \begin{tabular}{@{}lrrr@{}}
+      \toprule Mes & Personas & \% & Índice\\\midrule
+      Diciembre & 11\,522 & 9.49 & 1.14\\
+      Febrero & 11\,118 & 9.16 & 1.10\\
+      Abril & 8\,805 & 7.25 & 0.87\\\bottomrule
+    \end{tabular}
+    \par\vspace{6pt}\textbf{Cálculo después de reducir}\\
+    Participación: $p_m=100T_m/T$.\\
+    Índice: $I_m=12T_m/T$.
+    \par\vspace{5pt}Apoyo C: trimestre 4, 32\,650 personas (26.89\%).
+    \par\vspace{2pt}
+    \codigo{rdd/03c_3_estacionalidad_mensual}{20}{20}
+  \end{columns}
+  \respuesta{Diciembre: índice 1.14, superior a la referencia uniforme de 1.}
+  \origen{rdd}{03c_3_estacionalidad_mensual}
+  \note{35 s. Leer primero el Map y después el Reduce. B reúne todo bajo TOTAL; C es el apoyo trimestral. A y B alimentan los cálculos decimales.}
+\end{frame}

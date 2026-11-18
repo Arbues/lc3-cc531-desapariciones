@@ -1,0 +1,78 @@
+\section{Ruta breve para diez minutos: texto para decir}
+Esta es una alternativa a la versión explicada, no su continuación oral.
+Los tiempos son objetivos de ensayo y deben comprobarse con cronómetro.
+\lamina{1}{Arbués}{15 s}{Portada}
+\senalar{El título y las cifras de registros y personas.}
+\decir{Buenos días. Somos Arbués Pérez y Sergio Pezo. Presentaremos el análisis de las denuncias por desaparición de personas en el Perú entre 2019 y 2024. Trabajamos con datos del Ministerio del Interior y consultas en Scala, Spark SQL y PostgreSQL.}
+
+\lamina{2}{Arbués}{20 s}{Mapa de preguntas}
+\senalar{Las filas 3, 4 y 5 del mapa. No abrir los anexos durante este recorrido.}
+\decir{Organizamos el trabajo siguiendo los números del enunciado. Primero explicaremos el dataset, después las operaciones MapReduce y luego las consultas de Spark SQL. Cada ficha indica qué pregunta responde, qué columnas usa y cómo se interpreta su resultado. Los enlaces permiten revisar las veinticinco consultas.}
+
+\lamina{3}{Arbués}{30 s}{Dataset y unidad de análisis}
+\senalar{Primero 93\,831 filas y después la suma 121\,427.}
+\decir{El dataset pertenece al rubro Seguridad y Justicia de la Plataforma Nacional de Datos Abiertos. Contiene noventa y tres mil ochocientos treinta y un registros y trece columnas. Cada fila combina año, mes, ubicación y perfil, con una cantidad de personas reportadas. Por eso, contar filas no equivale a contar personas. Para obtener el total sumamos CANTIDAD: ciento veintiún mil cuatrocientos veintisiete.}
+
+\lamina{4}{Sergio}{25 s}{Campos y reglas}
+\senalar{Tiempo, ubicación, perfil y CANTIDAD en la tabla.}
+\decir{Los campos se organizan en cuatro grupos: tiempo, ubicación, perfil y cantidad. El ubigeo se conserva como texto para mantener sus ceros iniciales. Consideramos menores a los rangos de cero a cinco, seis a once y doce a diecisiete años. Los campos vacíos se conservan como NO ESPECIFICA. Región y periodo se obtienen mediante reglas explícitas del código.}
+
+\lamina{5}{Sergio}{25 s}{Flujo de procesamiento}
+\senalar{Las ramas del CSV a RDD, DataFrame y PostgreSQL.}
+\decir{Este diagrama muestra cómo obtuvimos las respuestas. El mismo CSV alimenta una colección distribuida RDD y una tabla DataFrame. Con el RDD aplicamos map y reduce. Con el DataFrame usamos agrupamientos, filtros, uniones y funciones. Después registramos vistas para consultar en SQL. PostgreSQL recibe los datos mediante un proceso propio de extracción, transformación y carga.}
+
+\lamina{6}{Arbués}{25 s}{3a: extremos por sexo}
+\senalar{La clave sexo en map, el reducer y la tabla de extremos.}
+\decir{La pregunta del punto tres a es cuál es el mayor y el menor conteo por registro para cada sexo. Map emite el sexo como clave y las cantidades como valores. Reduce conserva el máximo y el mínimo. Obtenemos máximos de dieciocho para mujeres y catorce para hombres. Otras reducciones conservan la ubicación de un registro extremo.}
+
+\lamina{7}{Sergio}{30 s}{3b: estadísticos}
+\senalar{Suma y conteo, fórmula de desviación y tabla.}
+\decir{En el punto tres b describimos la columna CANTIDAD. Una reducción obtiene la suma y el número de filas para calcular el promedio. Otra suma los cuadrados para obtener la desviación. El promedio es aproximadamente uno coma veintinueve y la mediana es uno. La mediana requiere ordenar e identificar la posición central. También obtenemos mínimo uno y máximo dieciocho, como muestra la salida.}
+
+\lamina{8}{Arbués}{40 s}{3c.1: menores por departamento}
+\senalar{Las ramas A y B, el porcentaje y el control C.}
+\decir{La primera consulta decimal pregunta qué proporción de cada departamento corresponde a menores. Primero, Map emite departamento y cantidad. Después, Reduce suma por departamento. Repetimos el par Map y Reduce filtrando menores. Unimos ambos resultados y dividimos menores entre total. Madre de Dios registra cuatrocientos setenta y tres menores de seiscientas cincuenta y cinco personas: setenta y dos coma veintiuno por ciento. Además, reducimos los parciales para el control nacional. Ese control da setenta mil ciento setenta y ocho menores sobre ciento veintiún mil cuatrocientos veintisiete: cincuenta y siete coma setenta y nueve por ciento.}
+
+\lamina{9}{Sergio}{35 s}{3c.2: extranjeros por año}
+\senalar{Total anual, extranjeros por año y agregación por nacionalidad.}
+\decir{La segunda consulta decimal calcula la participación anual de personas extranjeras. Primero, Map emite año y cantidad; después, Reduce suma por año. Repetimos esas operaciones para extranjeros, excluyendo PERÚ y NO ESPECIFICA. Al unir ambas ramas obtenemos el porcentaje. En 2024 son quinientas veintiocho personas extranjeras: dos coma setenta y dos por ciento del total. Como tercera agregación por clave, el programa suma por nacionalidad para explicar ese resultado. Venezuela encabeza el acumulado con dos mil ciento cincuenta y una personas.}
+
+\lamina{10}{Arbués}{35 s}{3c.3: distribución mensual}
+\senalar{Suma mensual, total nacional e índice. Después, el apoyo trimestral.}
+\decir{La tercera consulta decimal compara los meses con una distribución uniforme. Primero, Map emite mes y cantidad; después, Reduce suma por mes. Otro par Map y Reduce obtiene el total nacional. Con esos agregados calculamos la participación. La referencia es cien dividido entre doce: aproximadamente ocho coma treinta y tres por ciento. Diciembre representa nueve coma cuarenta y nueve por ciento y obtiene un índice de uno coma catorce. Una tercera agregación por clave resume los trimestres: el cuarto concentra treinta y dos mil seiscientas cincuenta personas.}
+
+\lamina{11}{Sergio}{25 s}{5a.1: groupBy y filter}
+\senalar{Las dos columnas de groupBy y el filtro posterior a la suma.}
+\decir{Para el punto cinco a mostramos un agrupamiento por dos columnas: departamento y rango de edad. La pregunta es qué combinaciones reúnen al menos mil personas. Sumamos CANTIDAD, filtramos los grupos y ordenamos. Obtenemos treinta combinaciones. La primera es Lima Metropolitana y doce a diecisiete años, con diecisiete mil novecientas una personas.}
+
+\lamina{12}{Sergio}{20 s}{5b.2: orden descendente}
+\senalar{orderBy descendente, limit y la primera fila.}
+\decir{Esta consulta responde cuáles son los quince distritos con mayor total reportado. Agrupamos por departamento, provincia y distrito, sumamos personas y ordenamos de mayor a menor. Finalmente aplicamos el límite. San Juan de Lurigancho encabeza el resultado con cuatro mil setecientas setenta y cinco personas.}
+
+\lamina{13}{Arbués}{25 s}{5c.1: INNER JOIN}
+\senalar{La clave ubigeo del JOIN y la suma por región.}
+\decir{En el punto cinco c usamos los cuatro tipos de unión. Aquí mostramos INNER JOIN. Unimos el agregado por ubigeo con la dimensión geográfica y después sumamos por región. Costa concentra setenta y nueve mil seiscientas sesenta y seis personas. La dimensión tiene una fila por clave, de modo que la unión conserva el total nacional sin multiplicar registros.}
+
+\lamina{14}{Sergio}{25 s}{5d.3: funciones estadísticas}
+\senalar{stddev\_pop, variance, min y max en el código.}
+\decir{El punto cinco d aplica funciones de Spark. Esta consulta compara la dispersión de CANTIDAD por sexo. Calcula promedio, desviación, varianza y extremos. La desviación poblacional es aproximadamente uno coma cero cinco para mujeres y cero coma sesenta para hombres. Esto indica mayor variación entre los conteos femeninos por fila; no permite reconstruir incidentes individuales.}
+
+\lamina{15}{Arbués}{30 s}{5e.2: vistas temporales}
+\senalar{JOIN con edad, JOIN con sexo y el porcentaje nacional.}
+\decir{Para el punto cinco e consultamos vistas temporales. Unimos las denuncias con las dimensiones de edad y sexo y agrupamos por ambas categorías. La combinación más numerosa es adolescentes mujeres: cincuenta y un mil veintiuna personas. Al dividir entre el total nacional obtenemos cuarenta y dos coma cero dos por ciento. Esta respuesta muestra cómo los JOIN incorporan categorías útiles para interpretar la medida.}
+
+\lamina{16}{Sergio}{25 s}{5f.1: ordenar con filtros}
+\senalar{WHERE, HAVING y ORDER BY, en ese orden.}
+\decir{El punto cinco f combina ordenamiento y filtros. WHERE selecciona mujeres de 2024 con edad especificada. Después agrupamos por ubicación y HAVING exige al menos veinte personas por distrito. ORDER BY ordena el resultado y LIMIT conserva los diez primeros. San Juan de Lurigancho vuelve a encabezar, ahora con trescientas setenta y nueve personas dentro de este subconjunto.}
+
+\lamina{17}{Arbués}{60 s}{Modelo estrella y ETL}
+\senalar{Tabla central, dimensiones, clave ubigeo y tres pasos del ETL.}
+\decir{En el punto cuatro almacenamos el dataset en PostgreSQL mediante un modelo estrella. La tabla central conserva cada registro y su cantidad. Ocho dimensiones describen tiempo, ubicación y perfil. Una clave de dimensión aparece una sola vez en su catálogo, pero puede relacionarse con muchos registros de la tabla central. El proceso ETL tiene tres pasos. Primero extraemos el CSV hacia una tabla de carga. Después transformamos vacíos y normalizamos claves. Finalmente cargamos dimensiones y hechos dentro de una transacción. Un caso importante es el ubigeo ciento cincuenta mil ciento veintiuno, que aparece con dos nombres. Lo agrupamos antes de unir para evitar duplicar datos. Las evidencias de carga y restauración conservan noventa y tres mil ochocientas treinta y una filas y ciento veintiún mil cuatrocientas veintisiete personas.}
+
+\lamina{18}{Sergio}{40 s}{Exportación con Spark}
+\senalar{Proveedor spark-excel, cabecera, destino y tabla de seis hojas.}
+\decir{El punto cinco g pide guardar en Excel los resultados de cinco e y cinco f usando Spark. El script calcula las seis consultas y escribe un libro por consulta mediante el proveedor spark-excel. Configuramos la hoja, la cabecera y la ruta de salida. Los libros contienen sesenta, dieciocho, nueve, diez, doce y doce filas, respectivamente. La exportación de cinco e dos conserva las categorías, los totales y el promedio. La columna adicional de porcentaje nacional se muestra en la consulta individual de la presentación.}
+
+\lamina{19}{Ambos}{40 s}{Cierre}
+\senalar{Las preguntas de la tabla y sus respuestas.}
+\decir{Como conclusión, cada resultado responde a una pregunta concreta. Identificamos la distribución territorial, la participación de menores y extranjeros, la distribución mensual y el perfil de edad y sexo. Estas respuestas se obtienen mediante operaciones que se pueden seguir desde las columnas originales hasta la salida. La base conserva el total contabilizado y los seis resultados de vistas temporales tienen su entrega en Excel. Las veinticinco consultas están documentadas y enlazadas para revisar cualquier detalle. Muchas gracias.}

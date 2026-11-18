@@ -1,0 +1,27 @@
+\begin{frame}[label=q5f3]{5f.3 · Vistas: estudiantes de 6 a 29 años}
+  \small
+  \pregunta{¿En qué meses se acumulan más estudiantes reportados de los rangos 6--11, 12--17 y 18--29 años?}
+  \entrada{Vista \texttt{denuncias}. Filtrar \texttt{ocupacion='ESTUDIANTE'} y los tres rangos de edad indicados.}
+  \flujo{\texttt{WHERE}\\Estudiante y edad}{\texttt{GROUP BY mes}\\\texttt{SUM(cantidad)}}{\texttt{HAVING SUM > 500}}{12 meses\\Personas DESC, mes ASC}
+  \begin{columns}[T,onlytextwidth]
+    \column{0.55\textwidth}
+    \textbf{Código Scala original (fragmento)}
+    \codigo{sql/05f_3_meses_estudiantes}{16}{20}
+    \column{0.42\textwidth}
+    \textbf{Salida}\\[5pt]
+    {\footnotesize
+\begin{tabular}{@{}lll@{}}
+\toprule
+Mes & Personas & Registros\\
+\midrule
+Diciembre & 2\,673 & 2\,019\\
+Noviembre & 2\,538 & 1\,960\\
+Septiembre & 2\,419 & 1\,903\\
+Abril & 1\,774 & 1\,378\\
+\bottomrule
+\end{tabular}
+    }
+  \end{columns}
+  \respuesta{Diciembre presenta el mayor acumulado de ese subconjunto. El filtro no incluye edades 0--5 ni no especificadas; la ocupación faltante limita el alcance de la comparación.}
+  \origen{sql}{05f_3_meses_estudiantes}
+\end{frame}

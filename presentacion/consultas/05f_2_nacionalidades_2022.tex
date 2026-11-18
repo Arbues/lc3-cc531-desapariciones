@@ -1,0 +1,27 @@
+\begin{frame}[label=q5f2]{5f.2 · Vistas: nacionalidades desde 2022}
+  \small
+  \pregunta{¿Qué pares nacionalidad extranjera y año acumulan más personas desde 2022, con al menos diez por grupo?}
+  \entrada{Vista \texttt{denuncias}. Excluir PERÚ y NO ESPECIFICA; filtrar \texttt{anio >= 2022}.}
+  \flujo{\texttt{WHERE}\\Extranjeros desde 2022}{\texttt{GROUP BY}\\Nacionalidad y año}{\texttt{HAVING SUM >= 10}}{12 pares\\Personas DESC, año ASC}
+  \begin{columns}[T,onlytextwidth]
+    \column{0.55\textwidth}
+    \textbf{Código Scala original (fragmento)}
+    \codigo{sql/05f_2_nacionalidades_2022}{16}{21}
+    \column{0.42\textwidth}
+    \textbf{Salida}\\[5pt]
+    {\footnotesize
+\begin{tabular}{@{}lll@{}}
+\toprule
+Nacionalidad & Año & Personas\\
+\midrule
+Venezuela & 2023 & 430\\
+Venezuela & 2024 & 428\\
+Venezuela & 2022 & 404\\
+Colombia & 2023 & 24\\
+\bottomrule
+\end{tabular}
+    }
+  \end{columns}
+  \respuesta{Venezuela ocupa los tres primeros puestos. Este orden compara acumulados; la consulta no calcula una tasa de crecimiento, pese a la pregunta del comentario original.}
+  \origen{sql}{05f_2_nacionalidades_2022}
+\end{frame}

@@ -1,0 +1,33 @@
+\begin{frame}[label=q3b]{3b · Scala/RDD: estadísticos de CANTIDAD}
+  \small
+  \pregunta{¿Cuál es el promedio, la mediana, la desviación, el máximo y el mínimo de CANTIDAD por registro?}
+  \entrada{93\,831 filas. $c$ = \texttt{cantidad}: conteo por registro agregado.}
+  \flujo{Entrada\\Columna CANTIDAD}{\textbf{1. Map}\\$(c,1)$, $c^2$ y $c$}{\textbf{2. Reduce}\\Sumas, conteo y extremos}{\textbf{Salida}\\Estadísticos}
+  \begin{columns}[T,onlytextwidth]
+    \column{0.55\textwidth}
+    \footnotesize
+    \begin{tabularx}{\linewidth}{@{}XX@{}}
+      \toprule\textbf{1. Map} & \textbf{2. Reduce}\\\midrule
+      Emitir $(c,1)$ & Sumar: $(S,n)=(\sum c,\sum 1)$\\[3pt]
+      Emitir $c^2$ & Sumar: $Q=\sum c^2$\\[3pt]
+      Emitir $c$ & Conservar máximo y mínimo\\\bottomrule
+    \end{tabularx}
+    \codigo{rdd/03b_estadisticos_cantidad}{16}{16}
+    Media: $\bar{x}=S/n$; desviación: $\sigma=\sqrt{Q/n-\bar{x}^2}$.\\
+    Mediana: ordenar, indexar y tomar el centro.
+    \column{0.42\textwidth}
+    \textbf{Salida}\\[5pt]
+    \begin{tabular}{@{}lr@{}}
+      \toprule Estadístico & Valor\\\midrule
+      Filas & 93\,831\\
+      Suma & 121\,427\\
+      Promedio & 1.2941\\
+      Mediana & 1\\
+      Desv. poblacional & 0.8906\\
+      Mínimo / máximo & 1 / 18\\\bottomrule
+    \end{tabular}
+  \end{columns}
+  \respuesta{La mediana es 1 y los conteos altos elevan la media. Media y promedio son sinónimos; se añade la mediana.}
+  \origen{rdd}{03b_estadisticos_cantidad}
+  \note{30 s. No confundir media y mediana. Explicar suma/conteo y cuadrados; el centro exige ordenamiento adicional.}
+\end{frame}

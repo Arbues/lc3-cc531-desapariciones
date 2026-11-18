@@ -1,0 +1,27 @@
+\begin{frame}[label=q5a1]{5a.1 · DataFrame: agrupar y filtrar dos columnas}
+  \small
+  \pregunta{¿Qué combinaciones de departamento y rango de edad reúnen al menos 1\,000 personas reportadas?}
+  \entrada{93\,831 filas. \texttt{departamento}, \texttt{rango\_edad}, \texttt{cantidad}.}
+  \flujo{93\,831 registros}{\texttt{groupBy}\\Departamento y edad}{\texttt{SUM(cantidad)}\\\texttt{filter >= 1000}}{30 combinaciones\\Orden descendente}
+  \begin{columns}[T,onlytextwidth]
+    \column{0.55\textwidth}
+    \textbf{Código Scala original (fragmento)}
+    \codigo{sql/05a_1_departamento_rangoedad}{10}{16}
+    \column{0.42\textwidth}
+    \textbf{Salida}\\[5pt]
+    {\footnotesize
+\begin{tabular}{@{}lll@{}}
+\toprule
+Departamento & Edad & Personas\\
+\midrule
+Lima Met. & 12--17 & 17\,901\\
+Lima Met. & 18--29 & 7\,875\\
+Junín & 12--17 & 4\,169\\
+\bottomrule
+\end{tabular}
+    }
+  \end{columns}
+  \respuesta{Lima Metropolitana y el rango 12--17 encabezan el resultado. El filtro opera sobre el total agregado, no sobre la cantidad de cada fila.}
+  \origen{sql}{05a_1_departamento_rangoedad}
+  \note{25 s. Señalar las dos claves del groupBy, luego el umbral. Los otros tres ejemplos 5a están enlazados en el mapa.}
+\end{frame}

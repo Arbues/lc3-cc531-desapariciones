@@ -1,0 +1,26 @@
+\begin{frame}[label=q5b1]{5b.1 · DataFrame: promedio por departamento}
+  \small
+  \pregunta{¿Cuál es el promedio de personas contabilizadas por registro en cada departamento?}
+  \entrada{93\,831 filas. \texttt{departamento} y \texttt{cantidad}; \texttt{count(*)} aporta el denominador.}
+  \flujo{Registros por\\departamento}{\texttt{groupBy}\\Departamento}{\texttt{avg(cantidad)}\\Redondeo a 3 decimales}{26 departamentos\\Promedio descendente}
+  \begin{columns}[T,onlytextwidth]
+    \column{0.55\textwidth}
+    \textbf{Código Scala original (fragmento)}
+    \codigo{sql/05b_1_promedio_por_departamento}{12}{17}
+    \column{0.42\textwidth}
+    \textbf{Salida}\\[5pt]
+    {\footnotesize
+\begin{tabular}{@{}lll@{}}
+\toprule
+Departamento & Promedio & Personas\\
+\midrule
+Callao & 1.505 & 4\,565\\
+Lima Met. & 1.485 & 39\,490\\
+Lambayeque & 1.319 & 6\,231\\
+\bottomrule
+\end{tabular}
+    }
+  \end{columns}
+  \respuesta{Callao encabeza el promedio, aunque Lima Metropolitana tiene mayor total. La media describe la cantidad por cruce agregado, no el tamaño de un incidente.}
+  \origen{sql}{05b_1_promedio_por_departamento}
+\end{frame}

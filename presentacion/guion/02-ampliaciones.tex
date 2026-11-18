@@ -1,0 +1,41 @@
+\section{Ampliaciones literales para ensayar o responder}
+Estos textos son reserva. Añadirlos al recorrido principal aumenta el tiempo de exposición.
+
+\subsection{Dataset: por qué una fila no equivale a una persona}
+\decir{Podemos pensarlo como una tabla de frecuencias. Dos registros pueden compartir mes y distrito, pero tener distinto perfil. A su vez, una fila puede contener una cantidad mayor que uno. Por eso utilizamos la suma de CANTIDAD para hablar de personas contabilizadas y el conteo de filas para describir registros. No contamos con identificadores que permitan saber si una misma persona aparece en denuncias distintas.}
+
+\subsection{Qué hace map y qué hace reduce}
+\decir{Map transforma cada elemento en una representación útil. Por ejemplo, de una fila extraemos el departamento y la cantidad. Reduce combina valores; si la clave es departamento, reduceByKey suma las cantidades que comparten esa clave. Antes de combinar los valores, Spark puede redistribuir datos entre particiones. El diagrama explica las operaciones del programa; no fija cuántas tareas físicas o etapas ejecutará Spark.}
+
+\subsection{3a: cómo se conserva el extremo}
+\decir{Para obtener máximo y mínimo por sexo emitimos dos copias del conteo en una tupla. Al combinar dos tuplas conservamos el mayor de sus máximos y el menor de sus mínimos. Así reducimos todas las filas de una categoría a un par de valores. Para conservar la ubicación utilizamos otra tupla que incluye territorio y fecha. Si hay empate, el código conserva un registro, no todos los registros empatados.}
+
+\subsection{3b: media, mediana y desviación}
+\decir{La media usa toda la suma y por eso cambia cuando aparecen cantidades altas. La mediana ocupa el centro de la lista ordenada y representa mejor el valor típico cuando predominan unos pocos conteos. La desviación resume cuánto varían los valores alrededor de la media. El código calcula tanto desviación poblacional como muestral. Además aclaremos la terminología: media y promedio son sinónimos; la mediana es un estadístico distinto que añadimos a la descripción.}
+
+\subsection{3c: cómo explicar las tres agregaciones existentes}
+\decir{En estas consultas mostramos tanto el indicador decimal como sus agregaciones de apoyo. En menores tenemos total por departamento, menores por departamento y control nacional. En extranjeros tenemos total anual, extranjeros por año y total por nacionalidad. En distribución mensual tenemos total por mes, total nacional y total trimestral. Esas operaciones aparecen en el código. El porcentaje se calcula después de agregar; no llamamos reducer a una división.}
+
+\subsection{3c.1: el denominador cambia la respuesta}
+\decir{La consulta tres c uno divide menores entre el total reportado, incluyendo los registros cuya edad no está especificada. En cambio, cinco c cuatro compara únicamente menores y adultos con edad conocida. Por eso Lima Metropolitana aparece con cincuenta coma cero dos por ciento en la primera y cincuenta coma sesenta por ciento en la segunda. La diferencia proviene del denominador, no de una contradicción entre resultados.}
+
+\subsection{3c.2: porcentaje y puntos porcentuales}
+\decir{El porcentaje anual responde cuánto representan los extranjeros dentro del total de ese año. Los puntos porcentuales comparan dos participaciones: dos coma setenta y dos menos dos coma ochenta y nueve da menos cero coma diecisiete puntos. Esto puede ocurrir aunque el conteo extranjero aumente de quinientas veinticinco a quinientas veintiocho personas, porque el total de personas reportadas también cambia.}
+
+\subsection{3c.3: lectura del índice}
+\decir{Un índice igual a uno significa que la participación del mes coincide con la referencia uniforme. Un índice de uno coma catorce indica una participación alrededor de catorce por ciento superior a esa referencia. No significa catorce por ciento de todas las desapariciones: esa participación es nueve coma cuarenta y nueve por ciento. Es una comparación descriptiva del acumulado de seis años, sin ajuste por días del mes ni una prueba estadística de estacionalidad.}
+
+\subsection{DataFrame y SQL: dos formas de expresar operaciones}
+\decir{Con DataFrame expresamos operaciones mediante métodos de Scala, como groupBy, filter y join. Con las vistas temporales damos un nombre consultable a las tablas y escribimos SELECT, JOIN y GROUP BY dentro de spark.sql. Las dos formas trabajan dentro de Spark. No convertimos la consulta Spark SQL en una consulta de PostgreSQL: PostgreSQL es otra capa de almacenamiento y verificación del proyecto.}
+
+\subsection{Los cuatro JOIN del punto 5c}
+\decir{INNER conserva coincidencias. LEFT conserva todas las claves de la izquierda. RIGHT conserva todas las de la derecha. FULL OUTER conserva las de ambos lados, aunque falte una coincidencia. Elegimos esos comportamientos para responder preguntas diferentes: distribución regional, claves sin registros, meses faltantes y departamentos con menores o adultos. Unir no es suficiente: también debemos comprobar que la clave de una dimensión no esté repetida.}
+
+\subsection{WHERE, HAVING y ORDER BY}
+\decir{WHERE decide qué filas entran al análisis. GROUP BY forma los grupos y SUM calcula su medida. HAVING filtra usando esa medida ya calculada. ORDER BY determina en qué orden se presentan los grupos y LIMIT restringe la cantidad mostrada. Si filtráramos CANTIDAD mayor o igual a veinte antes de sumar, estaríamos respondiendo otra pregunta: buscaríamos filas grandes y no distritos con acumulados grandes.}
+
+\subsection{Modelo estrella y carga}
+\decir{El modelo estrella separa la medida de sus descripciones. La tabla de hechos mantiene la cantidad y las claves de las dimensiones. Los catálogos evitan repetir descripciones y permiten agrupar de forma consistente. La clave primaria impide repetir una clave de dimensión; las claves foráneas relacionan los hechos con esos catálogos. La transacción agrupa la carga, de forma que una falla no deje confirmada solamente una parte de las inserciones.}
+
+\subsection{Excel y las dos variantes de 5e.2}
+\decir{Los libros son resultados tabulares producidos por Spark, no capturas pegadas en un Excel. La consulta individual cinco e dos incluye un porcentaje nacional calculado con una ventana. El script de exportación utiliza una selección más corta y no incluye esa columna. Por eso, si abrimos el libro veremos los totales y promedios, mientras que el porcentaje de cuarenta y dos coma cero dos aparece en la salida de la consulta individual.}

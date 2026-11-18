@@ -1,0 +1,28 @@
+\begin{frame}[label=q5b2]{5b.2 · DataFrame: ordenamiento decreciente}
+  \small
+  \pregunta{¿Cuáles son los 15 distritos con más personas reportadas durante 2019--2024?}
+  \entrada{93\,831 filas. \texttt{departamento}, \texttt{provincia}, \texttt{distrito}, \texttt{cantidad}.}
+  \flujo{Todos los registros}{\texttt{groupBy}\\Departamento, provincia, distrito}{\texttt{SUM(cantidad)}\\\texttt{orderBy(desc)}}{\texttt{limit(15)}\\15 distritos}
+  \begin{columns}[T,onlytextwidth]
+    \column{0.55\textwidth}
+    \textbf{Código Scala original (fragmento)}
+    \codigo{sql/05b_2_top_distritos_desc}{10}{16}
+    \column{0.42\textwidth}
+    \textbf{Salida}\\[5pt]
+    {\footnotesize
+\begin{tabular}{@{}ll@{}}
+\toprule
+Distrito & Personas\\
+\midrule
+San Juan de Lurigancho & 4\,775\\
+Lima & 3\,153\\
+San Martín de Porres & 2\,646\\
+Callao & 2\,642\\
+\bottomrule
+\end{tabular}
+    }
+  \end{columns}
+  \respuesta{San Juan de Lurigancho encabeza el acumulado con 4\,775. Las tres claves identifican la ubicación; el orden usa personas, no filas.}
+  \origen{sql}{05b_2_top_distritos_desc}
+  \note{20 s. Leer el primer lugar y mostrar orderBy(desc) seguido de limit.}
+\end{frame}

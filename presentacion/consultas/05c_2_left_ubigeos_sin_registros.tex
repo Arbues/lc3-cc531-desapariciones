@@ -1,0 +1,27 @@
+\begin{frame}[label=q5c2]{5c.2 · DataFrame: LEFT OUTER JOIN}
+  \small
+  \pregunta{¿Qué ubigeos del catálogo construido con el dataset no tienen registros asociados?}
+  \entrada{\texttt{dimGeografia} como tabla izquierda; agregados por \texttt{ubigeo} como derecha.}
+  \flujo{Catálogo derivado\\del mismo dataset}{\texttt{LEFT OUTER JOIN}\\Conservar todos sus ubigeos}{\texttt{personas.isNull}\\Buscar faltantes}{0 sin registros\\1\,506 con registros}
+  \begin{columns}[T,onlytextwidth]
+    \column{0.55\textwidth}
+    \textbf{Código Scala original (fragmento)}
+    \codigo{sql/05c_2_left_ubigeos_sin_registros}{16}{17}
+    \codigo{sql/05c_2_left_ubigeos_sin_registros}{21}{21}
+    \column{0.42\textwidth}
+    \textbf{Salida}\\[5pt]
+    {\footnotesize
+\begin{tabular}{@{}ll@{}}
+\toprule
+Control & Resultado\\
+\midrule
+Ubigeos del catálogo & 1\,506\\
+Con registros & 1\,506\\
+Sin registros & 0\\
+\bottomrule
+\end{tabular}
+    }
+  \end{columns}
+  \respuesta{No aparecen faltantes dentro del catálogo observado. Como este se construyó con las denuncias, el resultado no demuestra cobertura de todos los distritos del Perú.}
+  \origen{sql}{05c_2_left_ubigeos_sin_registros}
+\end{frame}

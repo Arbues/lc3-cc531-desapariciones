@@ -1,0 +1,28 @@
+\begin{frame}[label=q5d4]{5d.4 · Funciones: construir fecha y trimestre}
+  \small
+  \pregunta{¿Cuántas personas se reportan por trimestre al construir una fecha con año y mes?}
+  \entrada{93\,831 filas. \texttt{anio}, \texttt{mes}, \texttt{cantidad}. La fecha usa día 01 convencional.}
+  \flujo{Año y mes originales}{\texttt{concat\_ws + lpad}\\\texttt{to\_date}}{\texttt{quarter(fecha)}\\Agrupar y sumar}{24 trimestres\\Orden cronológico}
+  \begin{columns}[T,onlytextwidth]
+    \column{0.55\textwidth}
+    \textbf{Código Scala original (fragmento)}
+    \codigo{sql/05d_4_fecha_trimestre}{12}{13}
+    \codigo{sql/05d_4_fecha_trimestre}{18}{20}
+    \column{0.42\textwidth}
+    \textbf{Salida}\\[5pt]
+    {\footnotesize
+\begin{tabular}{@{}ll@{}}
+\toprule
+Trimestre & Personas\\
+\midrule
+2019-T4 & 7\,164\\
+2020-T1 & 6\,018\\
+2020-T2 & 2\,485\\
+2020-T3 & 4\,567\\
+\bottomrule
+\end{tabular}
+    }
+  \end{columns}
+  \respuesta{Entre los trimestres mostrados, 2020-T2 presenta el menor total. La consulta construye una clave temporal y describe la serie; no identifica por sí sola la causa de la caída.}
+  \origen{sql}{05d_4_fecha_trimestre}
+\end{frame}

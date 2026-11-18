@@ -1,0 +1,28 @@
+\begin{frame}[label=q3a]{3a · Scala/RDD: máximos y mínimos por sexo}
+  \small
+  \pregunta{¿Cuál es el mayor y el menor conteo por registro para cada sexo, y dónde se observa un máximo?}
+  \entrada{93\,831 filas; \texttt{sexo}, \texttt{cantidad}; territorio, año y mes permiten localizar extremos.}
+  \flujo{Entrada\\Sexo y cantidad}{\textbf{1. Map}\\$(sexo,(c,c))$}{\textbf{2. Reduce}\\Máximo y mínimo por sexo}{\textbf{Salida}\\Extremos y ubicación}
+  \begin{columns}[T,onlytextwidth]
+    \column{0.55\textwidth}
+    \textbf{1. Map: emitir clave y valores}
+    \codigo{rdd/03a_max_min_por_sexo}{17}{17}
+    \vspace{3pt}\textbf{2. Reduce: combinar cada sexo}
+    \codigo{rdd/03a_max_min_por_sexo}{18}{18}
+    \footnotesize $c$ representa \texttt{cantidad}. Las otras reducciones conservan la ubicación extrema.
+    \column{0.42\textwidth}
+    \textbf{Salida}\\[5pt]
+    \footnotesize\begin{tabular}{@{}lrr@{}}
+      \toprule Sexo & Máximo & Mínimo\\\midrule
+      F & 18 & 1\\
+      M & 14 & 1\\
+      No especifica & 3 & 1\\\bottomrule
+    \end{tabular}
+    \par\vspace{5pt}\footnotesize
+    Máximo F: Villa María del Triunfo, noviembre de 2019.\\
+    Máximo M: Santiago, Cusco, octubre de 2019.
+  \end{columns}
+  \respuesta{Máximo F: 18; máximo M: 14. La ubicación corresponde a un registro extremo, sin enumerar todos los empates.}
+  \origen{rdd}{03a_max_min_por_sexo}
+  \note{25 s. Map emite sexo como clave. El primer reducer conserva max y min; los otros conservan una tupla con ubicación.}
+\end{frame}

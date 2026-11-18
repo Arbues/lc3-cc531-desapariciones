@@ -1,0 +1,26 @@
+\begin{frame}[label=q5d1]{5d.1 · Funciones: when y otherwise}
+  \small
+  \pregunta{¿Cuántas filas y personas corresponden a cada tramo de CANTIDAD definido por el código?}
+  \entrada{93\,831 filas. \texttt{cantidad}; derivar la etiqueta \texttt{severidad} con \texttt{when}.}
+  \flujo{\texttt{cantidad} por fila}{\texttt{when / otherwise}\\1--2, 3--4, 5 o más}{\texttt{groupBy(severidad)}\\Count, sum y avg}{3 categorías\\98\,236 / 14\,003 / 9\,188}
+  \begin{columns}[T,onlytextwidth]
+    \column{0.55\textwidth}
+    \textbf{Código Scala original (fragmento)}
+    \codigo{sql/05d_1_severidad_when}{12}{18}
+    \column{0.42\textwidth}
+    \textbf{Salida}\\[5pt]
+    {\footnotesize
+\begin{tabular}{@{}lll@{}}
+\toprule
+Etiqueta del código & Filas & Personas\\
+\midrule
+INDIVIDUAL (1--2) & 88\,182 & 98\,236\\
+ALTO (3--4) & 4\,249 & 14\,003\\
+FOCO (5 o más) & 1\,400 & 9\,188\\
+\bottomrule
+\end{tabular}
+    }
+  \end{columns}
+  \respuesta{Las 1\,400 filas con cantidad al menos 5 suman 9\,188 personas. Las etiquetas clasifican conteos agregados; no prueban severidad ni incidentes individuales o grupales.}
+  \origen{sql}{05d_1_severidad_when}
+\end{frame}

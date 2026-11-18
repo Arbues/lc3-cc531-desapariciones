@@ -1,0 +1,26 @@
+\begin{frame}[label=q5c4]{5c.4 · DataFrame: FULL OUTER JOIN}
+  \small
+  \pregunta{¿Qué departamentos aparecen solo entre menores o solo entre adultos con edad conocida?}
+  \entrada{Dos agregados por \texttt{departamento}: menores de 18 y adultos. Excluir rango de edad NO ESPECIFICA.}
+  \flujo{Filtrar edades conocidas\\Dos agregados}{\texttt{FULL OUTER JOIN}\\Clave: departamento}{\texttt{coalesce} a cero\\Sumar y calcular porcentaje}{26 departamentos\\Ambos grupos presentes}
+  \begin{columns}[T,onlytextwidth]
+    \column{0.55\textwidth}
+    \textbf{Código Scala original (fragmento)}
+    \codigo{sql/05c_4_full_menores_adultos}{27}{31}
+    \column{0.42\textwidth}
+    \textbf{Salida}\\[5pt]
+    {\footnotesize
+\begin{tabular}{@{}lll@{}}
+\toprule
+Departamento & Menores & Adultos\\
+\midrule
+Lima Met. & 19\,751 & 19\,281\\
+Junín & 4\,525 & 2\,688\\
+Cusco & 4\,299 & 2\,762\\
+\bottomrule
+\end{tabular}
+    }
+  \end{columns}
+  \respuesta{Los 26 departamentos tienen menores y adultos. En Lima el porcentaje es 50.60\% sobre edad conocida; 3c.1 usa el total con edades no especificadas y obtiene 50.02\%.}
+  \origen{sql}{05c_4_full_menores_adultos}
+\end{frame}

@@ -1,0 +1,26 @@
+\begin{frame}[label=q5d2]{5d.2 · Funciones: sum, lit y round}
+  \small
+  \pregunta{¿Qué participación tiene cada periodo sobre el total de personas reportadas?}
+  \entrada{93\,831 filas. \texttt{periodo}, \texttt{cantidad}; denominador nacional 121\,427.}
+  \flujo{Obtener total nacional\\\texttt{agg(sum)}}{\texttt{groupBy(periodo)}\\Suma por periodo}{\texttt{lit(totalNacional)}\\\texttt{round(100 * parte / total)}}{3 participaciones\\Suman 100\%}
+  \begin{columns}[T,onlytextwidth]
+    \column{0.55\textwidth}
+    \textbf{Código Scala original (fragmento)}
+    \codigo{sql/05d_2_participacion_periodo}{16}{19}
+    \column{0.42\textwidth}
+    \textbf{Salida}\\[5pt]
+    {\footnotesize
+\begin{tabular}{@{}lll@{}}
+\toprule
+Periodo & Personas & \% total\\
+\midrule
+2019 & 26\,331 & 21.68\\
+2020--2021 & 38\,622 & 31.81\\
+2022--2024 & 56\,474 & 46.51\\
+\bottomrule
+\end{tabular}
+    }
+  \end{columns}
+  \respuesta{2022--2024 representa 46.51\% del acumulado. Cubre tres años, frente a dos y uno de los otros periodos; ese peso no demuestra mayor intensidad anual.}
+  \origen{sql}{05d_2_participacion_periodo}
+\end{frame}

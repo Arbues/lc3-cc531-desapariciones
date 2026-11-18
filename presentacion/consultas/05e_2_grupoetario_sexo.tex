@@ -1,0 +1,28 @@
+\begin{frame}[label=q5e2]{5e.2 · Vistas temporales: dos JOIN de perfil}
+  \small
+  \pregunta{¿Qué combinación de grupo etario y sexo concentra más personas y qué porcentaje del total representa?}
+  \entrada{Vistas \texttt{denuncias}, \texttt{dim\_edad}, \texttt{dim\_sexo}. Claves: \texttt{rango\_edad} y \texttt{sexo}.}
+  \flujo{Vistas registradas\\En esquema.scala}{\texttt{JOIN dim\_edad}\\\texttt{JOIN dim\_sexo}}{\texttt{GROUP BY} grupo y sexo\\Suma y \% nacional}{18 combinaciones\\Orden por personas}
+  \begin{columns}[T,onlytextwidth]
+    \column{0.55\textwidth}
+    \textbf{Código Scala original (fragmento)}
+    \codigo{sql/05e_2_grupoetario_sexo}{17}{17}
+    \codigo{sql/05e_2_grupoetario_sexo}{22}{26}
+    \column{0.42\textwidth}
+    \textbf{Salida}\\[5pt]
+    {\footnotesize
+\begin{tabular}{@{}llll@{}}
+\toprule
+Grupo & Sexo & Personas & \% país\\
+\midrule
+Adolescente & F & 51\,021 & 42.02\\
+Adolescente & M & 13\,309 & 10.96\\
+Adulto & M & 12\,389 & 10.20\\
+\bottomrule
+\end{tabular}
+    }
+  \end{columns}
+  \respuesta{Adolescentes mujeres reúnen 51\,021 personas: $100\times51\,021/121\,427=42.02\%$. Es una participación en las denuncias, no una probabilidad individual de desaparición.}
+  \origen{sql}{05e_2_grupoetario_sexo}
+  \note{30 s. Seguir ambos joins hasta el porcentaje. Las vistas se registraron con createOrReplaceTempView en esquema.scala.}
+\end{frame}

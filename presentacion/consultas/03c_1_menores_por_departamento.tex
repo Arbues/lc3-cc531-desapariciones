@@ -1,0 +1,33 @@
+\begin{frame}[label=q3c1]{3c.1 · Decimales: menores por departamento}
+  \small
+  \pregunta{¿Qué porcentaje del total de cada departamento corresponde a menores de 18 años, y cuál es el control nacional?}
+  \entrada{RDD; $d$ = departamento, $c$ = cantidad. Menores: 0--5, 6--11 y 12--17 años.}
+  \begin{columns}[T,onlytextwidth]
+    \column{0.55\textwidth}
+    \textbf{Map y Reduce de cada operación}
+    \parmr{A: total}{$(d,c)$\\Todas las filas}
+      {\texttt{reduceByKey(\_+\_)}\\$(d,T_d)$: total por dpto.}
+    \parmr{B: menores}{$(d,c)$\\Filtrar menores antes del Map}
+      {\texttt{reduceByKey(\_+\_)}\\$(d,M_d)$: menores por dpto.}
+    \parmr[Proyección]{C: control}{\texttt{values} de A y B\\Tomar los totales parciales}
+      {\texttt{reduce(\_+\_)}\\Total y menores nacionales}
+    \column{0.42\textwidth}
+    \textbf{Salida}\\[5pt]
+    \footnotesize
+    \begin{tabular}{@{}lrr@{}}
+      \toprule Departamento & Menores/total & \%\\\midrule
+      Madre de Dios & 473/655 & 72.21\\
+      Ucayali & 1\,504/2\,126 & 70.74\\
+      Lima Met. & 19\,751/39\,490 & 50.02\\\bottomrule
+    \end{tabular}
+    \par\vspace{6pt}\textbf{Cálculo después de reducir}\\
+    Unir A y B por departamento:\\
+    $p_d=100M_d/T_d$.
+    \par\vspace{5pt}Control: $70\,178/121\,427=57.79\%$.
+    \par\vspace{2pt}
+    \codigo{rdd/03c_1_menores_por_departamento}{20}{20}
+  \end{columns}
+  \respuesta{Madre de Dios: 72.21\% de menores; el denominador es el total reportado del departamento.}
+  \origen{rdd}{03c_1_menores_por_departamento}
+  \note{40 s. Leer cada fila de izquierda a derecha: primero la clave y el valor del Map, luego su Reduce. C proyecta values y reduce los parciales. Después del join se calcula la división.}
+\end{frame}

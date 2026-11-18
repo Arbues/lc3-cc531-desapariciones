@@ -1,267 +1,94 @@
-% ============================================================================
-% Guion de exposición — LC3 CC531 A (10 minutos)
-% Compilar: latexmk -pdf guion-exposicion.tex
-% Cada bloque corresponde a una lámina de presentacion.pdf
-% ============================================================================
 \documentclass[10pt,a4paper]{article}
 \usepackage[utf8]{inputenc}
 \usepackage[T1]{fontenc}
-\usepackage[spanish]{babel}
+\usepackage[spanish,es-nodecimaldot]{babel}
 \usepackage[margin=2cm]{geometry}
-\usepackage{booktabs}
-\usepackage{longtable}
-\usepackage{array}
-\usepackage{xcolor}
-\usepackage{titlesec}
-\usepackage{enumitem}
-\usepackage{hyperref}
+\usepackage{booktabs,tabularx,xcolor,hyperref}
 \hypersetup{hidelinks}
-\usepackage{tikz}
-
 \definecolor{azul}{RGB}{20,60,110}
-\definecolor{naranja}{RGB}{200,85,10}
-\titleformat{\section}{\normalfont\large\bfseries\color{azul}}{}{0pt}{}
-\setlist[itemize]{leftmargin=1.2em,itemsep=1pt,topsep=2pt}
-\setlist[enumerate]{leftmargin=1.4em,itemsep=1pt,topsep=2pt}
-\newcommand{\senala}[1]{\textcolor{naranja}{\textbf{Señala:}} #1}
-\newcommand{\dice}[1]{\textbf{Dice:} #1}
-\newcommand{\cambio}[1]{\textit{Transición:} #1}
-
-\title{\vspace{-1.2cm}Guion de exposición\\\large LC531 A --- Laboratorio Calificado 03}
+\newcommand{\lamina}[4]{\subsection{Lámina #1: #4}\noindent\textbf{Expone: #2. Tiempo objetivo: #3.}\par}
+\newcommand{\senalar}[1]{\par\noindent{\small\color{azul}\textbf{Indicación, no leer:} #1}\par}
+\newcommand{\decir}[1]{\par\medskip\noindent\textbf{Texto para decir:}\par\nobreak\smallskip\noindent #1\par\medskip}
+\newcommand{\apoyo}[1]{\par\noindent{\small\color{azul}\textbf{Preparación, no leer:} #1}\par}
+\newcommand{\completa}[3]{\subsection{Lámina #1: #3}\noindent\textbf{Expone: #2. Versión explicada, sin límite de diez minutos.}\par}
+\title{\vspace{-1cm}Guion literal de exposición\\\large CC531 A · Laboratorio 03}
 \author{Arbués Enrique Pérez Villanueva \and Sergio Pezo}
-\date{Noviembre 2026}
-
+\date{Noviembre de 2026}
 \begin{document}
 \maketitle
-\vspace{-0.7cm}
+\noindent Los bloques \textbf{Texto para decir} están redactados para leerlos palabra por palabra.
+Las indicaciones azules describen qué señalar y no se pronuncian.
+La primera parte recorre las 37 láminas: explica el origen de las preguntas,
+lee los cuadros de los diagramas, sigue sus flechas y desarrolla el código, las fórmulas y las salidas.
+Después se conserva una ruta breve de las 19 láminas principales, junto con preguntas y demo.
 
-\noindent
-Este guion acompaña a \texttt{presentacion.pdf} (15 láminas). Cada bloque indica el tiempo, quién
-habla, el texto que se dice ---no para leerlo literalmente, sino para tener las cifras y el orden
-del argumento--- y \textcolor{naranja}{\textbf{lo que hay que señalar}} en la lámina mientras se
-dice. La regla del curso: 10 minutos; se descuenta si se pasa o si hay desorden.
+\medskip\noindent\textbf{Cómo usarlo.} Para comprender y defender cada elemento, ensayar
+primero la versión explicada. Sus transiciones también se pronuncian; las indicaciones azules,
+en cambio, solo orientan el puntero y las pausas. Leer todo este desarrollo excede ampliamente
+diez minutos. Si ese es el límite, utilizar únicamente la ruta breve, cronometrarla y reservar
+los anexos y la explicación extensa para las preguntas. No acelerar la lectura para intentar
+encajar ambas versiones.
+\medskip\noindent\textbf{Duración de referencia.} La versión explicada contiene alrededor de
+11\,000 palabras habladas: unos 75--95 minutos a 120--145 palabras por minuto,
+antes de añadir cambios de lámina, pausas o demo. Es material para estudiar y defender el trabajo;
+no es el texto de la exposición de diez minutos. La ruta breve conserva su reparto de 570 segundos.
 
-\section*{Reparto y tiempos}
+\medskip\noindent\textbf{Lectura sin LaTeX.} La copia \texttt{guion-exposicion.md}
+permite leer este desarrollo sin compilar. El estado de los PDF se documenta
+en \texttt{README.md}, dentro de la carpeta de presentación.
 
-\begin{center}
-\small
-\begin{tabular}{clrl}
-\toprule
-Lámina & Contenido & Tiempo & Quién\\
-\midrule
-1 & Portada & 15 s & Arbués\\
-2 & Qué analizamos y por qué importa & 40 s & Arbués\\
-3 & Qué se construyó & 35 s & Sergio\\
-4 & El dato que cambia todas las cuentas & 45 s & Sergio\\
-5 & La serie anual & 40 s & Arbués\\
-6 & Hallazgo 1: adolescentes mujeres & 50 s & Sergio\\
-7 & Hallazgo 2: menores y ruralidad & 45 s & Arbués\\
-8 & Hallazgo 3: estacionalidad & 40 s & Sergio\\
-9 & Hallazgo 4: geografía estable & 40 s & Arbués\\
-10 & 2020: el trimestre que cortó la serie & 40 s & Sergio\\
-11 & Modelo estrella y ETL & 50 s & Arbués\\
-12 & Validación en tres tecnologías & 35 s & Sergio\\
-13 & Conclusiones & 40 s & Arbués\\
-14 & Referencias y reproducibilidad & 15 s & Sergio\\
-15 & Cierre & 10 s & ambos\\
-\midrule
- & \textbf{Total} & \textbf{9 min 40 s} & \\
-\bottomrule
-\end{tabular}
-\end{center}
+\section*{Reparto de la ruta breve: tiempos objetivo}
+{\small
+\noindent\begin{tabularx}{\linewidth}{@{}rlrX@{}}
+\toprule Lámina & Expone & Tiempo & Tema\\\midrule
+1 & Arbués & 15 s & Portada y alcance\\
+2 & Arbués & 20 s & Mapa de requisitos y consultas\\
+3 & Arbués & 30 s & Dataset y unidad de análisis\\
+4 & Sergio & 25 s & Columnas y reglas\\
+5 & Sergio & 25 s & Flujo del CSV a las respuestas\\
+6 & Arbués & 25 s & 3a: extremos por sexo\\
+7 & Sergio & 30 s & 3b: estadísticos de CANTIDAD\\
+8 & Arbués & 40 s & 3c.1: menores por departamento\\
+9 & Sergio & 35 s & 3c.2: extranjeros por año\\
+10 & Arbués & 35 s & 3c.3: distribución mensual\\
+11 & Sergio & 25 s & 5a.1: groupBy y filter\\
+12 & Sergio & 20 s & 5b.2: ranking descendente\\
+13 & Arbués & 25 s & 5c.1: INNER JOIN\\
+14 & Sergio & 25 s & 5d.3: funciones de dispersión\\
+15 & Arbués & 30 s & 5e.2: vistas temporales y JOIN\\
+16 & Sergio & 25 s & 5f.1: WHERE, HAVING y ORDER BY\\
+17 & Arbués & 60 s & Modelo estrella y ETL\\
+18 & Sergio & 40 s & 5g: exportación Excel con Spark\\
+19 & Ambos & 40 s & Respuestas y cierre\\\midrule
+ & & \textbf{570 s} & \textbf{Objetivo: 9 min 30 s, con 30 s de margen}\\\bottomrule
+\end{tabularx}}
 
-\noindent\small Los 20 segundos de margen son el colchón para el cambio de expositor. Si alguien se
-demora, lo que se recorta es la lámina 14 (referencias), nunca las conclusiones.
+\medskip\noindent\textbf{Material de demo:}
+\href{run:DEMO.md}{DEMO.md} contiene la preparación, los comandos, las salidas esperadas
+y el plan alternativo. La configuración está en \texttt{demo/compose.yaml}.
+Las cifras que se dicen a continuación provienen de las salidas del proyecto en
+\texttt{evidencias/salidas/} y de los controles PostgreSQL.
 
-\section*{Lámina por lámina}
-
-% --- 1
-\subsection*{Lámina 1 · Portada --- 15 s (Arbués)}
-\dice{``Buenos días. Somos Arbués Pérez y Sergio Pezo, del curso de Análisis en Macrodatos.
-Vamos a presentar el análisis de las denuncias por desaparición de personas en el Perú entre 2019
-y 2024: 93,831 registros que representan a 121,427 personas.''}
-\senala{el subtítulo de la lámina, donde están las dos cifras: ``121,427 casos''. Que el jurado
-lea ahí el número antes de que lo digas en voz alta.}
-\cambio{pasar directo a la lámina 2 sin pausa.}
-
-% --- 2
-\subsection*{Lámina 2 · Qué analizamos --- 40 s (Arbués)}
-\dice{``La fuente es el registro que publica el Ministerio del Interior en la Plataforma Nacional
-de Datos Abiertos, en el rubro de Seguridad y Justicia. Son 13 campos, de enero de 2019 a
-diciembre de 2024, con un detalle importante: cada fila no es una persona, es un cruce de fecha,
-distrito y perfil de la víctima, y trae en la columna CANTIDAD cuántas personas involucra. Es un
-cubo de datos en formato plano, y eso define cómo se consulta.''}
-\senala{el recuadro de la derecha, recorriendo los cuatro bloques con el dedo: fecha, geografía,
-perfil y ---al final--- la medida CANTIDAD. Detenerse en la medida, porque es la idea que sostiene
-toda la presentación.}
-\cambio{``Para trabajarlo construimos tres capas de cómputo y una base de datos.''}
-
-% --- 3
-\subsection*{Lámina 3 · Qué se construyó --- 35 s (Sergio)}
-\dice{``Sobre ese dataset hicimos 25 consultas con objetivos distintos: cinco con RDD y mapReduce,
-catorce con la API de DataFrame y seis con vistas temporales y SQL. Además lo cargamos en
-PostgreSQL 16 con un modelo estrella de nueve tablas, con su ETL documentado, y exportamos los
-resultados de las últimas consultas a Excel usando Spark.''}
-\senala{primero la columna izquierda (las tres capas), después la derecha (la base de datos) y al
-final la línea de versiones al pie: ``esas son las versiones de clase''.}
-\cambio{``Antes de las consultas, un dato que cambia todas las cuentas.''}
-
-% --- 4
-\subsection*{Lámina 4 · El dato que cambia todas las cuentas --- 45 s (Sergio)}
-\dice{``Tenemos 93,831 filas, pero representan 121,427 personas. El 83.3\,\% de los registros trae
-una sola persona, y el máximo es 18 personas en un mismo hecho. Por eso ninguna consulta cuenta
-filas: todas suman la columna CANTIDAD. Contar filas subestimaría el fenómeno en casi 27,600
-personas. Y hay un detalle que sí es de política pública: 1,400 hechos con cinco o más víctimas
-concentran 9,188 personas, el 7.6\,\% del total. Ahí es donde se justifica un protocolo de búsqueda
-grupal.''}
-\senala{la tabla de la izquierda en las filas ``Personas'' y ``Máximo en un hecho''; luego bajar a
-la frase ``la cola es donde está el riesgo'' y señalar el 9,188.}
-\cambio{``Con esa unidad entendida, veamos la serie completa.''}
-
-% --- 5
-\subsection*{Lámina 5 · La serie anual --- 40 s (Arbués)}
-\dice{``En 2019 se registraron 26,331 personas; en 2020 caen a 18,481, casi un 30\,\% menos; y
-aunque 2021 repunta a 20,141, la serie nunca vuelve al nivel inicial. En 2024 hay 19,420, todavía
-26\,\% por debajo de 2019. Es decir, el efecto de 2020 no fue un bache: cambió el nivel de la
-serie.''}
-\senala{la barra de 2019 y la de 2020, una junto a otra; después la línea imaginaria del nivel de
-2019 y cómo las barras de 2021 a 2024 quedan todas por debajo.}
-\cambio{``¿Quiénes son esas personas?''}
-
-% --- 6
-\subsection*{Lámina 6 · Hallazgo 1 --- 50 s (Sergio)}
-\dice{``El perfil es muy marcado: las adolescentes mujeres concentran 51,021 personas, el 42\,\%
-de todos los casos del país. El siguiente grupo, adolescentes hombres, tiene 13,309: la brecha es
-de casi cuatro a uno. Y hay un dato adicional que refuerza la lectura: en los registros de mujeres
-la dispersión del número de víctimas por hecho es 1.05, frente a 0.60 en hombres. Es decir, las
-mujeres no solo aparecen más: aparecen en grupos.''}
-\senala{la fila resaltada de la tabla (Adolescente--F) con el 42.02; después el ``casi 4 a 1'' del
-texto derecho y, al final, la línea de la desviación 1.05 vs 0.60.}
-\cambio{``Y ese peso cambia según el territorio.''}
-
-% --- 7
-\subsection*{Lámina 7 · Hallazgo 2 --- 45 s (Arbués)}
-\dice{``En Madre de Dios, 72.2\,\% de las desapariciones son de menores de 18 años: 473 de 655.
-En Lima Metropolitana, 50.6\,\%. La diferencia es de más de 22 puntos porcentuales. El patrón se
-repite en Ucayali, Loreto, Cajamarca y Huánuco: mientras más rural y amazónica la región, mayor el
-peso relativo de los menores. La consecuencia práctica: si se prioriza por volumen absoluto se
-refuerza Lima; si se prioriza por riesgo relativo, el mapa cambia.''}
-\senala{primero la barra más larga (Madre de Dios 72.21) y la más corta (Lima Metropolitana 50.02);
-después recorrer el bloque ``Lectura'' de la derecha, terminando en ``riesgo relativo''.}
-\cambio{``El tercer hallazgo es de calendario.''}
-
-% --- 8
-\subsection*{Lámina 8 · Hallazgo 3 --- 40 s (Sergio)}
-\dice{``Existe estacionalidad, moderada pero consistente. Si no hubiera patrón, cada mes tendría
-8.33\,\% del total. Diciembre llega a 9.49\,\% ---un índice de 1.14--- y febrero a 9.16\,\%;
-abril y junio bajan a 7.25 y 7.33. La amplitud es de 2.24 puntos. Por trimestres, el cuarto y el
-primero son los más cargados, y el segundo el más flojo.''}
-\senala{la línea punteada del 8.33\,\% como referencia, y luego los dos picos (diciembre, febrero)
-y los dos valles (abril, junio) sobre la línea naranja.}
-\cambio{``Con el calendario claro, veamos dónde ocurre.''}
-
-% --- 9
-\subsection*{Lámina 9 · Hallazgo 4 --- 40 s (Arbués)}
-\dice{``San Juan de Lurigancho encabeza con 4,775 personas, seguido de Lima, San Martín de Porres,
-Callao y Ate: siete de los diez primeros son distritos de Lima Norte y Este. Por región natural,
-la costa concentra 65.6\,\% de las personas pero en solo 567 ubigeos; la sierra tiene 28.2\,\% y
-está repartida en 804 ubigeos: el fenómeno está mucho más disperso. La selva pesa 6.1\,\%. Y lo
-importante: el ranking de 2024 es casi el mismo que el acumulado, así que la focalización no
-cambia de un año a otro.''}
-\senala{la tabla de distritos (las tres primeras filas) y luego el bloque de regiones, marcando
-``567 ubigeos'' contra ``804 ubigeos''.}
-\cambio{``Dentro de esa estabilidad, hay un año que se comporta distinto.''}
-
-% --- 10
-\subsection*{Lámina 10 · 2020: el trimestre que cortó la serie --- 40 s (Sergio)}
-\dice{``El cuarto trimestre de 2019 fue el pico del periodo, con 7,164 personas. El segundo
-trimestre de 2020 cae a 2,485: 65\,\% menos. Después hay un rebote fuerte en el tercer trimestre,
-pero el mejor trimestre reciente, el cuarto de 2024 con 5,613, sigue 22\,\% por debajo del pico.
-Además, de los 60 meses comparables contra su año anterior, 21 suben y 39 bajan: las caídas son
-frecuentes, pero los repuntes son más grandes.''}
-\senala{las filas resaltadas de la tabla (2019-T4 y 2020-T2) y luego la comparación final
-``2024-T4 vs 2019-T4''.}
-\cambio{``Todo esto se sostiene en una base de datos que armamos nosotros.''}
-
-% --- 11
-\subsection*{Lámina 11 · Modelo estrella y ETL --- 50 s (Arbués)}
-\dice{``El dataset ya viene en forma de cubo, así que el modelo natural es una estrella: una tabla
-de hechos con la medida y ocho dimensiones alrededor. El ETL tiene tres pasos: extracción del CSV a
-una tabla de staging con COPY; transformación ---vaciar categóricas se convierten en la categoría
-NO ESPECIFICA, el ubigeo se normaliza a seis dígitos y se derivan región natural, periodo y grupo
-etario---; y llenado, con dimensiones por DISTINCT y hechos con cantidad positiva, todo en una
-transacción. Un hallazgo de calidad: el ubigeo 150121 aparece con dos nombres, Pueblo Libre y su
-antiguo Magdalena Vieja; sin deduplicar, los joins sumaban 82 personas de más.''}
-\senala{el centro del diagrama (la tabla de hechos con ``93,831 filas'') y luego las ocho cajas
-alrededor; al final, subrayar el bloque amarillo del ubigeo 150121.}
-\cambio{``¿Cómo sabemos que todo esto está bien? Contrastando.''}
-
-% --- 12
-\subsection*{Lámina 12 · Validación --- 35 s (Sergio)}
-\dice{``La misma cifra aparece en las cuatro capas: 121,427 personas en RDD, en DataFrame, en
-PostgreSQL y también al restaurar el dump en una base vacía. Además el orden de departamentos es
-idéntico en Spark y en la vista SQL: Lima Metropolitana, Junín, Cusco, Arequipa, Lambayeque. Y los
-joins externos sirven de control: no hay ubigeos sin registros, no hay meses sin datos y los 26
-departamentos tienen víctimas menores y adultas.''}
-\senala{la columna de la derecha de la tabla, bajando por los cuatro 121,427; después la línea de
-departamentos.}
-\cambio{``Con eso, las conclusiones.''}
-
-% --- 13
-\subsection*{Lámina 13 · Conclusiones --- 40 s (Arbués)}
-\dice{``Cinco ideas. Uno: el perfil es definido, adolescentes mujeres con el 42\,\% del total.
-Dos: el riesgo relativo de los menores crece con la ruralidad, de 72.2\,\% en Madre de Dios a
-50.6\,\% en Lima. Tres: 2020 cortó la serie y no se recuperó. Cuatro: la geografía del problema es
-estable, con la concentración en Lima Norte y Este. Cinco, en lo técnico: las tres capas cuadran en
-121,427 personas y el modelo estrella reproduce consulta por consulta los resultados de Spark.''}
-\senala{cada número de la lista mientras se nombra; no leer la lista completa de corrido.}
-\cambio{``Y dejamos todo reproducible.''}
-
-% --- 14
-\subsection*{Lámina 14 · Referencias y reproducibilidad --- 15 s (Sergio)}
-\dice{``La fuente, los papers de RDD y Spark SQL, Kimball para el modelo dimensional, y el
-repositorio con el código: cualquiera puede correr las 25 consultas con dos scripts.''}
-\senala{la primera referencia (el dataset) y el enlace del repositorio al pie.}
-\cambio{``Gracias.''}
-
-% --- 15
-\subsection*{Lámina 15 · Cierre --- 10 s (ambos)}
-\dice{``Gracias. Quedamos atentos a sus preguntas.''}
-\senala{nada; mirar al jurado, no a la pantalla.}
-
-\section*{Preguntas probables y respuesta corta}
-
-\begin{enumerate}[label=\textbf{P\arabic*.}, leftmargin=2em]
-  \item \textbf{¿Por qué la medida no es el conteo de filas?} Porque cada fila es un cruce
-        agregado: 83.3\,\% trae una persona, pero el máximo es 18. Sumar filas da 93,831; sumar
-        CANTIDAD da 121,427, que es el número de personas.
-  \item \textbf{¿Cómo trataron los nulos?} No se imputó nada: las categóricas vacías pasaron a
-        \texttt{NO ESPECIFICA}, que se conserva en todos los agregados. Nivel educativo y
-        ocupación faltan en 64.7 y 64.8\,\% de las filas, y se advierte en cada interpretación.
-  \item \textbf{¿Por qué PostgreSQL y no solo Spark?} Porque el enunciado pide la base: el modelo
-        estrella permite auditar el ETL y contrastar los totales. La vista
-        \texttt{v\_desaparicion} reproduce los resultados de Spark.
-  \item \textbf{¿Qué pasa si el dataset está tomado por otro grupo?} Se publica como registro
-        independiente en la PNDA, con diccionario y metadatos propios; está registrado en el
-        cuadro de temas del curso y el detalle está en la sección 2 del informe.
-  \item \textbf{¿Qué es ``media'' en el punto 3-b?} Se interpretó como \emph{mediana} y así se
-        declara: el resultado es 1 persona por hecho, frente a un promedio de 1.29.
-  \item \textbf{¿Los tres MapReduce de 3-c están realmente encadenados?} Sí: el segundo job usa
-        el resultado del primero y el tercero hace el join de ambos agregados; sus salidas
-        intermedias se ven en el log de la consulta.
-\end{enumerate}
-
-\section*{Antes de exponer}
-
-\begin{itemize}
-  \item Abrir \texttt{presentacion.pdf} en modo presentación y probar el proyector con 5 minutos
-        de margen; el PDF no depende de internet.
-  \item Tener a mano \texttt{informe/informe.pdf} en la página 12 (panorama general) por si piden
-        una figura en detalle.
-  \item No leer las láminas: las cifras clave son 121,427 · 42\,\% · 72.2 vs 50.6 · 65\,\% de
-        caída en 2020-T2.
-  \item Cronometrar el ensayo completo una vez con cada expositor; los cambios de lámina son 9 y
-        el reparto ya está balanceado (Arbués 6 láminas, Sergio 6, cierre compartido).
-\end{itemize}
-
+\clearpage
+\tableofcontents
+\clearpage
+\section{Versión explicada: datos y recorrido general}
+\input{guion/detallado/01-datos}
+\section{Versión explicada: Scala y MapReduce}
+\input{guion/detallado/02-rdd}
+\section{Versión explicada: DataFrame y vistas}
+\input{guion/detallado/03-consultas-principales}
+\section{Versión explicada: almacenamiento, entrega y cierre}
+\input{guion/detallado/04-almacenamiento}
+\section{Versión explicada: todas las consultas de anexo}
+\input{guion/detallado/05-anexos-dataframe}
+\input{guion/detallado/06-anexos-vistas}
+\section{Versión explicada: respaldo técnico y fuentes}
+\input{guion/detallado/07-respaldo}
+\clearpage
+\input{guion/01-recorrido}
+\clearpage
+\input{guion/02-ampliaciones}
+\clearpage
+\input{guion/03-anexos-y-preguntas}
 \end{document}

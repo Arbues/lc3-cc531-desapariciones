@@ -1,0 +1,32 @@
+\begin{frame}[label=q3c2]{3c.2 · Decimales: extranjeros por año}
+  \small
+  \pregunta{¿Qué porcentaje anual corresponde a nacionalidades extranjeras y cuáles aportan más al acumulado?}
+  \entrada{RDD; $a$ = año, $n$ = nacionalidad, $c$ = cantidad. Extranjeros excluye PERÚ y NO ESPECIFICA.}
+  \begin{columns}[T,onlytextwidth]
+    \column{0.55\textwidth}
+    \textbf{Map y Reduce de cada operación}
+    \parmr{A: total}{$(a,c)$\\Todas las filas}
+      {\texttt{reduceByKey(\_+\_)}\\$(a,T_a)$: total anual}
+    \parmr{B: extranjeros}{$(a,c)$\\Solo extranjeros}
+      {\texttt{reduceByKey(\_+\_)}\\$(a,E_a)$: extranjeros por año}
+    \parmr{C: apoyo}{$(n,c)$\\Solo extranjeros}
+      {\texttt{reduceByKey(\_+\_)}\\Total por nacionalidad}
+    \column{0.42\textwidth}
+    \textbf{Salida}\\[5pt]
+    \footnotesize
+    \begin{tabular}{@{}lrrr@{}}
+      \toprule Año & Total & Extranjeros & \%\\\midrule
+      2019 & 26\,331 & 434 & 1.65\\
+      2023 & 18\,192 & 525 & 2.89\\
+      2024 & 19\,420 & 528 & 2.72\\\bottomrule
+    \end{tabular}
+    \par\vspace{6pt}\textbf{Cálculo después de reducir}\\
+    Unir A y B por año: $p_a=100E_a/T_a$.
+    \par\vspace{5pt}Apoyo C: Venezuela 2\,151; Colombia 124.
+    \par\vspace{2pt}
+    \codigo{rdd/03c_2_extranjeros_por_anio}{20}{20}
+  \end{columns}
+  \respuesta{2024: 528 extranjeros, 2.72\% del total y $-0.17$ puntos frente a 2023. C aporta el perfil por nacionalidad.}
+  \origen{rdd}{03c_2_extranjeros_por_anio}
+  \note{35 s. Leer Map y después Reduce por cada fila. A agrupa por año, B por año tras filtrar y C por nacionalidad como apoyo. El porcentaje se calcula después de unir A y B.}
+\end{frame}

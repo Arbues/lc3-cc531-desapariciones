@@ -1,0 +1,27 @@
+\begin{frame}[label=q5c3]{5c.3 · DataFrame: RIGHT OUTER JOIN}
+  \small
+  \pregunta{¿Hay meses sin registros entre enero de 2019 y diciembre de 2024?}
+  \entrada{Agregados por \texttt{anio, mes} a la izquierda; calendario independiente de 72 meses a la derecha.}
+  \flujo{\texttt{groupBy(anio,mes)}}{\texttt{RIGHT OUTER JOIN}\\Conservar calendario}{\texttt{coalesce} a cero\\Filtrar total = 0}{72 meses presentes\\0 meses sin registros}
+  \begin{columns}[T,onlytextwidth]
+    \column{0.55\textwidth}
+    \textbf{Código Scala original (fragmento)}
+    \codigo{sql/05c_3_right_calendario}{16}{18}
+    \codigo{sql/05c_3_right_calendario}{21}{21}
+    \column{0.42\textwidth}
+    \textbf{Salida}\\[5pt]
+    {\footnotesize
+\begin{tabular}{@{}ll@{}}
+\toprule
+Control & Resultado\\
+\midrule
+Meses conservados & 72\\
+Meses sin registros & 0\\
+Personas & 121\,427\\
+\bottomrule
+\end{tabular}
+    }
+  \end{columns}
+  \respuesta{Todos los meses del calendario tienen registros. A diferencia del catálogo geográfico, el calendario se genera sin depender de las filas observadas.}
+  \origen{sql}{05c_3_right_calendario}
+\end{frame}

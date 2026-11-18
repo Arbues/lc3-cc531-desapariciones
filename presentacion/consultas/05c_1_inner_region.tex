@@ -1,0 +1,27 @@
+\begin{frame}[label=q5c1]{5c.1 · DataFrame: INNER JOIN geográfico}
+  \small
+  \pregunta{¿Cómo se distribuye el total entre las regiones definidas por el catálogo geográfico del proyecto?}
+  \entrada{Agrupar las denuncias por \texttt{ubigeo}. Unir con \texttt{dimGeografia}, una fila por clave; usar \texttt{region}.}
+  \flujo{\texttt{groupBy(ubigeo)}\\Suma de personas}{\texttt{INNER JOIN}\\Clave: ubigeo}{\texttt{groupBy(region)}\\Sumar personas y registros}{3 regiones\\Total 121\,427}
+  \begin{columns}[T,onlytextwidth]
+    \column{0.55\textwidth}
+    \textbf{Código Scala original (fragmento)}
+    \codigo{sql/05c_1_inner_region}{15}{18}
+    \column{0.42\textwidth}
+    \textbf{Salida}\\[5pt]
+    {\footnotesize
+\begin{tabular}{@{}lll@{}}
+\toprule
+Región & Personas & Ubigeos\\
+\midrule
+Costa & 79\,666 & 567\\
+Sierra & 34\,301 & 804\\
+Selva & 7\,460 & 135\\
+\bottomrule
+\end{tabular}
+    }
+  \end{columns}
+  \respuesta{Costa reúne 79\,666 personas. El total se conserva porque el catálogo tiene una fila por ubigeo y no hay claves nulas en la salida guardada.}
+  \origen{sql}{05c_1_inner_region}
+  \note{25 s. Señalar la clave de join y explicar por qué deduplicar la dimensión evita inflar el total.}
+\end{frame}

@@ -1,0 +1,26 @@
+\begin{frame}[label=q5a4]{5a.4 · DataFrame: nacionalidad y edad}
+  \small
+  \pregunta{¿Qué combinaciones de nacionalidad extranjera y rango de edad reúnen al menos 30 personas?}
+  \entrada{Filtrar nacionalidades distintas de PERÚ y NO ESPECIFICA. Usar \texttt{nacionalidad}, \texttt{rango\_edad}, \texttt{cantidad}.}
+  \flujo{Excluir PERÚ y\\NO ESPECIFICA}{\texttt{groupBy}\\Nacionalidad y edad}{\texttt{SUM(cantidad)}\\Total >= 30}{9 combinaciones\\Orden descendente}
+  \begin{columns}[T,onlytextwidth]
+    \column{0.55\textwidth}
+    \textbf{Código Scala original (fragmento)}
+    \codigo{sql/05a_4_nacionalidad_rangoedad}{10}{17}
+    \column{0.42\textwidth}
+    \textbf{Salida}\\[5pt]
+    {\footnotesize
+\begin{tabular}{@{}lll@{}}
+\toprule
+Nacionalidad & Edad & Personas\\
+\midrule
+Venezuela & 12--17 & 1\,009\\
+Venezuela & 18--29 & 595\\
+Colombia & 18--29 & 52\\
+\bottomrule
+\end{tabular}
+    }
+  \end{columns}
+  \respuesta{La combinación con más personas es Venezuela y 12--17 años. Se compara el volumen registrado, sin estimar tasas por población extranjera.}
+  \origen{sql}{05a_4_nacionalidad_rangoedad}
+\end{frame}

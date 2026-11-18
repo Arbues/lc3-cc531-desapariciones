@@ -1,0 +1,27 @@
+\begin{frame}[label=q5a3]{5a.3 · DataFrame: región y periodo}
+  \small
+  \pregunta{¿Qué combinaciones de región y periodo superan las 10\,000 personas reportadas?}
+  \entrada{93\,831 filas. \texttt{region} y \texttt{periodo} derivados en el esquema, más \texttt{cantidad}.}
+  \flujo{Región y periodo\\Derivados del código}{\texttt{groupBy}\\Dos columnas}{\texttt{SUM(cantidad)}\\Total > 10\,000}{5 combinaciones\\Orden descendente}
+  \begin{columns}[T,onlytextwidth]
+    \column{0.55\textwidth}
+    \textbf{Código Scala original (fragmento)}
+    \codigo{sql/05a_3_region_periodo}{11}{17}
+    \column{0.42\textwidth}
+    \textbf{Salida}\\[5pt]
+    {\footnotesize
+\begin{tabular}{@{}lll@{}}
+\toprule
+Región & Periodo & Personas\\
+\midrule
+Costa & 2022--2024 & 37\,204\\
+Costa & 2020--2021 & 24\,603\\
+Costa & 2019 & 17\,859\\
+Sierra & 2022--2024 & 15\,981\\
+\bottomrule
+\end{tabular}
+    }
+  \end{columns}
+  \respuesta{Costa 2022--2024 tiene el mayor acumulado. Los periodos duran uno, dos y tres años: comparar estos totales no equivale a comparar promedios anuales.}
+  \origen{sql}{05a_3_region_periodo}
+\end{frame}

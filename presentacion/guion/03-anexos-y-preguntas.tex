@@ -1,0 +1,36 @@
+\section{Preguntas del docente: respuestas literales}
+\subsection{¿Por qué no usan COUNT para hablar de personas?}
+\decir{Porque el dataset ya está agregado. COUNT cuenta combinaciones de tiempo, lugar y perfil; SUM de CANTIDAD agrega personas reportadas dentro de esas combinaciones. Para mostrar la estructura usamos COUNT y para medir el volumen reportado usamos SUM.}
+
+\subsection{¿Dónde están las tres operaciones de 3c?}
+\decir{En la ficha distinguimos las agregaciones principales de la reducción de control o apoyo. Por ejemplo, en tres c dos agregamos total anual, extranjeros por año y extranjeros por nacionalidad. El porcentaje se calcula después con los agregados. Podemos abrir el script y señalar cada operación.}
+\apoyo{Si pide expresamente tres MapReduce consecutivos del indicador:}
+\decir{El código actual tiene esas agregaciones en ramas principales y de apoyo; no tres reducciones consecutivas del porcentaje. Para cumplir esa dependencia estricta habría que adaptar el flujo.}
+
+\subsection{¿El dataset demuestra que las personas desaparecen juntas?}
+\decir{No. La fila agrega personas que comparten fecha mensual, territorio y perfil. Sin un identificador de incidente no podemos establecer que desaparecieron juntas. La cantidad mayor que uno describe el conteo del cruce agregado.}
+
+\subsection{¿Cómo verifican que un JOIN no duplicó personas?}
+\decir{Comprobamos que el catálogo tenga una fila por clave y contrastamos la suma antes y después. El ubigeo con dos nombres se colapsa antes de unir. La salida del INNER JOIN y los controles de PostgreSQL conservan el total nacional.}
+
+\subsection{¿Por qué la región no implica ruralidad?}
+\decir{Porque la región es una clasificación por departamento definida en el código. El dataset no incorpora una medida de ruralidad ni un denominador poblacional. Nuestro resultado describe la distribución según esa agrupación, sin convertirla en una medida de riesgo.}
+
+\subsection{¿Por qué la base tiene 93831 hechos y no 121427?}
+\decir{Cada fila original se conserva como un registro de la tabla de hechos. La columna cantidad mantiene el número de personas de ese registro. Por eso el conteo de hechos reproduce las filas del CSV y la suma de cantidad reproduce las personas contabilizadas.}
+
+\subsection{¿Esto demuestra procesamiento en varios equipos?}
+\decir{La demo utiliza Spark en modo local con dos hilos. Permite mostrar el programa y sus operaciones dentro del motor, pero no demuestra escalamiento entre varios equipos. Los diagramas describen el flujo lógico de los datos.}
+
+\section{Guion hablado para una demo de tres minutos}
+\apoyo{Preparar Spark y cargar el esquema antes. Los comandos están en DEMO.md. La demo se realiza si se concede tiempo adicional.}
+\subsection{Inicio y control de datos}
+\decir{Voy a mostrar cómo una pregunta de la presentación se obtiene desde los datos. Este entorno utiliza Spark tres punto tres punto dos. Primero comprobamos el número de filas y la suma de CANTIDAD. Así distinguimos los registros del total de personas contabilizadas.}
+\subsection{Una consulta RDD}
+\decir{Ahora cargo la consulta de menores por departamento. Aquí se suma el total territorial, aquí se filtran y suman los menores, y aquí se unen ambos resultados para calcular el porcentaje. La salida permite leer Madre de Dios y contrastarlo con la cifra de la presentación. Al final aparecen los controles nacionales.}
+\subsection{Una consulta Spark SQL}
+\decir{Después cargo la consulta de perfil por edad y sexo. Estas vistas permiten unir las denuncias con las categorías de edad y sexo. El resultado vuelve a mostrar adolescentes mujeres con cincuenta y un mil veintiuna personas y cuarenta y dos coma cero dos por ciento.}
+\subsection{Cierre de la demo}
+\decir{Con esto mostramos la entrada, las operaciones y la respuesta dentro del motor. Si desea revisar almacenamiento, podemos abrir la copia de PostgreSQL y contrastar el conteo y la suma. Los Excel existentes permiten revisar también la entrega tabular.}
+\subsection{Si hay un problema de entorno}
+\decir{En este momento el entorno de ejecución no está disponible. Puedo mostrar el script y la salida que quedó guardada de la ejecución anterior. Esta salida es evidencia previa; no la estoy presentando como una ejecución en vivo.}

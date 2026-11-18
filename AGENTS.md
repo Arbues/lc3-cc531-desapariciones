@@ -70,7 +70,7 @@ sql/dump-denuncias.sql     dump de la base cargada
 evidencias/salidas/*.txt   salida real de cada consulta
 evidencias/pg-*.png        capturas de la base funcionando
 informe/                   informe.tex + informe.pdf (20 páginas)
-presentacion/              presentacion.pdf (37 láminas) + guion-exposicion.pdf (desfasado)
+presentacion/              presentacion.pdf (37 láminas) + guion-exposicion.pdf (33 páginas, reparto por bloques)
 presentacion/DEMO.md       qué abrir, qué ejecutar y qué decir en la demo de 3 min
 docs/mapa-consultas.md     las 25 preguntas y por qué no se repiten
 ```

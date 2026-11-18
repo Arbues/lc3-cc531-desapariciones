@@ -10,7 +10,7 @@ Esta copia permite leer el guion actualizado sin compilar LaTeX. La fuente edita
 
 **Duración:** la versión explicada tiene unas 11 000 palabras habladas, aproximadamente 75–95 minutos sin pausas ni demo. Sirve para estudiar y defender el trabajo. Para diez minutos, utilizar la ruta breve al final y ensayar con cronómetro; no leer ambas versiones consecutivamente.
 
-**PDF:** el PDF de 33 páginas incorporado desde el remoto contiene el guion ampliado, pero conserva el reparto anterior de expositores. El nuevo reparto por bloques está en esta copia y en las fuentes TEX; no se recompiló este ajuste.
+**PDF:** el PDF de 33 páginas se recompiló por solicitud explícita del usuario y contiene el guion ampliado con el nuevo reparto por bloques, igual que esta copia y las fuentes TEX.
 
 **Demo:** [DEMO.md](DEMO.md) contiene los comandos y salidas esperadas. La configuración Docker está preparada; no se ejecutó durante esta revisión.
 

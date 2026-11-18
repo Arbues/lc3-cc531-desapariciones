@@ -1,7 +1,6 @@
 # Presentación y guion LC3
 
-- presentacion.tex: Beamer de 38 láminas, con 19 principales y el resto como anexos.
-- secciones/06-modelo-completo.tex: diagrama ER completo del punto 4 en la lámina 38, enlazado desde la lámina 17; 10 tablas, 47 columnas, tipos, PK/FK, nulabilidad y vista derivada.
+- presentacion.tex: Beamer de 37 láminas, con 19 principales y el resto como anexos.
 - estilo.tex: estilo, diagramas TikZ y carga de fragmentos del código original.
 - consultas/ y secciones/: contenido de las láminas.
 - guion-exposicion.tex: entrada del guion literal para ambos expositores.
@@ -20,7 +19,7 @@ necesita ensayo cronometrado. No se deben leer ambas consecutivamente en diez mi
 
 ## Estado de los PDF
 
-presentacion.pdf tiene 38 láminas. guion-exposicion.pdf tiene 33 páginas con las
+presentacion.pdf tiene 37 láminas. guion-exposicion.pdf tiene 33 páginas con las
 37 láminas explicadas, la ruta breve, las ampliaciones y las respuestas al docente.
 El PDF del guion ya incluye el nuevo reparto por bloques: Arbués presenta las
 láminas 1–10 y Sergio las 11–19, con un solo relevo. Se recompiló por solicitud
@@ -37,3 +36,5 @@ Para regenerar ambos PDF, ejecutar desde esta carpeta:
 Los fragmentos de las láminas se leen de ../code/; conservar la estructura del
 repositorio al copiar o compilar. Las cifras proceden de ../evidencias/salidas/
 y de los controles PostgreSQL; esta revisión no cambia las consultas ni sus resultados.
+
+El punto 4 (lámina 17) utiliza el mismo diagrama TikZ del informe, con todos sus campos. El PDF se recompiló con este diagrama y los datos de autor actualizados.

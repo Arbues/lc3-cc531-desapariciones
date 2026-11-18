@@ -4,11 +4,13 @@ Arbués Enrique Pérez Villanueva y Sergio Pezo · noviembre de 2026.
 
 Esta copia permite leer el guion actualizado sin compilar LaTeX. La fuente editable es [guion-exposicion.tex](guion-exposicion.tex), que incluye los archivos de [guion/detallado](guion/detallado/).
 
+**Reparto con un solo relevo:** Arbués presenta las láminas 1–10 (objetivo de la ruta breve: 4:40). Sergio continúa con las láminas 11–19 (4:50), incluido el cierre, y presenta los anexos si se abren después. Ambos pueden responder preguntas. Se conserva el orden de las diapositivas.
+
 **Cómo usarlo:** leer en voz alta únicamente los bloques «Texto para decir». Las indicaciones orientan el puntero y las pausas. Las transiciones entre láminas y expositores están incluidas.
 
 **Duración:** la versión explicada tiene unas 11 000 palabras habladas, aproximadamente 75–95 minutos sin pausas ni demo. Sirve para estudiar y defender el trabajo. Para diez minutos, utilizar la ruta breve al final y ensayar con cronómetro; no leer ambas versiones consecutivamente.
 
-**PDF:** el PDF existente es la versión anterior de 12 páginas. No se recompiló en esta revisión, conforme a la instrucción actual de no compilar después de los cambios.
+**PDF:** el PDF de 33 páginas incorporado desde el remoto contiene el guion ampliado, pero conserva el reparto anterior de expositores. El nuevo reparto por bloques está en esta copia y en las fuentes TEX; no se recompiló este ajuste.
 
 **Demo:** [DEMO.md](DEMO.md) contiene los comandos y salidas esperadas. La configuración Docker está preparada; no se ejecutó durante esta revisión.
 
@@ -66,11 +68,11 @@ El segundo bloque dice «Unidad de análisis». Una fila contiene un conteo para
 
 **Texto para decir:**
 
-Finalmente, el recuadro «Qué podemos interpretar» fija el alcance de las respuestas. Podemos describir cómo se distribuyen y cambian los conteos reportados. No podemos deduplicar personas, porque no hay identificadores individuales; tampoco establecer que desaparecieron juntas, explicar causas o calcular riesgo poblacional. Para una tasa de riesgo necesitaríamos, además, la población expuesta de cada grupo. Esta distinción acompañará todas las consultas. Sergio explicará ahora cómo se leen las columnas.
+Finalmente, el recuadro «Qué podemos interpretar» fija el alcance de las respuestas. Podemos describir cómo se distribuyen y cambian los conteos reportados. No podemos deduplicar personas, porque no hay identificadores individuales; tampoco establecer que desaparecieron juntas, explicar causas o calcular riesgo poblacional. Para una tasa de riesgo necesitaríamos, además, la población expuesta de cada grupo. Esta distinción acompañará todas las consultas. Ahora revisaremos cómo se leen las columnas.
 
 ## Lámina 4: Los trece campos y las reglas de lectura
 
-**Expone:** Sergio. Versión explicada.
+**Expone:** Arbués. Versión explicada.
 
 > **Indicación, no leer:** Seguir todas las filas de la tabla y terminar en Limpieza y Derivadas.
 
@@ -92,7 +94,7 @@ Al pie aparecen los nombres normalizados de Scala: anio, mes, ubigeo, departamen
 
 ## Lámina 5: Leer todas las ramas del flujo
 
-**Expone:** Sergio. Versión explicada.
+**Expone:** Arbués. Versión explicada.
 
 > **Indicación, no leer:** Comenzar en CSV; seguir RDD, DataFrame y PostgreSQL. Las dos flechas que salen de DataFrame llegan a API y SQL.
 
@@ -114,7 +116,7 @@ Desde DataFrame sale otra flecha hacia «cinco e a cinco f: vistas y spark punto
 
 **Texto para decir:**
 
-La rama inferior del CSV llega a «PostgreSQL dieciséis: extracción, transformación y carga, ETL». Esa flecha representa una carga independiente a la base. No hay una flecha desde PostgreSQL hacia las consultas Spark. Finalmente, el bloque inferior recuerda cómo leer los diagramas siguientes: Map crea claves y valores; Reduce los combina; join reúne agregados por clave y un map posterior calcula el porcentaje. Arbués mostrará ahora ese patrón con máximos y mínimos.
+La rama inferior del CSV llega a «PostgreSQL dieciséis: extracción, transformación y carga, ETL». Esa flecha representa una carga independiente a la base. No hay una flecha desde PostgreSQL hacia las consultas Spark. Finalmente, el bloque inferior recuerda cómo leer los diagramas siguientes: Map crea claves y valores; Reduce los combina; join reúne agregados por clave y un map posterior calcula el porcentaje. A continuación veremos ese patrón con máximos y mínimos.
 
 ## Lámina 6: 3a: de una fila a los extremos por sexo
 
@@ -136,11 +138,11 @@ La siguiente flecha llega a «dos, Reduce: máximo y mínimo por sexo». ReduceB
 
 **Texto para decir:**
 
-La última flecha lleva a «Salida: extremos y ubicación». Las otras reducciones del script conservan una tupla más amplia con cantidad, lugar y fecha. La tabla muestra F: máximo dieciocho y mínimo uno; M: máximo catorce y mínimo uno; y NO ESPECIFICA: máximo tres y mínimo uno. Un máximo F está en Villa María del Triunfo, noviembre de 2019; uno M está en Santiago, Cusco, octubre de 2019. Si hay empate, se conserva un registro extremo; no enumeramos todos los empatados. Ya sabemos los límites: ahora Sergio explicará qué ocurre entre ellos.
+La última flecha lleva a «Salida: extremos y ubicación». Las otras reducciones del script conservan una tupla más amplia con cantidad, lugar y fecha. La tabla muestra F: máximo dieciocho y mínimo uno; M: máximo catorce y mínimo uno; y NO ESPECIFICA: máximo tres y mínimo uno. Un máximo F está en Villa María del Triunfo, noviembre de 2019; uno M está en Santiago, Cusco, octubre de 2019. Si hay empate, se conserva un registro extremo; no enumeramos todos los empatados. Ya sabemos los límites: ahora explicaremos qué ocurre entre ellos.
 
 ## Lámina 7: 3b: cómo se construyen los estadísticos
 
-**Expone:** Sergio. Versión explicada.
+**Expone:** Arbués. Versión explicada.
 
 > **Indicación, no leer:** Leer los cuatro cuadros y las tres filas Map/Reduce; señalar cada símbolo de las fórmulas.
 
@@ -192,11 +194,11 @@ Después de reducir, join une A y B por departamento. Para cada clave obtenemos 
 
 **Texto para decir:**
 
-En la salida, Madre de Dios tiene cuatrocientos setenta y tres menores de seiscientas cincuenta y cinco personas: setenta y dos coma veintiuno por ciento. Ucayali tiene mil quinientos cuatro de dos mil ciento veintiséis: setenta coma setenta y cuatro por ciento. Lima Metropolitana registra diecinueve mil setecientos cincuenta y uno de treinta y nueve mil cuatrocientos noventa: cincuenta coma cero dos por ciento. El control nacional divide setenta mil ciento setenta y ocho entre ciento veintiún mil cuatrocientas veintisiete y obtiene cincuenta y siete coma setenta y nueve por ciento. El denominador incluye edades no especificadas; no es la población del departamento. Sergio mostrará ahora el mismo principio con nacionalidad y año.
+En la salida, Madre de Dios tiene cuatrocientos setenta y tres menores de seiscientas cincuenta y cinco personas: setenta y dos coma veintiuno por ciento. Ucayali tiene mil quinientos cuatro de dos mil ciento veintiséis: setenta coma setenta y cuatro por ciento. Lima Metropolitana registra diecinueve mil setecientos cincuenta y uno de treinta y nueve mil cuatrocientos noventa: cincuenta coma cero dos por ciento. El control nacional divide setenta mil ciento setenta y ocho entre ciento veintiún mil cuatrocientas veintisiete y obtiene cincuenta y siete coma setenta y nueve por ciento. El denominador incluye edades no especificadas; no es la población del departamento. Aplicaremos ahora el mismo principio a nacionalidad y año.
 
 ## Lámina 9: 3c.2: extranjeros por año y apoyo por nacionalidad
 
-**Expone:** Sergio. Versión explicada.
+**Expone:** Arbués. Versión explicada.
 
 > **Indicación, no leer:** Seguir horizontalmente los tres pares; distinguir la clave año de A/B y la clave nacionalidad de C.
 
@@ -218,7 +220,7 @@ Una vez reducidos A y B, los unimos por año y calculamos p sub a igual a cien p
 
 **Texto para decir:**
 
-El apoyo C registra dos mil ciento cincuenta y una personas de nacionalidad venezolana y ciento veinticuatro de nacionalidad colombiana. Finalmente, dos coma setenta y dos menos dos coma ochenta y nueve da menos cero coma diecisiete puntos porcentuales. Aunque el conteo extranjero crece de quinientos veinticinco a quinientos veintiocho, su participación baja porque también cambia el total anual. Puntos porcentuales es la resta entre porcentajes; no una tasa de crecimiento del conteo. Arbués trasladará esta lógica a los meses.
+El apoyo C registra dos mil ciento cincuenta y una personas de nacionalidad venezolana y ciento veinticuatro de nacionalidad colombiana. Finalmente, dos coma setenta y dos menos dos coma ochenta y nueve da menos cero coma diecisiete puntos porcentuales. Aunque el conteo extranjero crece de quinientos veinticinco a quinientos veintiocho, su participación baja porque también cambia el total anual. Puntos porcentuales es la resta entre porcentajes; no una tasa de crecimiento del conteo. A continuación trasladaremos esta lógica a los meses.
 
 ## Lámina 10: 3c.3: participación mensual, referencia e índice
 
@@ -248,7 +250,7 @@ Después calculamos participación p sub m igual a cien por T sub m dividido ent
 
 **Texto para decir:**
 
-La salida muestra diciembre: once mil quinientas veintidós personas, nueve coma cuarenta y nueve por ciento e índice uno coma catorce. Febrero: once mil ciento dieciocho, nueve coma dieciséis por ciento e índice uno coma diez. Abril: ocho mil ochocientas cinco, siete coma veinticinco por ciento e índice cero coma ochenta y siete. El cuarto trimestre acumula treinta y dos mil seiscientas cincuenta, veintiséis coma ochenta y nueve por ciento. Diciembre queda aproximadamente catorce por ciento por encima de la referencia uniforme; eso no significa que su participación sea catorce por ciento. Tampoco ajustamos por días del mes ni demostramos causas. Concluido el bloque RDD, Sergio pasará a tablas con esquema.
+La salida muestra diciembre: once mil quinientas veintidós personas, nueve coma cuarenta y nueve por ciento e índice uno coma catorce. Febrero: once mil ciento dieciocho, nueve coma dieciséis por ciento e índice uno coma diez. Abril: ocho mil ochocientas cinco, siete coma veinticinco por ciento e índice cero coma ochenta y siete. El cuarto trimestre acumula treinta y dos mil seiscientas cincuenta, veintiséis coma ochenta y nueve por ciento. Diciembre queda aproximadamente catorce por ciento por encima de la referencia uniforme; eso no significa que su participación sea catorce por ciento. Tampoco ajustamos por días del mes ni demostramos causas. Concluido el bloque RDD, doy paso a Sergio, quien continuará con las consultas sobre tablas con esquema.
 
 ## Lámina 11: 5a.1: por qué agrupamos antes de filtrar
 
@@ -288,11 +290,11 @@ El primer cuadro dice «Todos los registros». Su flecha llega a «groupBy: depa
 
 **Texto para decir:**
 
-El fragmento Scala utiliza agg para sumar, as para nombrar personas, desc para indicar orden descendente y limit para seleccionar los quince. En la salida, San Juan de Lurigancho suma cuatro mil setecientas setenta y cinco personas; Lima, tres mil ciento cincuenta y tres; San Martín de Porres, dos mil seiscientas cuarenta y seis; y Callao, dos mil seiscientas cuarenta y dos. Ordenamos personas contabilizadas, no número de filas. El ranking describe volumen reportado y no riesgo por habitante. Para agrupar territorios de otra forma necesitamos unirlos con un catálogo; Arbués explicará esa unión.
+El fragmento Scala utiliza agg para sumar, as para nombrar personas, desc para indicar orden descendente y limit para seleccionar los quince. En la salida, San Juan de Lurigancho suma cuatro mil setecientas setenta y cinco personas; Lima, tres mil ciento cincuenta y tres; San Martín de Porres, dos mil seiscientas cuarenta y seis; y Callao, dos mil seiscientas cuarenta y dos. Ordenamos personas contabilizadas, no número de filas. El ranking describe volumen reportado y no riesgo por habitante. Para agrupar territorios de otra forma necesitamos unirlos con un catálogo; ahora explicaré esa unión.
 
 ## Lámina 13: 5c.1: INNER JOIN y conservación del total
 
-**Expone:** Arbués. Versión explicada.
+**Expone:** Sergio. Versión explicada.
 
 > **Indicación, no leer:** Seguir las cuatro cajas y detenerse en la clave ubigeo antes de leer las regiones.
 
@@ -310,7 +312,7 @@ La siguiente flecha llega a «groupBy región; sumar personas y registros». Una
 
 **Texto para decir:**
 
-Para que el resultado sea válido, el catálogo tiene una fila por ubigeo. Si una clave encontrara dos filas de dimensión, su cantidad se repetiría al unir. Además, la salida guardada no presenta claves nulas, es decir, ausentes, en el control geográfico. Verificamos la suma final para comprobar que no perdimos ni multiplicamos el total. La clasificación regional es la del código por departamento; no mide ruralidad. Sergio continuará con funciones estadísticas sobre esos registros.
+Para que el resultado sea válido, el catálogo tiene una fila por ubigeo. Si una clave encontrara dos filas de dimensión, su cantidad se repetiría al unir. Además, la salida guardada no presenta claves nulas, es decir, ausentes, en el control geográfico. Verificamos la suma final para comprobar que no perdimos ni multiplicamos el total. La clasificación regional es la del código por departamento; no mide ruralidad. Continuaremos con funciones estadísticas sobre esos registros.
 
 ## Lámina 14: 5d.3: promedio, desviación y varianza
 
@@ -332,11 +334,11 @@ La última flecha llega a «tres grupos; medias y dispersiones». En la salida F
 
 **Texto para decir:**
 
-Conviene distinguir los denominadores: la desviación poblacional se obtiene a partir de una varianza dividida entre n, el número de filas del grupo. La varianza muestral divide entre n menos uno. Además, la varianza está en unidades al cuadrado y la desviación vuelve a la escala original mediante la raíz. Por eso no debemos comparar directamente variance con stddev pop ni elevar al cuadrado la cifra mostrada esperando igualdad exacta. La mayor dispersión de F describe conteos agregados; no demuestra desapariciones en grupo. Ahora Arbués explicará cómo esas mismas tablas pueden consultarse mediante vistas SQL.
+Conviene distinguir los denominadores: la desviación poblacional se obtiene a partir de una varianza dividida entre n, el número de filas del grupo. La varianza muestral divide entre n menos uno. Además, la varianza está en unidades al cuadrado y la desviación vuelve a la escala original mediante la raíz. Por eso no debemos comparar directamente variance con stddev pop ni elevar al cuadrado la cifra mostrada esperando igualdad exacta. La mayor dispersión de F describe conteos agregados; no demuestra desapariciones en grupo. Ahora explicaré cómo esas mismas tablas pueden consultarse mediante vistas SQL.
 
 ## Lámina 15: 5e.2: dos JOIN, perfil y porcentaje nacional
 
-**Expone:** Arbués. Versión explicada.
+**Expone:** Sergio. Versión explicada.
 
 > **Indicación, no leer:** Leer las cuatro cajas; marcar ambos JOIN y después el OVER vacío del porcentaje.
 
@@ -358,7 +360,7 @@ El porcentaje divide cada suma entre SUM de SUM de cantidad, OVER paréntesis va
 
 **Texto para decir:**
 
-La última flecha lleva a «dieciocho combinaciones; orden por personas». Adolescentes mujeres reúne cincuenta y un mil veintiuna personas, cuarenta y dos coma cero dos por ciento del total nacional. Adolescentes hombres reúne trece mil trescientas nueve, diez coma noventa y seis por ciento. Adultos hombres reúne doce mil trescientas ochenta y nueve, diez coma veinte por ciento. La fórmula visible multiplica cincuenta y un mil veintiuna por cien y divide entre ciento veintiún mil cuatrocientas veintisiete. Es participación dentro del dataset, no probabilidad individual. Sergio usará ahora filtros para delimitar otro universo de comparación.
+La última flecha lleva a «dieciocho combinaciones; orden por personas». Adolescentes mujeres reúne cincuenta y un mil veintiuna personas, cuarenta y dos coma cero dos por ciento del total nacional. Adolescentes hombres reúne trece mil trescientas nueve, diez coma noventa y seis por ciento. Adultos hombres reúne doce mil trescientas ochenta y nueve, diez coma veinte por ciento. La fórmula visible multiplica cincuenta y un mil veintiuna por cien y divide entre ciento veintiún mil cuatrocientas veintisiete. Es participación dentro del dataset, no probabilidad individual. Usaremos ahora filtros para delimitar otro universo de comparación.
 
 ## Lámina 16: 5f.1: el orden de WHERE, GROUP BY, HAVING y LIMIT
 
@@ -380,11 +382,11 @@ La siguiente flecha conduce a «HAVING SUM mayor o igual a veinte; ORDER BY pers
 
 **Texto para decir:**
 
-La salida muestra San Juan de Lurigancho con trescientas setenta y nueve; Lima con doscientas ochenta y cuatro; Ate con doscientas setenta y una; y Callao con doscientas sesenta y cinco. No deben compararse directamente con los cuatro mil setecientos setenta y cinco del ranking general: este universo comprende solo mujeres de 2024 con edad especificada. Tampoco sería equivalente aplicar cantidad mayor o igual a veinte en WHERE: eso buscaría filas individuales de ese tamaño y no distritos con veinte personas acumuladas. Ya tenemos las respuestas analíticas; Arbués mostrará cómo se conserva su base de datos.
+La salida muestra San Juan de Lurigancho con trescientas setenta y nueve; Lima con doscientas ochenta y cuatro; Ate con doscientas setenta y una; y Callao con doscientas sesenta y cinco. No deben compararse directamente con los cuatro mil setecientos setenta y cinco del ranking general: este universo comprende solo mujeres de 2024 con edad especificada. Tampoco sería equivalente aplicar cantidad mayor o igual a veinte en WHERE: eso buscaría filas individuales de ese tamaño y no distritos con veinte personas acumuladas. Ya tenemos las respuestas analíticas; ahora mostraré cómo se conserva su base de datos.
 
 ## Lámina 17: Ítem 4: cada dimensión del modelo estrella y cada paso ETL
 
-**Expone:** Arbués. Versión explicada.
+**Expone:** Sergio. Versión explicada.
 
 > **Indicación, no leer:** Comenzar en el hecho central; recorrer las cuatro dimensiones izquierdas y las cuatro derechas. Aclarar que las flechas son relaciones, no una secuencia de carga.
 
@@ -414,7 +416,7 @@ A la derecha del diagrama aparece el proceso ETL. Paso uno, «Extraer»: el coma
 
 **Texto para decir:**
 
-El control del ubigeo quince cero uno veintiuno es especialmente importante: aparece con dos nombres. Si conserváramos dos filas de catálogo para esa clave, un JOIN podría multiplicar sus cantidades. Agrupar por ubigeo antes de unir evita esa repetición. Finalmente, SUM de cantidad mantiene ciento veintiún mil cuatrocientas veintisiete tanto en la base cargada como en la evidencia de restauración del dump. Un dump es un archivo de respaldo que permite reconstruir la base. La captura está enlazada como evidencia guardada. Sergio explicará ahora cómo entregamos las tablas de resultados.
+El control del ubigeo quince cero uno veintiuno es especialmente importante: aparece con dos nombres. Si conserváramos dos filas de catálogo para esa clave, un JOIN podría multiplicar sus cantidades. Agrupar por ubigeo antes de unir evita esa repetición. Finalmente, SUM de cantidad mantiene ciento veintiún mil cuatrocientas veintisiete tanto en la base cargada como en la evidencia de restauración del dump. Un dump es un archivo de respaldo que permite reconstruir la base. La captura está enlazada como evidencia guardada. A continuación explicaré cómo entregamos las tablas de resultados.
 
 ## Lámina 18: 5g: de Spark SQL a los seis libros Excel
 
@@ -448,9 +450,9 @@ El registro de ejecución documenta los seis libros escritos desde DataFrames. H
 
 ## Lámina 19: Conectar cada conclusión con su pregunta y evidencia
 
-**Expone:** Ambos. Versión explicada.
+**Expone:** Sergio. Versión explicada.
 
-> **Indicación, no leer:** Arbués lee las tres primeras filas; Sergio las tres restantes y el cierre. Terminar aquí si solo se realiza el recorrido principal.
+> **Indicación, no leer:** Sergio lee todas las filas y realiza el cierre. Terminar aquí si solo se realiza el recorrido principal.
 
 **Texto para decir:**
 
@@ -466,7 +468,7 @@ El bloque inferior explica cómo se sostienen esas respuestas: cada ficha conect
 
 ## Lámina 20: Cómo navegar los anexos
 
-**Expone:** Quien reciba la pregunta. Versión explicada.
+**Expone:** Sergio. Versión explicada.
 
 > **Indicación, no leer:** No leer todos los enlaces durante una respuesta puntual. Escoger el solicitado y usar el retorno al mapa o a conclusiones.
 
@@ -480,7 +482,7 @@ La fila de respaldo abre las operaciones reales de tres c, la captura de Postgre
 
 ## Lámina 21: 5a.2: año, sexo y filtro agregado
 
-**Expone:** Arbués. Versión explicada.
+**Expone:** Sergio. Versión explicada.
 
 > **Indicación, no leer:** Leer las cuatro cajas. Distinguir sexo F del umbral sobre personas.
 
@@ -502,7 +504,7 @@ La salida muestra 2019 con dieciséis mil cuatrocientas cincuenta y una mujeres 
 
 ## Lámina 22: 5a.3: dos variables derivadas y periodos desiguales
 
-**Expone:** Arbués. Versión explicada.
+**Expone:** Sergio. Versión explicada.
 
 > **Indicación, no leer:** Señalar que región y periodo se crean en el esquema común. Leer las cuatro cajas y las cuatro filas visibles.
 
@@ -520,7 +522,7 @@ En la salida, Costa de 2022 a 2024 suma treinta y siete mil doscientas cuatro pe
 
 ## Lámina 23: 5a.4: delimitar extranjeros antes de agrupar
 
-**Expone:** Arbués. Versión explicada.
+**Expone:** Sergio. Versión explicada.
 
 > **Indicación, no leer:** Leer las cuatro cajas y contrastar el filtro inicial con el umbral posterior.
 
@@ -556,7 +558,7 @@ La salida muestra Callao con promedio uno coma cinco cero cinco y cuatro mil qui
 
 ## Lámina 25: 5c.2: qué conserva LEFT y qué significa un nulo
 
-**Expone:** Arbués. Versión explicada.
+**Expone:** Sergio. Versión explicada.
 
 > **Indicación, no leer:** Identificar el catálogo como izquierda y los acumulados como derecha antes de seguir las flechas.
 
@@ -574,7 +576,7 @@ En el fragmento se ve join con la clave ubigeo y el tipo left, seguido del filtr
 
 ## Lámina 26: 5c.3: RIGHT con un calendario independiente
 
-**Expone:** Arbués. Versión explicada.
+**Expone:** Sergio. Versión explicada.
 
 > **Indicación, no leer:** Señalar el calendario a la derecha y distinguir coalesce como función de valores.
 
@@ -592,7 +594,7 @@ El código utiliza join de tipo right con las claves año y mes. WithColumn crea
 
 ## Lámina 27: 5c.4: FULL OUTER y el universo de edades conocidas
 
-**Expone:** Arbués. Versión explicada.
+**Expone:** Sergio. Versión explicada.
 
 > **Indicación, no leer:** Leer las cuatro cajas; señalar por qué el denominador difiere del de 3c.1.
 
@@ -680,7 +682,7 @@ La salida muestra 2019 T cuatro con siete mil ciento sesenta y cuatro; 2020 T un
 
 ## Lámina 31: 5e.1: comparar cada mes con el mismo mes del año anterior
 
-**Expone:** Arbués. Versión explicada.
+**Expone:** Sergio. Versión explicada.
 
 > **Indicación, no leer:** Leer las cuatro cajas; señalar la doble condición del JOIN y la fórmula de variación.
 
@@ -702,7 +704,7 @@ En la salida, enero de 2020 tiene mil ciento sesenta y cinco frente a dos mil oc
 
 ## Lámina 32: 5e.3: tres tablas, dos JOIN y una ventana por periodo
 
-**Expone:** Arbués. Versión explicada.
+**Expone:** Sergio. Versión explicada.
 
 > **Indicación, no leer:** Seguir las cuatro cajas y marcar el PARTITION BY periodo. La tabla de salida se lee por columnas temporales.
 
@@ -772,7 +774,7 @@ La salida muestra diciembre con dos mil seiscientas setenta y tres personas y do
 
 ## Lámina 35: Qué reducciones existen realmente en 3c
 
-**Expone:** Quien reciba la pregunta. Versión explicada.
+**Expone:** Sergio. Versión explicada.
 
 > **Indicación, no leer:** Leer cada fila de izquierda a derecha. No presentar el cuadro como un conteo de jobs físicos ni como tres reducciones consecutivas del indicador.
 
@@ -794,7 +796,7 @@ El bloque «Lectura del flujo» resume que cada consulta combina ramas principal
 
 ## Lámina 36: Qué demuestra la captura PostgreSQL
 
-**Expone:** Arbués. Versión explicada.
+**Expone:** Sergio. Versión explicada.
 
 > **Indicación, no leer:** Abrir la captura y señalar la consulta ejecutada y su tabla de respuesta. No afirmar que es una ejecución actual.
 
@@ -874,7 +876,7 @@ El dataset pertenece al rubro Seguridad y Justicia de la Plataforma Nacional de 
 
 ### Lámina 4: Campos y reglas
 
-**Expone:** Sergio. **Tiempo objetivo:** 25 s.
+**Expone:** Arbués. **Tiempo objetivo:** 25 s.
 
 > **Indicación, no leer:** Tiempo, ubicación, perfil y CANTIDAD en la tabla.
 
@@ -884,7 +886,7 @@ Los campos se organizan en cuatro grupos: tiempo, ubicación, perfil y cantidad.
 
 ### Lámina 5: Flujo de procesamiento
 
-**Expone:** Sergio. **Tiempo objetivo:** 25 s.
+**Expone:** Arbués. **Tiempo objetivo:** 25 s.
 
 > **Indicación, no leer:** Las ramas del CSV a RDD, DataFrame y PostgreSQL.
 
@@ -904,7 +906,7 @@ La pregunta del punto tres a es cuál es el mayor y el menor conteo por registro
 
 ### Lámina 7: 3b: estadísticos
 
-**Expone:** Sergio. **Tiempo objetivo:** 30 s.
+**Expone:** Arbués. **Tiempo objetivo:** 30 s.
 
 > **Indicación, no leer:** Suma y conteo, fórmula de desviación y tabla.
 
@@ -924,7 +926,7 @@ La primera consulta decimal pregunta qué proporción de cada departamento corre
 
 ### Lámina 9: 3c.2: extranjeros por año
 
-**Expone:** Sergio. **Tiempo objetivo:** 35 s.
+**Expone:** Arbués. **Tiempo objetivo:** 35 s.
 
 > **Indicación, no leer:** Total anual, extranjeros por año y agregación por nacionalidad.
 
@@ -941,6 +943,12 @@ La segunda consulta decimal calcula la participación anual de personas extranje
 **Texto para decir:**
 
 La tercera consulta decimal compara los meses con una distribución uniforme. Primero, Map emite mes y cantidad; después, Reduce suma por mes. Otro par Map y Reduce obtiene el total nacional. Con esos agregados calculamos la participación. La referencia es cien dividido entre doce: aproximadamente ocho coma treinta y tres por ciento. Diciembre representa nueve coma cuarenta y nueve por ciento y obtiene un índice de uno coma catorce. Una tercera agregación por clave resume los trimestres: el cuarto concentra treinta y dos mil seiscientas cincuenta personas.
+
+> **Indicación, no leer:** Único cambio de expositor. Arbués dice la transición siguiente antes de pasar a la lámina 11.
+
+**Texto para decir:**
+
+Con esto termino el bloque de datos y consultas RDD. Ahora Sergio continuará con Spark SQL, el almacenamiento en PostgreSQL y la entrega de resultados.
 
 ### Lámina 11: 5a.1: groupBy y filter
 
@@ -964,7 +972,7 @@ Esta consulta responde cuáles son los quince distritos con mayor total reportad
 
 ### Lámina 13: 5c.1: INNER JOIN
 
-**Expone:** Arbués. **Tiempo objetivo:** 25 s.
+**Expone:** Sergio. **Tiempo objetivo:** 25 s.
 
 > **Indicación, no leer:** La clave ubigeo del JOIN y la suma por región.
 
@@ -984,7 +992,7 @@ El punto cinco d aplica funciones de Spark. Esta consulta compara la dispersión
 
 ### Lámina 15: 5e.2: vistas temporales
 
-**Expone:** Arbués. **Tiempo objetivo:** 30 s.
+**Expone:** Sergio. **Tiempo objetivo:** 30 s.
 
 > **Indicación, no leer:** JOIN con edad, JOIN con sexo y el porcentaje nacional.
 
@@ -1004,7 +1012,7 @@ El punto cinco f combina ordenamiento y filtros. WHERE selecciona mujeres de 202
 
 ### Lámina 17: Modelo estrella y ETL
 
-**Expone:** Arbués. **Tiempo objetivo:** 60 s.
+**Expone:** Sergio. **Tiempo objetivo:** 60 s.
 
 > **Indicación, no leer:** Tabla central, dimensiones, clave ubigeo y tres pasos del ETL.
 
@@ -1024,7 +1032,7 @@ El punto cinco g pide guardar en Excel los resultados de cinco e y cinco f usand
 
 ### Lámina 19: Cierre
 
-**Expone:** Ambos. **Tiempo objetivo:** 40 s.
+**Expone:** Sergio. **Tiempo objetivo:** 40 s.
 
 > **Indicación, no leer:** Las preguntas de la tabla y sus respuestas.
 

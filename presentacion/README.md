@@ -19,9 +19,11 @@ necesita ensayo cronometrado. No se deben leer ambas consecutivamente en diez mi
 
 ## Estado de los PDF
 
-Ambos PDF están compilados desde las fuentes actuales: presentacion.pdf tiene 37 láminas
-y guion-exposicion.pdf tiene 33 páginas con las 37 láminas explicadas, la ruta breve,
-las ampliaciones, el reparto de tiempos y las respuestas al docente.
+presentacion.pdf tiene 37 láminas. guion-exposicion.pdf tiene 33 páginas con las
+37 láminas explicadas, la ruta breve, las ampliaciones y las respuestas al docente.
+El PDF del guion conserva el reparto anterior de expositores: el nuevo reparto
+por bloques está en guion-exposicion.tex y guion-exposicion.md. Este ajuste de
+responsables y transiciones se hizo sin recompilar.
 
 Se compilan con pdfTeX y las fuentes Type1 de `cm-super` (paquete `cm-super`). Sin ese
 paquete, pdfTeX sustituye las fuentes por mapas de bits Type3: el texto se ve borroso al

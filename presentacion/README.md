@@ -19,12 +19,15 @@ necesita ensayo cronometrado. No se deben leer ambas consecutivamente en diez mi
 
 ## Estado de los PDF
 
-presentacion.pdf corresponde al Beamer de 37 láminas. guion-exposicion.pdf
-conserva la versión previa de 12 páginas: **no contiene todavía el guion ampliado**.
-Las fuentes del guion son la versión actual. No se recompilaron en esta revisión
-por la instrucción de no compilar después de los cambios.
+Ambos PDF están compilados desde las fuentes actuales: presentacion.pdf tiene 37 láminas
+y guion-exposicion.pdf tiene 33 páginas con las 37 láminas explicadas, la ruta breve,
+las ampliaciones, el reparto de tiempos y las respuestas al docente.
 
-Para regenerar ambos PDF cuando se autorice la compilación, ejecutar desde esta carpeta:
+Se compilan con pdfTeX y las fuentes Type1 de `cm-super` (paquete `cm-super`). Sin ese
+paquete, pdfTeX sustituye las fuentes por mapas de bits Type3: el texto se ve borroso al
+proyectar y el archivo pesa menos. Comprobar con `kpsewhich sfrm1000.pfb`.
+
+Para regenerar ambos PDF, ejecutar desde esta carpeta:
 
     latexmk -pdf -interaction=nonstopmode -halt-on-error presentacion.tex guion-exposicion.tex
 

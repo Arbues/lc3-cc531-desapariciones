@@ -7,7 +7,8 @@ completo y verificado; lo que sigue es cómo mantenerlo y qué falta cerrar.
 
 25 consultas en Scala/Spark sobre las denuncias por desaparición de personas [MININTER] 2019–2024
 (93,831 registros = 121,427 personas), más un modelo estrella cargado en PostgreSQL 16 con ETL,
-informe en LaTeX y presentación de 10 minutos. Todo reproducible con dos scripts.
+informe en LaTeX y presentación Beamer de 37 láminas (19 principales = ruta de 9 min 30 s,
+el resto anexos). Todo reproducible con dos scripts.
 
 ## Cómo correr cualquier cosa
 
@@ -46,8 +47,8 @@ El export a Excel necesita el jar: `./bin/ejecutar.sh code/sql/05g_excel.scala l
 |---|---|---|
 | Registrar la URL del dataset en la pestaña PC3 del cuadro de temas | Arbués | Requiere la sesión de Google; sin eso el trabajo se puede anular |
 | Subir el zip con su nombre al aula virtual | cada uno | `entrega/LC3_<integrante>.zip`; el contenido es idéntico |
-| Ensayar la exposición cronometrada | ambos | el guion está en `presentacion/guion-exposicion.pdf` |
-| Revisar las láminas 6 y 10 (sus hallazgos) | Sergio | son las que expone; el guion trae el texto y qué señalar |
+| Ensayar la exposición cronometrada | ambos | ruta breve de 19 láminas = 570 s objetivo (9:30) en `presentacion/guion/01-recorrido.tex`; el guion largo es para preguntas |
+| Probar `presentacion/demo/compose.yaml` | ambos | nunca se ejecutó; la imagen `spark:3.3.2` no está descargada en esta laptop |
 
 ## Pendientes técnicos (menores, opcionales)
 
@@ -69,6 +70,7 @@ sql/dump-denuncias.sql     dump de la base cargada
 evidencias/salidas/*.txt   salida real de cada consulta
 evidencias/pg-*.png        capturas de la base funcionando
 informe/                   informe.tex + informe.pdf (20 páginas)
-presentacion/              presentacion.pdf (15 láminas) + guion-exposicion.pdf
+presentacion/              presentacion.pdf (37 láminas) + guion-exposicion.pdf (desfasado)
+presentacion/DEMO.md       qué abrir, qué ejecutar y qué decir en la demo de 3 min
 docs/mapa-consultas.md     las 25 preguntas y por qué no se repiten
 ```

@@ -7,7 +7,7 @@ completo y verificado; lo que sigue es cómo mantenerlo y qué falta cerrar.
 
 25 consultas en Scala/Spark sobre las denuncias por desaparición de personas [MININTER] 2019–2024
 (93,831 registros = 121,427 personas), más un modelo estrella cargado en PostgreSQL 16 con ETL,
-informe en LaTeX y presentación Beamer de 37 láminas (19 principales = ruta de 9 min 30 s,
+informe en LaTeX y presentación Beamer de 36 láminas (19 principales = ruta de 9 min 30 s,
 el resto anexos). Todo reproducible con dos scripts.
 
 ## Cómo correr cualquier cosa
@@ -70,7 +70,7 @@ sql/dump-denuncias.sql     dump de la base cargada
 evidencias/salidas/*.txt   salida real de cada consulta
 evidencias/pg-*.png        capturas de la base funcionando
 informe/                   informe.tex + informe.pdf (20 páginas)
-presentacion/              presentacion.pdf (37 láminas; ER del informe en la 17, compilado) + guion-exposicion.pdf (33 páginas, reparto por bloques)
+presentacion/              presentacion.pdf (36 láminas; ER del informe en la 17, compilado) + guion-exposicion.pdf (33 páginas, reparto por bloques)
 presentacion/DEMO.md       qué abrir, qué ejecutar y qué decir en la demo de 3 min
 docs/mapa-consultas.md     las 25 preguntas y por qué no se repiten
 ```

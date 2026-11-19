@@ -466,21 +466,7 @@ En tres c tres preguntamos qué meses superan la referencia uniforme: diciembre 
 
 El bloque inferior explica cómo se sostienen esas respuestas: cada ficha conecta el ítem, las columnas, las operaciones, el código original y la salida. Las veinticinco consultas pueden abrirse desde el mapa. Las conclusiones describen lo reportado en este dataset; las proporciones no estiman riesgo poblacional y los cambios temporales no demuestran causalidad. Con esto terminamos el recorrido principal. Muchas gracias; podemos abrir el detalle de cualquier consulta o realizar la demostración si disponemos de tiempo adicional.
 
-## Lámina 20: Cómo navegar los anexos
-
-**Expone:** Sergio. Versión explicada.
-
-> **Indicación, no leer:** No leer todos los enlaces durante una respuesta puntual. Escoger el solicitado y usar el retorno al mapa o a conclusiones.
-
-**Texto para decir:**
-
-Esta lámina organiza el detalle complementario. En cinco a están año y sexo, región y periodo, nacionalidad y edad. En cinco b está el promedio por departamento. En cinco c encontramos LEFT para el catálogo observado, RIGHT para el calendario y FULL para edades conocidas. En cinco d están la clasificación con when y otherwise, la participación por periodo y la construcción de fecha y trimestre. En cinco e están la variación interanual y región con periodo mediante JOIN. En cinco f están nacionalidades desde 2022 y meses de estudiantes.
-
-**Texto para decir:**
-
-La fila de respaldo abre las operaciones reales de tres c, la captura de PostgreSQL y las fuentes con los comandos de reproducción. Cada enlace lleva a una ficha completa, y los botones inferiores vuelven al mapa o a las conclusiones. Abriremos ahora la consulta que se desee revisar y seguiremos el mismo orden: pregunta, entrada, operaciones y salida.
-
-## Lámina 21: 5a.2: año, sexo y filtro agregado
+## Lámina 20: 5a.2: año, sexo y filtro agregado
 
 **Expone:** Sergio. Versión explicada.
 
@@ -502,7 +488,7 @@ En el código, agg reúne sum y count: personas es la suma de CANTIDAD y registr
 
 La salida muestra 2019 con dieciséis mil cuatrocientas cincuenta y una mujeres y once mil treinta y siete registros; 2020 con once mil ochocientas veintiocho y ocho mil setecientos veintitrés; 2024 con once mil doscientas setenta y cinco y ocho mil trescientos noventa y ocho. Los seis años cumplen el umbral, aunque la tabla visible muestra tres. El criterio se aplica al grupo, no a una fila aislada. Cambiaremos ahora las dos claves para observar región y periodo.
 
-## Lámina 22: 5a.3: dos variables derivadas y periodos desiguales
+## Lámina 21: 5a.3: dos variables derivadas y periodos desiguales
 
 **Expone:** Sergio. Versión explicada.
 
@@ -520,7 +506,7 @@ El primer cuadro dice «Región y periodo: derivados del código». La flecha co
 
 En la salida, Costa de 2022 a 2024 suma treinta y siete mil doscientas cuatro personas; Costa de 2020 a 2021, veinticuatro mil seiscientas tres; Costa de 2019, diecisiete mil ochocientas cincuenta y nueve. Sierra de 2022 a 2024 suma quince mil novecientas ochenta y una. Son cuatro filas mostradas de cinco resultados. El mayor acumulado es Costa en el periodo final. Sin embargo, los periodos duran tres, dos y un año: su comparación no equivale a comparar promedios anuales. La siguiente consulta utilizará categorías originales de nacionalidad y edad.
 
-## Lámina 23: 5a.4: delimitar extranjeros antes de agrupar
+## Lámina 22: 5a.4: delimitar extranjeros antes de agrupar
 
 **Expone:** Sergio. Versión explicada.
 
@@ -538,7 +524,7 @@ El primer cuadro dice «Excluir PERÚ y NO ESPECIFICA». Este filtro actúa sobr
 
 En el código, col referencia una columna; el operador de distinto descarta las dos etiquetas indicadas y el operador y exige ambas condiciones. Agg calcula sum, as nombra personas y filter aplica el mínimo de treinta. La salida muestra Venezuela de doce a diecisiete años con mil nueve personas; Venezuela de dieciocho a veintinueve con quinientas noventa y cinco; y Colombia de dieciocho a veintinueve con cincuenta y dos. El mayor volumen corresponde al primer grupo. No es una tasa respecto de cuántas personas de cada nacionalidad viven en el país. Después del volumen revisaremos una pregunta sobre promedios.
 
-## Lámina 24: 5b.1: promedio por registro y departamento
+## Lámina 23: 5b.1: promedio por registro y departamento
 
 **Expone:** Sergio. Versión explicada.
 
@@ -556,7 +542,7 @@ El primer cuadro dice «Registros por departamento». Su flecha llega a «groupB
 
 La salida muestra Callao con promedio uno coma cinco cero cinco y cuatro mil quinientas sesenta y cinco personas; Lima Metropolitana con uno coma cuatro ocho cinco y treinta y nueve mil cuatrocientas noventa; y Lambayeque con uno coma tres uno nueve y seis mil doscientas treinta y una. Callao encabeza la media, aunque Lima Metropolitana tiene mayor acumulado. La media describe la cantidad por cruce agregado, no cuántas personas participan de un mismo incidente. Veamos ahora cómo se detecta una falta de correspondencia entre tablas.
 
-## Lámina 25: 5c.2: qué conserva LEFT y qué significa un nulo
+## Lámina 24: 5c.2: qué conserva LEFT y qué significa un nulo
 
 **Expone:** Sergio. Versión explicada.
 
@@ -574,7 +560,7 @@ El primer cuadro dice «Catálogo derivado del mismo dataset». La flecha llega 
 
 En el fragmento se ve join con la clave ubigeo y el tipo left, seguido del filtro de personas nulas. La salida repite los tres controles: mil quinientos seis ubigeos de catálogo, todos con registros, y cero sin registros. Este cero verifica correspondencia interna. Como el catálogo procede de las propias denuncias, no prueba que estén todos los distritos del país. Para detectar ausencias respecto de un universo independiente necesitaremos una referencia construida fuera de las filas observadas, como el calendario de la siguiente consulta.
 
-## Lámina 26: 5c.3: RIGHT con un calendario independiente
+## Lámina 25: 5c.3: RIGHT con un calendario independiente
 
 **Expone:** Sergio. Versión explicada.
 
@@ -592,7 +578,7 @@ El primer cuadro dice «groupBy año, mes». Sumamos las cantidades de cada comb
 
 El código utiliza join de tipo right con las claves año y mes. WithColumn crea o sustituye la columna ajustada, y lit cero aporta el valor constante. Esta función coalesce sobre columnas no es el método coalesce uno de la exportación, que modifica particiones. La tabla confirma setenta y dos meses conservados, ninguno sin registros y una suma de ciento veintiún mil cuatrocientas veintisiete personas. La consulta controla presencia mensual; no garantiza que cada denuncia posible se haya registrado. Pasaremos ahora a conservar claves de ambos lados de una unión.
 
-## Lámina 27: 5c.4: FULL OUTER y el universo de edades conocidas
+## Lámina 26: 5c.4: FULL OUTER y el universo de edades conocidas
 
 **Expone:** Sergio. Versión explicada.
 
@@ -614,7 +600,7 @@ En el código, full guion bajo outer selecciona ese comportamiento; withColumn c
 
 Los veintiséis departamentos tienen ambos grupos. Para Lima, menores dividido entre menores más adultos da cincuenta coma sesenta por ciento. En tres c uno, el mismo numerador se divide entre el total que incluye edad no especificada y da cincuenta coma cero dos. Cambiar el denominador cambia la pregunta; esa diferencia no es una contradicción. La siguiente ficha mostrará cómo crear categorías mediante condiciones.
 
-## Lámina 28: 5d.1: interpretar las etiquetas de when y otherwise
+## Lámina 27: 5d.1: interpretar las etiquetas de when y otherwise
 
 **Expone:** Sergio. Versión explicada.
 
@@ -636,7 +622,7 @@ La siguiente flecha conduce a «groupBy severidad; count, sum y avg». Agrupamos
 
 La tabla detalla INDIVIDUAL, uno a dos, con ochenta y ocho mil ciento ochenta y dos filas y noventa y ocho mil doscientas treinta y seis personas; ALTO, tres a cuatro, con cuatro mil doscientas cuarenta y nueve filas y catorce mil tres personas; FOCO, cinco o más, con mil cuatrocientas filas y nueve mil ciento ochenta y ocho personas. Aunque la columna se llame severidad y una etiqueta diga INDIVIDUAL, los datos no permiten afirmar gravedad ni incidentes individuales o grupales. Los nombres son decisiones del código sobre conteos agregados. Ahora calcularemos participaciones por periodo.
 
-## Lámina 29: 5d.2: numerador por periodo y denominador constante
+## Lámina 28: 5d.2: numerador por periodo y denominador constante
 
 **Expone:** Sergio. Versión explicada.
 
@@ -658,7 +644,7 @@ En el código, col personas referencia el numerador y withColumn añade pct naci
 
 El periodo final pesa más dentro del acumulado, pero dura tres años frente a dos y uno de los demás. Esa participación no demuestra mayor intensidad anual ni un efecto causal de la pandemia. Si quisiéramos intensidad comparable, tendríamos que definir otra medida que tenga en cuenta la duración. La siguiente consulta construye una unidad temporal más detallada: el trimestre de cada año.
 
-## Lámina 30: 5d.4: construir una fecha sin inventar un día observado
+## Lámina 29: 5d.4: construir una fecha sin inventar un día observado
 
 **Expone:** Sergio. Versión explicada.
 
@@ -680,7 +666,7 @@ La siguiente flecha conduce a «quarter de fecha; agrupar y sumar». Quarter dev
 
 La salida muestra 2019 T cuatro con siete mil ciento sesenta y cuatro; 2020 T uno con seis mil dieciocho; T dos con dos mil cuatrocientas ochenta y cinco; T tres con cuatro mil quinientas sesenta y siete. Entre esas filas, el segundo trimestre de 2020 tiene el menor acumulado. La fecha construida permite agrupar y ordenar; no representa el día real de cada desaparición ni explica la causa de la caída. Las siguientes fichas utilizarán SQL sobre vistas para otras comparaciones temporales.
 
-## Lámina 31: 5e.1: comparar cada mes con el mismo mes del año anterior
+## Lámina 30: 5e.1: comparar cada mes con el mismo mes del año anterior
 
 **Expone:** Sergio. Versión explicada.
 
@@ -702,7 +688,7 @@ La siguiente flecha llega a «cien por actual menos previo, dividido entre previ
 
 En la salida, enero de 2020 tiene mil ciento sesenta y cinco frente a dos mil ochenta y seis: menos cuarenta y cuatro coma quince por ciento. Febrero tiene dos mil setecientas veinticinco frente a dos mil trescientas veinticuatro: más diecisiete coma veinticinco por ciento. Abril tiene seiscientas cuarenta y tres frente a mil novecientas noventa y seis: menos sesenta y siete coma setenta y nueve por ciento. Son cambios de conteos frente al año anterior, no restas de participaciones. La consulta describe la variación; no identifica su causa. Pasaremos ahora a participaciones territoriales dentro de cada periodo.
 
-## Lámina 32: 5e.3: tres tablas, dos JOIN y una ventana por periodo
+## Lámina 31: 5e.3: tres tablas, dos JOIN y una ventana por periodo
 
 **Expone:** Sergio. Versión explicada.
 
@@ -728,7 +714,7 @@ La última flecha conduce a «nueve combinaciones; total ciento veintiún mil cu
 
 Cada columna temporal se interpreta respecto de su propio total; las participaciones suman aproximadamente cien por ciento por el redondeo. Costa conserva el mayor peso. A diferencia de cinco e dos, donde OVER vacío usa todos los grupos del país, aquí la ventana se restringe al periodo. La suma de las nueve combinaciones conserva el total original. Revisaremos ahora filtros y ordenamientos sobre nacionalidades.
 
-## Lámina 33: 5f.2: ordenar acumulados no equivale a medir crecimiento
+## Lámina 32: 5f.2: ordenar acumulados no equivale a medir crecimiento
 
 **Expone:** Sergio. Versión explicada.
 
@@ -750,7 +736,7 @@ La siguiente flecha llega a «HAVING SUM mayor o igual a diez». Filtramos grupo
 
 La salida muestra Venezuela en 2023 con cuatrocientas treinta personas; en 2024 con cuatrocientas veintiocho; y en 2022 con cuatrocientas cuatro. Colombia en 2023 aparece con veinticuatro. Venezuela ocupa los tres primeros puestos. Aunque el comentario original del script mencione crecimiento, la consulta ejecutada ordena acumulados y no calcula una tasa de crecimiento: no resta un año anterior ni divide entre su valor. La pregunta de esta ficha corresponde a lo que efectivamente calcula el código. La última consulta filtrada se centrará en estudiantes.
 
-## Lámina 34: 5f.3: qué incluye el subconjunto de estudiantes
+## Lámina 33: 5f.3: qué incluye el subconjunto de estudiantes
 
 **Expone:** Sergio. Versión explicada.
 
@@ -772,7 +758,7 @@ La siguiente flecha conduce a «HAVING SUM mayor que quinientos». Conservamos l
 
 La salida muestra diciembre con dos mil seiscientas setenta y tres personas y dos mil diecinueve registros; noviembre con dos mil quinientas treinta y ocho y mil novecientos sesenta; septiembre con dos mil cuatrocientas diecinueve y mil novecientos tres; abril con mil setecientas setenta y cuatro y mil trescientos setenta y ocho. Diciembre encabeza ese subconjunto. No incluye edades de cero a cinco ni edades desconocidas, y tampoco podemos recuperar estudiantes cuya ocupación no está informada. Por ello describimos estudiantes declarados en esos rangos, sin generalizar a todo el alumnado del país. Terminamos las veinticinco consultas; las siguientes láminas permiten revisar operaciones y evidencias.
 
-## Lámina 35: Qué reducciones existen realmente en 3c
+## Lámina 34: Qué reducciones existen realmente en 3c
 
 **Expone:** Sergio. Versión explicada.
 
@@ -794,7 +780,7 @@ En tres c dos, las principales agregan total y extranjeros por año. La adiciona
 
 El bloque «Lectura del flujo» resume que cada consulta combina ramas principales y de control o apoyo. Los diagramas describen las operaciones del programa. No representan tres reducciones consecutivas del indicador, ni un conteo medido de jobs físicos de Spark. Un job es una ejecución que Spark activa al solicitar un resultado; sus etapas y tareas dependen del plan y las particiones. Si se exigiera una dependencia estricta de tres reducciones consecutivas para el mismo indicador, el flujo actual necesitaría una adaptación. Podemos abrir los scripts para señalar exactamente las operaciones que acabamos de describir.
 
-## Lámina 36: Qué demuestra la captura PostgreSQL
+## Lámina 35: Qué demuestra la captura PostgreSQL
 
 **Expone:** Sergio. Versión explicada.
 
@@ -812,7 +798,7 @@ Arriba se ve el comando psql: es el cliente de terminal de PostgreSQL. Menos h i
 
 Los controles distinguen filas de dimensiones, filas de hechos y suma de cantidad. Cada dimensión contiene su catálogo; la tabla hecho desaparicion conserva noventa y tres mil ochocientas treinta y una filas. SUM de cantidad conserva ciento veintiún mil cuatrocientas veintisiete personas contabilizadas. El conteo de hechos y la suma no tienen que coincidir, porque responden a medidas distintas. El respaldo restaurado mantiene el mismo total. El enlace inferior permite volver al modelo estrella para relacionar cada nombre de tabla con su función.
 
-## Lámina 37: Fuentes, fragmentos de código y reproducción
+## Lámina 36: Fuentes, fragmentos de código y reproducción
 
 **Expone:** Sergio. Versión explicada.
 

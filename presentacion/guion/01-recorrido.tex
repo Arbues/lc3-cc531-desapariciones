@@ -42,35 +42,35 @@ Los tiempos son objetivos de ensayo y deben comprobarse con cronómetro.
 \decir{La tercera consulta decimal compara los meses con una distribución uniforme. Primero, Map emite mes y cantidad; después, Reduce suma por mes. Otro par Map y Reduce obtiene el total nacional. Con esos agregados calculamos la participación. La referencia es cien dividido entre doce: aproximadamente ocho coma treinta y tres por ciento. Diciembre representa nueve coma cuarenta y nueve por ciento y obtiene un índice de uno coma catorce. Una tercera agregación por clave resume los trimestres: el cuarto concentra treinta y dos mil seiscientas cincuenta personas.}
 
 \senalar{Único cambio de expositor. Arbués dice la transición siguiente antes de pasar a la lámina 11.}
-\decir{Con esto termino el bloque de datos y consultas RDD. Ahora Sergio continuará con Spark SQL, el almacenamiento en PostgreSQL y la entrega de resultados.}
+\decir{Con esto termino el bloque de datos y consultas RDD. Ahora Sergio continuará con el punto cuatro, PostgreSQL y ETL; después presentará Spark SQL y la entrega de resultados.}
 
-\lamina{11}{Sergio}{25 s}{5a.1: groupBy y filter}
+\lamina{11}{Sergio}{60 s}{Modelo estrella y ETL}
+\senalar{Tabla central, dimensiones, clave ubigeo y tres pasos del ETL.}
+\decir{En el punto cuatro almacenamos el dataset en PostgreSQL mediante un modelo estrella. La tabla central conserva cada registro y su cantidad. Ocho dimensiones describen tiempo, ubicación y perfil. Una clave de dimensión aparece una sola vez en su catálogo, pero puede relacionarse con muchos registros de la tabla central. El proceso ETL tiene tres pasos. Primero extraemos el CSV hacia una tabla de carga. Después transformamos vacíos y normalizamos claves. Finalmente cargamos dimensiones y hechos dentro de una transacción. Un caso importante es el ubigeo ciento cincuenta mil ciento veintiuno, que aparece con dos nombres. Lo agrupamos antes de unir para evitar duplicar datos. Las evidencias de carga y restauración conservan noventa y tres mil ochocientas treinta y una filas y ciento veintiún mil cuatrocientas veintisiete personas.}
+
+\lamina{12}{Sergio}{25 s}{5a.1: groupBy y filter}
 \senalar{Las dos columnas de groupBy y el filtro posterior a la suma.}
 \decir{Para el punto cinco a mostramos un agrupamiento por dos columnas: departamento y rango de edad. La pregunta es qué combinaciones reúnen al menos mil personas. Sumamos CANTIDAD, filtramos los grupos y ordenamos. Obtenemos treinta combinaciones. La primera es Lima Metropolitana y doce a diecisiete años, con diecisiete mil novecientas una personas.}
 
-\lamina{12}{Sergio}{20 s}{5b.2: orden descendente}
+\lamina{13}{Sergio}{20 s}{5b.2: orden descendente}
 \senalar{orderBy descendente, limit y la primera fila.}
 \decir{Esta consulta responde cuáles son los quince distritos con mayor total reportado. Agrupamos por departamento, provincia y distrito, sumamos personas y ordenamos de mayor a menor. Finalmente aplicamos el límite. San Juan de Lurigancho encabeza el resultado con cuatro mil setecientas setenta y cinco personas.}
 
-\lamina{13}{Sergio}{25 s}{5c.1: INNER JOIN}
+\lamina{14}{Sergio}{25 s}{5c.1: INNER JOIN}
 \senalar{La clave ubigeo del JOIN y la suma por región.}
 \decir{En el punto cinco c usamos los cuatro tipos de unión. Aquí mostramos INNER JOIN. Unimos el agregado por ubigeo con la dimensión geográfica y después sumamos por región. Costa concentra setenta y nueve mil seiscientas sesenta y seis personas. La dimensión tiene una fila por clave, de modo que la unión conserva el total nacional sin multiplicar registros.}
 
-\lamina{14}{Sergio}{25 s}{5d.3: funciones estadísticas}
+\lamina{15}{Sergio}{25 s}{5d.3: funciones estadísticas}
 \senalar{stddev\_pop, variance, min y max en el código.}
 \decir{El punto cinco d aplica funciones de Spark. Esta consulta compara la dispersión de CANTIDAD por sexo. Calcula promedio, desviación, varianza y extremos. La desviación poblacional es aproximadamente uno coma cero cinco para mujeres y cero coma sesenta para hombres. Esto indica mayor variación entre los conteos femeninos por fila; no permite reconstruir incidentes individuales.}
 
-\lamina{15}{Sergio}{30 s}{5e.2: vistas temporales}
+\lamina{16}{Sergio}{30 s}{5e.2: vistas temporales}
 \senalar{JOIN con edad, JOIN con sexo y el porcentaje nacional.}
 \decir{Para el punto cinco e consultamos vistas temporales. Unimos las denuncias con las dimensiones de edad y sexo y agrupamos por ambas categorías. La combinación más numerosa es adolescentes mujeres: cincuenta y un mil veintiuna personas. Al dividir entre el total nacional obtenemos cuarenta y dos coma cero dos por ciento. Esta respuesta muestra cómo los JOIN incorporan categorías útiles para interpretar la medida.}
 
-\lamina{16}{Sergio}{25 s}{5f.1: ordenar con filtros}
+\lamina{17}{Sergio}{25 s}{5f.1: ordenar con filtros}
 \senalar{WHERE, HAVING y ORDER BY, en ese orden.}
 \decir{El punto cinco f combina ordenamiento y filtros. WHERE selecciona mujeres de 2024 con edad especificada. Después agrupamos por ubicación y HAVING exige al menos veinte personas por distrito. ORDER BY ordena el resultado y LIMIT conserva los diez primeros. San Juan de Lurigancho vuelve a encabezar, ahora con trescientas setenta y nueve personas dentro de este subconjunto.}
-
-\lamina{17}{Sergio}{60 s}{Modelo estrella y ETL}
-\senalar{Tabla central, dimensiones, clave ubigeo y tres pasos del ETL.}
-\decir{En el punto cuatro almacenamos el dataset en PostgreSQL mediante un modelo estrella. La tabla central conserva cada registro y su cantidad. Ocho dimensiones describen tiempo, ubicación y perfil. Una clave de dimensión aparece una sola vez en su catálogo, pero puede relacionarse con muchos registros de la tabla central. El proceso ETL tiene tres pasos. Primero extraemos el CSV hacia una tabla de carga. Después transformamos vacíos y normalizamos claves. Finalmente cargamos dimensiones y hechos dentro de una transacción. Un caso importante es el ubigeo ciento cincuenta mil ciento veintiuno, que aparece con dos nombres. Lo agrupamos antes de unir para evitar duplicar datos. Las evidencias de carga y restauración conservan noventa y tres mil ochocientas treinta y una filas y ciento veintiún mil cuatrocientas veintisiete personas.}
 
 \lamina{18}{Sergio}{40 s}{Exportación con Spark}
 \senalar{Proveedor spark-excel, cabecera, destino y tabla de seis hojas.}

@@ -1,20 +1,12 @@
-# Guion literal LC3: versión explicada
+# Guion literal LC3
 
-Arbués Enrique Pérez Villanueva y Sergio Pezo · noviembre de 2026.
+Arbués Enrique Pérez Villanueva y Sergio Sebastian Pezo Jimenez.
 
-Esta copia permite leer el guion actualizado sin compilar LaTeX. La fuente editable es [guion-exposicion.tex](guion-exposicion.tex), que incluye los archivos de [guion/detallado](guion/detallado/).
+**Orden:** láminas 1–10, datos y RDD, por Arbués; lámina 11, PostgreSQL y ETL, por Sergio; láminas 12–19, Spark SQL, Excel y cierre, por Sergio. Un único relevo tras la 10. La ruta breve conserva el objetivo de 9:30. Las capturas de respaldo están en las láminas 34–38; se abren durante preguntas.
 
-**Reparto con un solo relevo:** Arbués presenta las láminas 1–10 (objetivo de la ruta breve: 4:40). Sergio continúa con las láminas 11–19 (4:50), incluido el cierre, y presenta los anexos si se abren después. Ambos pueden responder preguntas. Se conserva el orden de las diapositivas.
+**Alcance:** 39 láminas totales. La explicación extensa es material de estudio; no se lee íntegra en diez minutos. Los párrafos «Texto para decir» son hablados; las indicaciones no se leen.
 
-**Cómo usarlo:** leer en voz alta únicamente los bloques «Texto para decir». Las indicaciones orientan el puntero y las pausas. Las transiciones entre láminas y expositores están incluidas.
-
-**Duración:** la versión explicada tiene unas 11 000 palabras habladas, aproximadamente 75–95 minutos sin pausas ni demo. Sirve para estudiar y defender el trabajo. Para diez minutos, utilizar la ruta breve al final y ensayar con cronómetro; no leer ambas versiones consecutivamente.
-
-**PDF:** el PDF de 33 páginas se recompiló por solicitud explícita del usuario y contiene el guion ampliado con el nuevo reparto por bloques, igual que esta copia y las fuentes TEX.
-
-**Demo:** [DEMO.md](DEMO.md) contiene los comandos y salidas esperadas. La configuración Docker está preparada; no se ejecutó durante esta revisión.
-
----
+**Demo:** consultar DEMO.md. Esta revisión reorganiza diapositivas y muestra evidencia guardada; no ejecuta Spark ni PostgreSQL.
 
 ## Lámina 1: Qué estudiamos y qué vamos a responder
 
@@ -250,141 +242,9 @@ Después calculamos participación p sub m igual a cien por T sub m dividido ent
 
 **Texto para decir:**
 
-La salida muestra diciembre: once mil quinientas veintidós personas, nueve coma cuarenta y nueve por ciento e índice uno coma catorce. Febrero: once mil ciento dieciocho, nueve coma dieciséis por ciento e índice uno coma diez. Abril: ocho mil ochocientas cinco, siete coma veinticinco por ciento e índice cero coma ochenta y siete. El cuarto trimestre acumula treinta y dos mil seiscientas cincuenta, veintiséis coma ochenta y nueve por ciento. Diciembre queda aproximadamente catorce por ciento por encima de la referencia uniforme; eso no significa que su participación sea catorce por ciento. Tampoco ajustamos por días del mes ni demostramos causas. Concluido el bloque RDD, doy paso a Sergio, quien continuará con las consultas sobre tablas con esquema.
+La salida muestra diciembre: once mil quinientas veintidós personas, nueve coma cuarenta y nueve por ciento e índice uno coma catorce. Febrero: once mil ciento dieciocho, nueve coma dieciséis por ciento e índice uno coma diez. Abril: ocho mil ochocientas cinco, siete coma veinticinco por ciento e índice cero coma ochenta y siete. El cuarto trimestre acumula treinta y dos mil seiscientas cincuenta, veintiséis coma ochenta y nueve por ciento. Diciembre queda aproximadamente catorce por ciento por encima de la referencia uniforme; eso no significa que su participación sea catorce por ciento. Tampoco ajustamos por días del mes ni demostramos causas. Concluido el bloque RDD, doy paso a Sergio, quien explicará primero el punto cuatro, almacenamiento en PostgreSQL, y después las consultas del punto cinco.
 
-## Lámina 11: 5a.1: por qué agrupamos antes de filtrar
-
-**Expone:** Sergio. Versión explicada.
-
-> **Indicación, no leer:** Seguir los cuatro cuadros y señalar la posición de filter después de agg.
-
-**Texto para decir:**
-
-El punto cinco a pide agrupar y filtrar utilizando dos o más columnas. Departamento y rango de edad nos permiten preguntar: ¿qué combinaciones reúnen al menos mil personas reportadas? Buscamos acumulados por perfil territorial, no filas individuales con una cantidad alta. El umbral de mil es una condición de selección de esta consulta, no un criterio oficial de riesgo.
-
-**Texto para decir:**
-
-El primer cuadro dice «noventa y tres mil ochocientos treinta y un registros». La flecha conduce a «groupBy: departamento y edad». GroupBy forma un grupo por cada pareja de valores. Por ejemplo, Lima Metropolitana y doce a diecisiete años es un grupo distinto de Lima Metropolitana y dieciocho a veintinueve. La siguiente flecha lleva a «SUM de cantidad; filter mayor o igual a mil». Sum suma cantidades dentro de cada grupo; filter conserva los grupos que cumplen el umbral. La última flecha llega a «treinta combinaciones; orden descendente»: primero aparecen los totales mayores.
-
-**Texto para decir:**
-
-El código expresa esa misma secuencia. Denuncias es el DataFrame limpio. Agg aplica la agregación; as personas da un nombre a la suma. Col personas referencia esa nueva columna. OrderBy con desc ordena de mayor a menor. Val consulta guarda la definición del resultado en una variable de Scala; los puntos encadenan operaciones y los paréntesis contienen sus argumentos.
-
-**Texto para decir:**
-
-En la tabla, Lima Metropolitana de doce a diecisiete años suma diecisiete mil novecientas una personas; de dieciocho a veintinueve, siete mil ochocientas setenta y cinco; y Junín de doce a diecisiete, cuatro mil ciento sesenta y nueve. Es una muestra de las treinta combinaciones devueltas. El filtro se aplica al acumulado ya calculado. Una fila con cantidad uno puede aportar a un grupo que supere mil. Ahora mantendremos ese principio y cambiaremos la pregunta hacia los distritos.
-
-## Lámina 12: 5b.2: del acumulado al ranking
-
-**Expone:** Sergio. Versión explicada.
-
-> **Indicación, no leer:** Mostrar que orderBy precede a limit y que la clave territorial tiene tres componentes.
-
-**Texto para decir:**
-
-El punto cinco b solicita un orden decreciente. La disponibilidad de departamento, provincia y distrito permite preguntar: ¿cuáles son los quince distritos con más personas reportadas entre 2019 y 2024? Las tres columnas evitan mezclar distritos que comparten nombre en ubicaciones distintas.
-
-**Texto para decir:**
-
-El primer cuadro dice «Todos los registros». Su flecha llega a «groupBy: departamento, provincia, distrito». La siguiente conduce a «SUM de cantidad; orderBy descendente». Primero calculamos el acumulado por ubicación y luego lo ordenamos de mayor a menor. La última flecha llega a «limit quince; quince distritos». Limit restringe la salida a los primeros quince resultados; debe ir después del orden para que sean los de mayor acumulado.
-
-**Texto para decir:**
-
-El fragmento Scala utiliza agg para sumar, as para nombrar personas, desc para indicar orden descendente y limit para seleccionar los quince. En la salida, San Juan de Lurigancho suma cuatro mil setecientas setenta y cinco personas; Lima, tres mil ciento cincuenta y tres; San Martín de Porres, dos mil seiscientas cuarenta y seis; y Callao, dos mil seiscientas cuarenta y dos. Ordenamos personas contabilizadas, no número de filas. El ranking describe volumen reportado y no riesgo por habitante. Para agrupar territorios de otra forma necesitamos unirlos con un catálogo; ahora explicaré esa unión.
-
-## Lámina 13: 5c.1: INNER JOIN y conservación del total
-
-**Expone:** Sergio. Versión explicada.
-
-> **Indicación, no leer:** Seguir las cuatro cajas y detenerse en la clave ubigeo antes de leer las regiones.
-
-**Texto para decir:**
-
-El punto cinco c pide distintos JOIN. En este primero preguntamos: ¿cómo se distribuye el total entre las regiones definidas por el catálogo geográfico del proyecto? La tabla de denuncias aporta las cantidades y el catálogo aporta la región asociada al ubigeo. Un JOIN relaciona ambas tablas mediante una clave común.
-
-**Texto para decir:**
-
-El primer cuadro dice «groupBy ubigeo; suma de personas». Reducimos las filas a un acumulado por código geográfico y conservamos también el conteo de registros. La flecha conduce a «INNER JOIN; clave ubigeo». Inner significa que se conservan las claves que encuentran coincidencia en ambos lados. En el código, join recibe dimGeografia, Seq ubigeo y la palabra inner. Seq indica aquí la lista de columnas utilizadas como clave.
-
-**Texto para decir:**
-
-La siguiente flecha llega a «groupBy región; sumar personas y registros». Una vez incorporada la región, reunimos los ubigeos de cada región. La última flecha conduce a «tres regiones; total ciento veintiún mil cuatrocientas veintisiete». La tabla muestra Costa con setenta y nueve mil seiscientas sesenta y seis personas y quinientos sesenta y siete ubigeos; Sierra con treinta y cuatro mil trescientas una y ochocientos cuatro; Selva con siete mil cuatrocientas sesenta y ciento treinta y cinco. Ubigeos es número de claves geográficas observadas, no número de personas.
-
-**Texto para decir:**
-
-Para que el resultado sea válido, el catálogo tiene una fila por ubigeo. Si una clave encontrara dos filas de dimensión, su cantidad se repetiría al unir. Además, la salida guardada no presenta claves nulas, es decir, ausentes, en el control geográfico. Verificamos la suma final para comprobar que no perdimos ni multiplicamos el total. La clasificación regional es la del código por departamento; no mide ruralidad. Continuaremos con funciones estadísticas sobre esos registros.
-
-## Lámina 14: 5d.3: promedio, desviación y varianza
-
-**Expone:** Sergio. Versión explicada.
-
-> **Indicación, no leer:** Leer los cuatro cuadros y las funciones de los dos fragmentos. Distinguir desviación poblacional y varianza muestral.
-
-**Texto para decir:**
-
-El promedio global de tres b puede ocultar diferencias entre categorías. Por eso, usando SEXO y CANTIDAD, preguntamos: ¿cómo varía la dispersión de CANTIDAD por registro entre mujeres y hombres? Dispersión significa cuánto se separan los valores alrededor de su promedio. Esta consulta ejemplifica el punto cinco d, funciones de Spark, y conserva también NO ESPECIFICA.
-
-**Texto para decir:**
-
-El primer cuadro dice «Registros por sexo». La flecha lleva a «groupBy sexo»: formamos los tres grupos. La segunda flecha conduce a «avg, stddev pop, variance, min, max». Avg obtiene la media; stddev pop obtiene la desviación estándar poblacional; variance calcula la varianza muestral; min y max encuentran los extremos. El código añade count para filas, sum para personas y round para redondear, en este caso a cuatro decimales. As asigna nombres a las columnas calculadas.
-
-**Texto para decir:**
-
-La última flecha llega a «tres grupos; medias y dispersiones». En la salida F presenta promedio uno coma tres siete uno cinco y desviación poblacional uno coma cero cuatro cinco cuatro. M presenta uno coma uno ocho seis seis y cero coma cinco nueve siete uno. NO ESPECIFICA presenta uno coma cero seis siete seis y cero coma tres cero cero cero. Una desviación menor indica conteos más cercanos entre sí, en la escala de CANTIDAD.
-
-**Texto para decir:**
-
-Conviene distinguir los denominadores: la desviación poblacional se obtiene a partir de una varianza dividida entre n, el número de filas del grupo. La varianza muestral divide entre n menos uno. Además, la varianza está en unidades al cuadrado y la desviación vuelve a la escala original mediante la raíz. Por eso no debemos comparar directamente variance con stddev pop ni elevar al cuadrado la cifra mostrada esperando igualdad exacta. La mayor dispersión de F describe conteos agregados; no demuestra desapariciones en grupo. Ahora explicaré cómo esas mismas tablas pueden consultarse mediante vistas SQL.
-
-## Lámina 15: 5e.2: dos JOIN, perfil y porcentaje nacional
-
-**Expone:** Sergio. Versión explicada.
-
-> **Indicación, no leer:** Leer las cuatro cajas; marcar ambos JOIN y después el OVER vacío del porcentaje.
-
-**Texto para decir:**
-
-Al conocer los rangos de edad y el sexo surge la pregunta: ¿qué combinación de grupo etario y sexo concentra más personas y qué porcentaje del total representa? Grupo etario significa categoría de edad, como adolescente. Esta consulta resuelve cinco e mediante vistas temporales y JOIN. Usamos las vistas denuncias, dim edad y dim sexo; las claves son rango edad y sexo.
-
-**Texto para decir:**
-
-El primer cuadro dice «Vistas registradas en esquema punto Scala». Registrar significa dar a cada DataFrame un nombre que spark punto sql puede consultar. CreateOrReplaceTempView crea esa vista o sustituye su definición en la sesión; no genera una tabla permanente de PostgreSQL. La flecha conduce a «JOIN dim edad; JOIN dim sexo». La primera unión incorpora el nombre del grupo etario mediante rango edad. La segunda relaciona la categoría de sexo. Son tres tablas y dos operaciones JOIN.
-
-**Texto para decir:**
-
-La siguiente flecha llega a «GROUP BY grupo y sexo; suma y porcentaje nacional». Group By forma las combinaciones y SUM calcula su cantidad. El código utiliza d, e y s como alias, nombres cortos de denuncias, edad y sexo; por eso d punto cantidad indica de qué tabla viene la medida. ON expresa la condición de igualdad entre claves. SELECT elige las columnas de salida y AS les asigna nombre.
-
-**Texto para decir:**
-
-El porcentaje divide cada suma entre SUM de SUM de cantidad, OVER paréntesis vacíos. La suma interior corresponde a cada grupo; la suma exterior es una función de ventana que reúne esos totales sin eliminar las filas del resultado. OVER vacío toma todos los grupos, por eso el denominador es nacional. CAST AS DOUBLE convierte a un tipo numérico con decimales y ROUND redondea a dos posiciones. El código incluye también COUNT asterisco para contar registros y AVG para obtener el promedio de CANTIDAD por registro.
-
-**Texto para decir:**
-
-La última flecha lleva a «dieciocho combinaciones; orden por personas». Adolescentes mujeres reúne cincuenta y un mil veintiuna personas, cuarenta y dos coma cero dos por ciento del total nacional. Adolescentes hombres reúne trece mil trescientas nueve, diez coma noventa y seis por ciento. Adultos hombres reúne doce mil trescientas ochenta y nueve, diez coma veinte por ciento. La fórmula visible multiplica cincuenta y un mil veintiuna por cien y divide entre ciento veintiún mil cuatrocientas veintisiete. Es participación dentro del dataset, no probabilidad individual. Usaremos ahora filtros para delimitar otro universo de comparación.
-
-## Lámina 16: 5f.1: el orden de WHERE, GROUP BY, HAVING y LIMIT
-
-**Expone:** Sergio. Versión explicada.
-
-> **Indicación, no leer:** Seguir los cuatro cuadros; señalar dónde se filtran filas y dónde se filtran grupos.
-
-**Texto para decir:**
-
-Después del ranking general podemos hacer una pregunta más específica: ¿qué diez distritos reúnen más mujeres reportadas en 2024 con rango de edad especificado? El punto cinco f pide ORDER BY combinado con filtros. Aquí fijamos año, sexo y calidad de la información de edad, y exigimos al menos veinte personas por distrito.
-
-**Texto para decir:**
-
-El primer cuadro dice «WHERE: año, sexo y edad». Where selecciona las filas que cumplen año igual a 2024, sexo igual a F y rango de edad distinto de NO ESPECIFICA. El signo menor que seguido de mayor que en SQL significa distinto. La primera flecha llega a «GROUP BY: departamento, provincia, distrito». Con las filas ya filtradas formamos cada ubicación y sumamos CANTIDAD.
-
-**Texto para decir:**
-
-La siguiente flecha conduce a «HAVING SUM mayor o igual a veinte; ORDER BY personas descendente». Having filtra grupos ya sumados; Order By los ordena de mayor a menor. La última flecha lleva a «LIMIT diez; diez distritos». Seleccionamos las diez primeras ubicaciones del ranking después de filtrar y ordenar. En el código, COUNT asterisco añade el número de registros, mientras SUM aporta personas.
-
-**Texto para decir:**
-
-La salida muestra San Juan de Lurigancho con trescientas setenta y nueve; Lima con doscientas ochenta y cuatro; Ate con doscientas setenta y una; y Callao con doscientas sesenta y cinco. No deben compararse directamente con los cuatro mil setecientos setenta y cinco del ranking general: este universo comprende solo mujeres de 2024 con edad especificada. Tampoco sería equivalente aplicar cantidad mayor o igual a veinte en WHERE: eso buscaría filas individuales de ese tamaño y no distritos con veinte personas acumuladas. Ya tenemos las respuestas analíticas; ahora mostraré cómo se conserva su base de datos.
-
-## Lámina 17: Ítem 4: cada dimensión del modelo estrella y cada paso ETL
+## Lámina 11: Ítem 4: cada dimensión del modelo estrella y cada paso ETL
 
 **Expone:** Sergio. Versión explicada.
 
@@ -416,7 +276,139 @@ A la derecha del diagrama aparece el proceso ETL. Paso uno, «Extraer»: el coma
 
 **Texto para decir:**
 
-El control del ubigeo quince cero uno veintiuno es especialmente importante: aparece con dos nombres. Si conserváramos dos filas de catálogo para esa clave, un JOIN podría multiplicar sus cantidades. Agrupar por ubigeo antes de unir evita esa repetición. Finalmente, SUM de cantidad mantiene ciento veintiún mil cuatrocientas veintisiete tanto en la base cargada como en la evidencia de restauración del dump. Un dump es un archivo de respaldo que permite reconstruir la base. La captura está enlazada como evidencia guardada. A continuación explicaré cómo entregamos las tablas de resultados.
+El control del ubigeo quince cero uno veintiuno es especialmente importante: aparece con dos nombres. Si conserváramos dos filas de catálogo para esa clave, un JOIN podría multiplicar sus cantidades. Agrupar por ubigeo antes de unir evita esa repetición. Finalmente, SUM de cantidad mantiene ciento veintiún mil cuatrocientas veintisiete tanto en la base cargada como en la evidencia de restauración del dump. Un dump es un archivo de respaldo que permite reconstruir la base. Las capturas están enlazadas como evidencia guardada de versión, conteos, esquema, consultas y restauración. Con la base descrita, pasaremos ahora al punto cinco: las consultas Spark SQL.
+
+## Lámina 12: 5a.1: por qué agrupamos antes de filtrar
+
+**Expone:** Sergio. Versión explicada.
+
+> **Indicación, no leer:** Seguir los cuatro cuadros y señalar la posición de filter después de agg.
+
+**Texto para decir:**
+
+El punto cinco a pide agrupar y filtrar utilizando dos o más columnas. Departamento y rango de edad nos permiten preguntar: ¿qué combinaciones reúnen al menos mil personas reportadas? Buscamos acumulados por perfil territorial, no filas individuales con una cantidad alta. El umbral de mil es una condición de selección de esta consulta, no un criterio oficial de riesgo.
+
+**Texto para decir:**
+
+El primer cuadro dice «noventa y tres mil ochocientos treinta y un registros». La flecha conduce a «groupBy: departamento y edad». GroupBy forma un grupo por cada pareja de valores. Por ejemplo, Lima Metropolitana y doce a diecisiete años es un grupo distinto de Lima Metropolitana y dieciocho a veintinueve. La siguiente flecha lleva a «SUM de cantidad; filter mayor o igual a mil». Sum suma cantidades dentro de cada grupo; filter conserva los grupos que cumplen el umbral. La última flecha llega a «treinta combinaciones; orden descendente»: primero aparecen los totales mayores.
+
+**Texto para decir:**
+
+El código expresa esa misma secuencia. Denuncias es el DataFrame limpio. Agg aplica la agregación; as personas da un nombre a la suma. Col personas referencia esa nueva columna. OrderBy con desc ordena de mayor a menor. Val consulta guarda la definición del resultado en una variable de Scala; los puntos encadenan operaciones y los paréntesis contienen sus argumentos.
+
+**Texto para decir:**
+
+En la tabla, Lima Metropolitana de doce a diecisiete años suma diecisiete mil novecientas una personas; de dieciocho a veintinueve, siete mil ochocientas setenta y cinco; y Junín de doce a diecisiete, cuatro mil ciento sesenta y nueve. Es una muestra de las treinta combinaciones devueltas. El filtro se aplica al acumulado ya calculado. Una fila con cantidad uno puede aportar a un grupo que supere mil. Ahora mantendremos ese principio y cambiaremos la pregunta hacia los distritos.
+
+## Lámina 13: 5b.2: del acumulado al ranking
+
+**Expone:** Sergio. Versión explicada.
+
+> **Indicación, no leer:** Mostrar que orderBy precede a limit y que la clave territorial tiene tres componentes.
+
+**Texto para decir:**
+
+El punto cinco b solicita un orden decreciente. La disponibilidad de departamento, provincia y distrito permite preguntar: ¿cuáles son los quince distritos con más personas reportadas entre 2019 y 2024? Las tres columnas evitan mezclar distritos que comparten nombre en ubicaciones distintas.
+
+**Texto para decir:**
+
+El primer cuadro dice «Todos los registros». Su flecha llega a «groupBy: departamento, provincia, distrito». La siguiente conduce a «SUM de cantidad; orderBy descendente». Primero calculamos el acumulado por ubicación y luego lo ordenamos de mayor a menor. La última flecha llega a «limit quince; quince distritos». Limit restringe la salida a los primeros quince resultados; debe ir después del orden para que sean los de mayor acumulado.
+
+**Texto para decir:**
+
+El fragmento Scala utiliza agg para sumar, as para nombrar personas, desc para indicar orden descendente y limit para seleccionar los quince. En la salida, San Juan de Lurigancho suma cuatro mil setecientas setenta y cinco personas; Lima, tres mil ciento cincuenta y tres; San Martín de Porres, dos mil seiscientas cuarenta y seis; y Callao, dos mil seiscientas cuarenta y dos. Ordenamos personas contabilizadas, no número de filas. El ranking describe volumen reportado y no riesgo por habitante. Para agrupar territorios de otra forma necesitamos unirlos con un catálogo; ahora explicaré esa unión.
+
+## Lámina 14: 5c.1: INNER JOIN y conservación del total
+
+**Expone:** Sergio. Versión explicada.
+
+> **Indicación, no leer:** Seguir las cuatro cajas y detenerse en la clave ubigeo antes de leer las regiones.
+
+**Texto para decir:**
+
+El punto cinco c pide distintos JOIN. En este primero preguntamos: ¿cómo se distribuye el total entre las regiones definidas por el catálogo geográfico del proyecto? La tabla de denuncias aporta las cantidades y el catálogo aporta la región asociada al ubigeo. Un JOIN relaciona ambas tablas mediante una clave común.
+
+**Texto para decir:**
+
+El primer cuadro dice «groupBy ubigeo; suma de personas». Reducimos las filas a un acumulado por código geográfico y conservamos también el conteo de registros. La flecha conduce a «INNER JOIN; clave ubigeo». Inner significa que se conservan las claves que encuentran coincidencia en ambos lados. En el código, join recibe dimGeografia, Seq ubigeo y la palabra inner. Seq indica aquí la lista de columnas utilizadas como clave.
+
+**Texto para decir:**
+
+La siguiente flecha llega a «groupBy región; sumar personas y registros». Una vez incorporada la región, reunimos los ubigeos de cada región. La última flecha conduce a «tres regiones; total ciento veintiún mil cuatrocientas veintisiete». La tabla muestra Costa con setenta y nueve mil seiscientas sesenta y seis personas y quinientos sesenta y siete ubigeos; Sierra con treinta y cuatro mil trescientas una y ochocientos cuatro; Selva con siete mil cuatrocientas sesenta y ciento treinta y cinco. Ubigeos es número de claves geográficas observadas, no número de personas.
+
+**Texto para decir:**
+
+Para que el resultado sea válido, el catálogo tiene una fila por ubigeo. Si una clave encontrara dos filas de dimensión, su cantidad se repetiría al unir. Además, la salida guardada no presenta claves nulas, es decir, ausentes, en el control geográfico. Verificamos la suma final para comprobar que no perdimos ni multiplicamos el total. La clasificación regional es la del código por departamento; no mide ruralidad. Continuaremos con funciones estadísticas sobre esos registros.
+
+## Lámina 15: 5d.3: promedio, desviación y varianza
+
+**Expone:** Sergio. Versión explicada.
+
+> **Indicación, no leer:** Leer los cuatro cuadros y las funciones de los dos fragmentos. Distinguir desviación poblacional y varianza muestral.
+
+**Texto para decir:**
+
+El promedio global de tres b puede ocultar diferencias entre categorías. Por eso, usando SEXO y CANTIDAD, preguntamos: ¿cómo varía la dispersión de CANTIDAD por registro entre mujeres y hombres? Dispersión significa cuánto se separan los valores alrededor de su promedio. Esta consulta ejemplifica el punto cinco d, funciones de Spark, y conserva también NO ESPECIFICA.
+
+**Texto para decir:**
+
+El primer cuadro dice «Registros por sexo». La flecha lleva a «groupBy sexo»: formamos los tres grupos. La segunda flecha conduce a «avg, stddev pop, variance, min, max». Avg obtiene la media; stddev pop obtiene la desviación estándar poblacional; variance calcula la varianza muestral; min y max encuentran los extremos. El código añade count para filas, sum para personas y round para redondear, en este caso a cuatro decimales. As asigna nombres a las columnas calculadas.
+
+**Texto para decir:**
+
+La última flecha llega a «tres grupos; medias y dispersiones». En la salida F presenta promedio uno coma tres siete uno cinco y desviación poblacional uno coma cero cuatro cinco cuatro. M presenta uno coma uno ocho seis seis y cero coma cinco nueve siete uno. NO ESPECIFICA presenta uno coma cero seis siete seis y cero coma tres cero cero cero. Una desviación menor indica conteos más cercanos entre sí, en la escala de CANTIDAD.
+
+**Texto para decir:**
+
+Conviene distinguir los denominadores: la desviación poblacional se obtiene a partir de una varianza dividida entre n, el número de filas del grupo. La varianza muestral divide entre n menos uno. Además, la varianza está en unidades al cuadrado y la desviación vuelve a la escala original mediante la raíz. Por eso no debemos comparar directamente variance con stddev pop ni elevar al cuadrado la cifra mostrada esperando igualdad exacta. La mayor dispersión de F describe conteos agregados; no demuestra desapariciones en grupo. Ahora explicaré cómo esas mismas tablas pueden consultarse mediante vistas SQL.
+
+## Lámina 16: 5e.2: dos JOIN, perfil y porcentaje nacional
+
+**Expone:** Sergio. Versión explicada.
+
+> **Indicación, no leer:** Leer las cuatro cajas; marcar ambos JOIN y después el OVER vacío del porcentaje.
+
+**Texto para decir:**
+
+Al conocer los rangos de edad y el sexo surge la pregunta: ¿qué combinación de grupo etario y sexo concentra más personas y qué porcentaje del total representa? Grupo etario significa categoría de edad, como adolescente. Esta consulta resuelve cinco e mediante vistas temporales y JOIN. Usamos las vistas denuncias, dim edad y dim sexo; las claves son rango edad y sexo.
+
+**Texto para decir:**
+
+El primer cuadro dice «Vistas registradas en esquema punto Scala». Registrar significa dar a cada DataFrame un nombre que spark punto sql puede consultar. CreateOrReplaceTempView crea esa vista o sustituye su definición en la sesión; no genera una tabla permanente de PostgreSQL. La flecha conduce a «JOIN dim edad; JOIN dim sexo». La primera unión incorpora el nombre del grupo etario mediante rango edad. La segunda relaciona la categoría de sexo. Son tres tablas y dos operaciones JOIN.
+
+**Texto para decir:**
+
+La siguiente flecha llega a «GROUP BY grupo y sexo; suma y porcentaje nacional». Group By forma las combinaciones y SUM calcula su cantidad. El código utiliza d, e y s como alias, nombres cortos de denuncias, edad y sexo; por eso d punto cantidad indica de qué tabla viene la medida. ON expresa la condición de igualdad entre claves. SELECT elige las columnas de salida y AS les asigna nombre.
+
+**Texto para decir:**
+
+El porcentaje divide cada suma entre SUM de SUM de cantidad, OVER paréntesis vacíos. La suma interior corresponde a cada grupo; la suma exterior es una función de ventana que reúne esos totales sin eliminar las filas del resultado. OVER vacío toma todos los grupos, por eso el denominador es nacional. CAST AS DOUBLE convierte a un tipo numérico con decimales y ROUND redondea a dos posiciones. El código incluye también COUNT asterisco para contar registros y AVG para obtener el promedio de CANTIDAD por registro.
+
+**Texto para decir:**
+
+La última flecha lleva a «dieciocho combinaciones; orden por personas». Adolescentes mujeres reúne cincuenta y un mil veintiuna personas, cuarenta y dos coma cero dos por ciento del total nacional. Adolescentes hombres reúne trece mil trescientas nueve, diez coma noventa y seis por ciento. Adultos hombres reúne doce mil trescientas ochenta y nueve, diez coma veinte por ciento. La fórmula visible multiplica cincuenta y un mil veintiuna por cien y divide entre ciento veintiún mil cuatrocientas veintisiete. Es participación dentro del dataset, no probabilidad individual. Usaremos ahora filtros para delimitar otro universo de comparación.
+
+## Lámina 17: 5f.1: el orden de WHERE, GROUP BY, HAVING y LIMIT
+
+**Expone:** Sergio. Versión explicada.
+
+> **Indicación, no leer:** Seguir los cuatro cuadros; señalar dónde se filtran filas y dónde se filtran grupos.
+
+**Texto para decir:**
+
+Después del ranking general podemos hacer una pregunta más específica: ¿qué diez distritos reúnen más mujeres reportadas en 2024 con rango de edad especificado? El punto cinco f pide ORDER BY combinado con filtros. Aquí fijamos año, sexo y calidad de la información de edad, y exigimos al menos veinte personas por distrito.
+
+**Texto para decir:**
+
+El primer cuadro dice «WHERE: año, sexo y edad». Where selecciona las filas que cumplen año igual a 2024, sexo igual a F y rango de edad distinto de NO ESPECIFICA. El signo menor que seguido de mayor que en SQL significa distinto. La primera flecha llega a «GROUP BY: departamento, provincia, distrito». Con las filas ya filtradas formamos cada ubicación y sumamos CANTIDAD.
+
+**Texto para decir:**
+
+La siguiente flecha conduce a «HAVING SUM mayor o igual a veinte; ORDER BY personas descendente». Having filtra grupos ya sumados; Order By los ordena de mayor a menor. La última flecha lleva a «LIMIT diez; diez distritos». Seleccionamos las diez primeras ubicaciones del ranking después de filtrar y ordenar. En el código, COUNT asterisco añade el número de registros, mientras SUM aporta personas.
+
+**Texto para decir:**
+
+La salida muestra San Juan de Lurigancho con trescientas setenta y nueve; Lima con doscientas ochenta y cuatro; Ate con doscientas setenta y una; y Callao con doscientas sesenta y cinco. No deben compararse directamente con los cuatro mil setecientos setenta y cinco del ranking general: este universo comprende solo mujeres de 2024 con edad especificada. Tampoco sería equivalente aplicar cantidad mayor o igual a veinte en WHERE: eso buscaría filas individuales de ese tamaño y no distritos con veinte personas acumuladas. Ya tenemos las respuestas analíticas y la base descrita; ahora mostraré cómo se entregan estos resultados en Excel.
 
 ## Lámina 18: 5g: de Spark SQL a los seis libros Excel
 
@@ -758,29 +750,7 @@ La siguiente flecha conduce a «HAVING SUM mayor que quinientos». Conservamos l
 
 La salida muestra diciembre con dos mil seiscientas setenta y tres personas y dos mil diecinueve registros; noviembre con dos mil quinientas treinta y ocho y mil novecientos sesenta; septiembre con dos mil cuatrocientas diecinueve y mil novecientos tres; abril con mil setecientas setenta y cuatro y mil trescientos setenta y ocho. Diciembre encabeza ese subconjunto. No incluye edades de cero a cinco ni edades desconocidas, y tampoco podemos recuperar estudiantes cuya ocupación no está informada. Por ello describimos estudiantes declarados en esos rangos, sin generalizar a todo el alumnado del país. Terminamos las veinticinco consultas; las siguientes láminas permiten revisar operaciones y evidencias.
 
-## Lámina 34: Qué reducciones existen realmente en 3c
-
-**Expone:** Sergio. Versión explicada.
-
-> **Indicación, no leer:** Leer cada fila de izquierda a derecha. No presentar el cuadro como un conteo de jobs físicos ni como tres reducciones consecutivas del indicador.
-
-**Texto para decir:**
-
-Esta lámina responde dónde están las reducciones que acompañan a cada consulta decimal del punto tres c. Las columnas separan dos reducciones principales, una reducción adicional real y el cálculo decimal. Esa separación permite explicar el código con precisión.
-
-**Texto para decir:**
-
-En tres c uno, las dos principales son total y menores por departamento mediante map y reduceByKey. El control nacional usa values y reduce sobre los totales departamentales y, por separado, sobre los menores. Values proyecta los valores: extrae las cantidades y descarta las claves. El cálculo decimal usa join y map para obtener cien por menores dividido entre total. Por tanto, la división posterior no es otra reducción.
-
-**Texto para decir:**
-
-En tres c dos, las principales agregan total y extranjeros por año. La adicional utiliza map y reduceByKey en topNacionalidades, que suma extranjeros por nacionalidad. Luego join y map calculan el porcentaje anual. En tres c tres, las principales suman por mes y obtienen el total nacional bajo una clave constante. La adicional, porTrimestre, utiliza map y reduceByKey para los totales trimestrales. Un map posterior obtiene participación, diferencia respecto de la referencia e índice.
-
-**Texto para decir:**
-
-El bloque «Lectura del flujo» resume que cada consulta combina ramas principales y de control o apoyo. Los diagramas describen las operaciones del programa. No representan tres reducciones consecutivas del indicador, ni un conteo medido de jobs físicos de Spark. Un job es una ejecución que Spark activa al solicitar un resultado; sus etapas y tareas dependen del plan y las particiones. Si se exigiera una dependencia estricta de tres reducciones consecutivas para el mismo indicador, el flujo actual necesitaría una adaptación. Podemos abrir los scripts para señalar exactamente las operaciones que acabamos de describir.
-
-## Lámina 35: Qué demuestra la captura PostgreSQL
+## Lámina 34: Qué demuestra la captura PostgreSQL
 
 **Expone:** Sergio. Versión explicada.
 
@@ -798,7 +768,47 @@ Arriba se ve el comando psql: es el cliente de terminal de PostgreSQL. Menos h i
 
 Los controles distinguen filas de dimensiones, filas de hechos y suma de cantidad. Cada dimensión contiene su catálogo; la tabla hecho desaparicion conserva noventa y tres mil ochocientas treinta y una filas. SUM de cantidad conserva ciento veintiún mil cuatrocientas veintisiete personas contabilizadas. El conteo de hechos y la suma no tienen que coincidir, porque responden a medidas distintas. El respaldo restaurado mantiene el mismo total. El enlace inferior permite volver al modelo estrella para relacionar cada nombre de tabla con su función.
 
-## Lámina 36: Fuentes, fragmentos de código y reproducción
+## Lámina 35: Versión de PostgreSQL
+
+**Expone:** Sergio. Versión explicada.
+
+> **Indicación, no leer:** Mostrar la captura y relacionarla con su archivo de evidencia; abrir solo si se solicita el respaldo.
+
+**Texto para decir:**
+
+Esta captura guardada identifica la versión del servidor PostgreSQL utilizado. El comando de versión permite comprobar el entorno de la ejecución documentada. Es una evidencia anterior del proyecto, no una conexión en vivo desde esta presentación.
+
+## Lámina 36: Esquema y claves de la base
+
+**Expone:** Sergio. Versión explicada.
+
+> **Indicación, no leer:** Mostrar la captura y relacionarla con su archivo de evidencia; abrir solo si se solicita el respaldo.
+
+**Texto para decir:**
+
+Esta captura guardada permite contrastar las tablas y sus restricciones con el diagrama del punto cuatro. Una clave primaria identifica una fila y una clave foránea relaciona la tabla de hechos con su dimensión. El SQL de creación es la referencia completa de columnas y tipos.
+
+## Lámina 37: Consultas sobre PostgreSQL
+
+**Expone:** Sergio. Versión explicada.
+
+> **Indicación, no leer:** Mostrar la captura y relacionarla con su archivo de evidencia; abrir solo si se solicita el respaldo.
+
+**Texto para decir:**
+
+Esta captura muestra resultados guardados de consultas sobre la base cargada. Podemos contrastar el total regional por periodo y el acumulado departamental con la evidencia textual. Por ejemplo, Lima Metropolitana registra treinta y nueve mil cuatrocientas noventa personas contabilizadas. La captura demuestra el resultado documentado; no es una ejecución nueva.
+
+## Lámina 38: Restauración del dump
+
+**Expone:** Sergio. Versión explicada.
+
+> **Indicación, no leer:** Mostrar la captura y relacionarla con su archivo de evidencia; abrir solo si se solicita el respaldo.
+
+**Texto para decir:**
+
+Esta captura documenta el control posterior a restaurar el respaldo SQL en una base vacía. Se recuperaron noventa y tres mil ochocientas treinta y una filas de hechos, ciento veintiún mil cuatrocientas veintisiete personas contabilizadas y mil quinientos seis ubigeos. Restaurar un respaldo y ejecutar el ETL son procesos diferentes; aquí se verifica la restauración.
+
+## Lámina 39: Fuentes, fragmentos de código y reproducción
 
 **Expone:** Sergio. Versión explicada.
 
@@ -934,9 +944,19 @@ La tercera consulta decimal compara los meses con una distribución uniforme. Pr
 
 **Texto para decir:**
 
-Con esto termino el bloque de datos y consultas RDD. Ahora Sergio continuará con Spark SQL, el almacenamiento en PostgreSQL y la entrega de resultados.
+Con esto termino el bloque de datos y consultas RDD. Ahora Sergio continuará con el punto cuatro, PostgreSQL y ETL; después presentará Spark SQL y la entrega de resultados.
 
-### Lámina 11: 5a.1: groupBy y filter
+### Lámina 11: Modelo estrella y ETL
+
+**Expone:** Sergio. **Tiempo objetivo:** 60 s.
+
+> **Indicación, no leer:** Tabla central, dimensiones, clave ubigeo y tres pasos del ETL.
+
+**Texto para decir:**
+
+En el punto cuatro almacenamos el dataset en PostgreSQL mediante un modelo estrella. La tabla central conserva cada registro y su cantidad. Ocho dimensiones describen tiempo, ubicación y perfil. Una clave de dimensión aparece una sola vez en su catálogo, pero puede relacionarse con muchos registros de la tabla central. El proceso ETL tiene tres pasos. Primero extraemos el CSV hacia una tabla de carga. Después transformamos vacíos y normalizamos claves. Finalmente cargamos dimensiones y hechos dentro de una transacción. Un caso importante es el ubigeo ciento cincuenta mil ciento veintiuno, que aparece con dos nombres. Lo agrupamos antes de unir para evitar duplicar datos. Las evidencias de carga y restauración conservan noventa y tres mil ochocientas treinta y una filas y ciento veintiún mil cuatrocientas veintisiete personas.
+
+### Lámina 12: 5a.1: groupBy y filter
 
 **Expone:** Sergio. **Tiempo objetivo:** 25 s.
 
@@ -946,7 +966,7 @@ Con esto termino el bloque de datos y consultas RDD. Ahora Sergio continuará co
 
 Para el punto cinco a mostramos un agrupamiento por dos columnas: departamento y rango de edad. La pregunta es qué combinaciones reúnen al menos mil personas. Sumamos CANTIDAD, filtramos los grupos y ordenamos. Obtenemos treinta combinaciones. La primera es Lima Metropolitana y doce a diecisiete años, con diecisiete mil novecientas una personas.
 
-### Lámina 12: 5b.2: orden descendente
+### Lámina 13: 5b.2: orden descendente
 
 **Expone:** Sergio. **Tiempo objetivo:** 20 s.
 
@@ -956,7 +976,7 @@ Para el punto cinco a mostramos un agrupamiento por dos columnas: departamento y
 
 Esta consulta responde cuáles son los quince distritos con mayor total reportado. Agrupamos por departamento, provincia y distrito, sumamos personas y ordenamos de mayor a menor. Finalmente aplicamos el límite. San Juan de Lurigancho encabeza el resultado con cuatro mil setecientas setenta y cinco personas.
 
-### Lámina 13: 5c.1: INNER JOIN
+### Lámina 14: 5c.1: INNER JOIN
 
 **Expone:** Sergio. **Tiempo objetivo:** 25 s.
 
@@ -966,7 +986,7 @@ Esta consulta responde cuáles son los quince distritos con mayor total reportad
 
 En el punto cinco c usamos los cuatro tipos de unión. Aquí mostramos INNER JOIN. Unimos el agregado por ubigeo con la dimensión geográfica y después sumamos por región. Costa concentra setenta y nueve mil seiscientas sesenta y seis personas. La dimensión tiene una fila por clave, de modo que la unión conserva el total nacional sin multiplicar registros.
 
-### Lámina 14: 5d.3: funciones estadísticas
+### Lámina 15: 5d.3: funciones estadísticas
 
 **Expone:** Sergio. **Tiempo objetivo:** 25 s.
 
@@ -976,7 +996,7 @@ En el punto cinco c usamos los cuatro tipos de unión. Aquí mostramos INNER JOI
 
 El punto cinco d aplica funciones de Spark. Esta consulta compara la dispersión de CANTIDAD por sexo. Calcula promedio, desviación, varianza y extremos. La desviación poblacional es aproximadamente uno coma cero cinco para mujeres y cero coma sesenta para hombres. Esto indica mayor variación entre los conteos femeninos por fila; no permite reconstruir incidentes individuales.
 
-### Lámina 15: 5e.2: vistas temporales
+### Lámina 16: 5e.2: vistas temporales
 
 **Expone:** Sergio. **Tiempo objetivo:** 30 s.
 
@@ -986,7 +1006,7 @@ El punto cinco d aplica funciones de Spark. Esta consulta compara la dispersión
 
 Para el punto cinco e consultamos vistas temporales. Unimos las denuncias con las dimensiones de edad y sexo y agrupamos por ambas categorías. La combinación más numerosa es adolescentes mujeres: cincuenta y un mil veintiuna personas. Al dividir entre el total nacional obtenemos cuarenta y dos coma cero dos por ciento. Esta respuesta muestra cómo los JOIN incorporan categorías útiles para interpretar la medida.
 
-### Lámina 16: 5f.1: ordenar con filtros
+### Lámina 17: 5f.1: ordenar con filtros
 
 **Expone:** Sergio. **Tiempo objetivo:** 25 s.
 
@@ -995,16 +1015,6 @@ Para el punto cinco e consultamos vistas temporales. Unimos las denuncias con la
 **Texto para decir:**
 
 El punto cinco f combina ordenamiento y filtros. WHERE selecciona mujeres de 2024 con edad especificada. Después agrupamos por ubicación y HAVING exige al menos veinte personas por distrito. ORDER BY ordena el resultado y LIMIT conserva los diez primeros. San Juan de Lurigancho vuelve a encabezar, ahora con trescientas setenta y nueve personas dentro de este subconjunto.
-
-### Lámina 17: Modelo estrella y ETL
-
-**Expone:** Sergio. **Tiempo objetivo:** 60 s.
-
-> **Indicación, no leer:** Tabla central, dimensiones, clave ubigeo y tres pasos del ETL.
-
-**Texto para decir:**
-
-En el punto cuatro almacenamos el dataset en PostgreSQL mediante un modelo estrella. La tabla central conserva cada registro y su cantidad. Ocho dimensiones describen tiempo, ubicación y perfil. Una clave de dimensión aparece una sola vez en su catálogo, pero puede relacionarse con muchos registros de la tabla central. El proceso ETL tiene tres pasos. Primero extraemos el CSV hacia una tabla de carga. Después transformamos vacíos y normalizamos claves. Finalmente cargamos dimensiones y hechos dentro de una transacción. Un caso importante es el ubigeo ciento cincuenta mil ciento veintiuno, que aparece con dos nombres. Lo agrupamos antes de unir para evitar duplicar datos. Las evidencias de carga y restauración conservan noventa y tres mil ochocientas treinta y una filas y ciento veintiún mil cuatrocientas veintisiete personas.
 
 ### Lámina 18: Exportación con Spark
 

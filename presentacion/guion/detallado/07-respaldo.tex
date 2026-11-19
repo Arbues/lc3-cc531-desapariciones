@@ -1,17 +1,26 @@
-\completa{34}{Sergio}{Qué reducciones existen realmente en 3c}
-\senalar{Leer cada fila de izquierda a derecha. No presentar el cuadro como un conteo de jobs físicos ni como tres reducciones consecutivas del indicador.}
-\decir{Esta lámina responde dónde están las reducciones que acompañan a cada consulta decimal del punto tres c. Las columnas separan dos reducciones principales, una reducción adicional real y el cálculo decimal. Esa separación permite explicar el código con precisión.}
-\decir{En tres c uno, las dos principales son total y menores por departamento mediante map y reduceByKey. El control nacional usa values y reduce sobre los totales departamentales y, por separado, sobre los menores. Values proyecta los valores: extrae las cantidades y descarta las claves. El cálculo decimal usa join y map para obtener cien por menores dividido entre total. Por tanto, la división posterior no es otra reducción.}
-\decir{En tres c dos, las principales agregan total y extranjeros por año. La adicional utiliza map y reduceByKey en topNacionalidades, que suma extranjeros por nacionalidad. Luego join y map calculan el porcentaje anual. En tres c tres, las principales suman por mes y obtienen el total nacional bajo una clave constante. La adicional, porTrimestre, utiliza map y reduceByKey para los totales trimestrales. Un map posterior obtiene participación, diferencia respecto de la referencia e índice.}
-\decir{El bloque «Lectura del flujo» resume que cada consulta combina ramas principales y de control o apoyo. Los diagramas describen las operaciones del programa. No representan tres reducciones consecutivas del indicador, ni un conteo medido de jobs físicos de Spark. Un job es una ejecución que Spark activa al solicitar un resultado; sus etapas y tareas dependen del plan y las particiones. Si se exigiera una dependencia estricta de tres reducciones consecutivas para el mismo indicador, el flujo actual necesitaría una adaptación. Podemos abrir los scripts para señalar exactamente las operaciones que acabamos de describir.}
-
-\completa{35}{Sergio}{Qué demuestra la captura PostgreSQL}
+\completa{34}{Sergio}{Qué demuestra la captura PostgreSQL}
 \senalar{Abrir la captura y señalar la consulta ejecutada y su tabla de respuesta. No afirmar que es una ejecución actual.}
 \decir{Esta es una captura guardada de PostgreSQL funcionando. Sirve como evidencia visual de la base utilizada en el proyecto. La contrastamos con los archivos de conteos y de restauración, que permiten leer los resultados en texto. No la presentamos como una ejecución en vivo.}
 \decir{Arriba se ve el comando psql: es el cliente de terminal de PostgreSQL. Menos h indica la ubicación de conexión, aquí barra tmp para el socket local; menos p indica el puerto, cinco mil cuatrocientos treinta y tres; menos U indica el usuario macrodatos y menos d selecciona la base denuncias. La tabla de salida muestra dos columnas, tabla y count, donde count es el conteo de filas. Dim ocupacion tiene doscientas ochenta y ocho; dim nacionalidad, cincuenta y siete; dim geografia, mil quinientas seis; hecho desaparicion, noventa y tres mil ochocientas treinta y una; y stg desaparicion, también noventa y tres mil ochocientas treinta y una. Stg es la tabla intermedia de carga. La indicación cinco rows significa que se mostraron cinco filas de este control.}
 \decir{Los controles distinguen filas de dimensiones, filas de hechos y suma de cantidad. Cada dimensión contiene su catálogo; la tabla hecho desaparicion conserva noventa y tres mil ochocientas treinta y una filas. SUM de cantidad conserva ciento veintiún mil cuatrocientas veintisiete personas contabilizadas. El conteo de hechos y la suma no tienen que coincidir, porque responden a medidas distintas. El respaldo restaurado mantiene el mismo total. El enlace inferior permite volver al modelo estrella para relacionar cada nombre de tabla con su función.}
 
-\completa{36}{Sergio}{Fuentes, fragmentos de código y reproducción}
+\completa{35}{Sergio}{Versión de PostgreSQL}
+\senalar{Mostrar la captura y relacionarla con su archivo de evidencia; abrir solo si se solicita el respaldo.}
+\decir{Esta captura guardada identifica la versión del servidor PostgreSQL utilizado. El comando de versión permite comprobar el entorno de la ejecución documentada. Es una evidencia anterior del proyecto, no una conexión en vivo desde esta presentación.}
+
+\completa{36}{Sergio}{Esquema y claves de la base}
+\senalar{Mostrar la captura y relacionarla con su archivo de evidencia; abrir solo si se solicita el respaldo.}
+\decir{Esta captura guardada permite contrastar las tablas y sus restricciones con el diagrama del punto cuatro. Una clave primaria identifica una fila y una clave foránea relaciona la tabla de hechos con su dimensión. El SQL de creación es la referencia completa de columnas y tipos.}
+
+\completa{37}{Sergio}{Consultas sobre PostgreSQL}
+\senalar{Mostrar la captura y relacionarla con su archivo de evidencia; abrir solo si se solicita el respaldo.}
+\decir{Esta captura muestra resultados guardados de consultas sobre la base cargada. Podemos contrastar el total regional por periodo y el acumulado departamental con la evidencia textual. Por ejemplo, Lima Metropolitana registra treinta y nueve mil cuatrocientas noventa personas contabilizadas. La captura demuestra el resultado documentado; no es una ejecución nueva.}
+
+\completa{38}{Sergio}{Restauración del dump}
+\senalar{Mostrar la captura y relacionarla con su archivo de evidencia; abrir solo si se solicita el respaldo.}
+\decir{Esta captura documenta el control posterior a restaurar el respaldo SQL en una base vacía. Se recuperaron noventa y tres mil ochocientas treinta y una filas de hechos, ciento veintiún mil cuatrocientas veintisiete personas contabilizadas y mil quinientos seis ubigeos. Restaurar un respaldo y ejecutar el ETL son procesos diferentes; aquí se verifica la restauración.}
+
+\completa{39}{Sergio}{Fuentes, fragmentos de código y reproducción}
 \senalar{Recorrer los seis grupos de fuentes y ambos comandos. Explicar los pies y botones comunes de las fichas.}
 \decir{Esta última lámina permite localizar el soporte de cada afirmación. Primero está el enunciado, guardado en material, cuyos puntos uno a nueve orientan la entrega; el punto siete determina la estructura de las fichas. Después está la fuente del dataset: MININTER, Denuncias por desaparición de personas, en la PNDA. El enlace identifica su publicación; el CSV utilizado está en la carpeta data y corresponde al periodo 2019 a 2024.}
 \decir{La carpeta code común contiene lectura, limpieza y catálogos; code RDD contiene las consultas de tres a a tres c; code SQL contiene las consultas DataFrame, vistas y exportación. Cada ficha muestra un fragmento de esos archivos originales, no una implementación diferente escrita solo para la lámina. Los resultados se localizan en evidencias, salidas; los libros, en excel; y los controles de base, en los archivos cuyo nombre empieza por pg.}

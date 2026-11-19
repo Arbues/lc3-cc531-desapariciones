@@ -1,36 +1,32 @@
-\begin{frame}[label=revision-3c]{Respaldo de 3c · Qué operaciones existen en los scripts}
-  \small
-  \pregunta{¿Dónde están las reducciones que acompañan a cada consulta decimal?}
-  \footnotesize
-  \begin{tabularx}{\linewidth}{@{}lXXX@{}}
-    \toprule Consulta & Dos reducciones principales & Reducción adicional real & Cálculo decimal\\\midrule
-    \enlace{q3c1}{3c.1} &
-      Totales y menores por departamento: \texttt{map + reduceByKey}. &
-      Control nacional: \texttt{values.reduce} sobre totales y menores. \texttt{values} proyecta los valores. &
-      \texttt{join + map}: $100\,menores/total$.\\[6pt]
-    \enlace{q3c2}{3c.2} &
-      Totales y extranjeros por año: \texttt{map + reduceByKey}. &
-      Nacionalidades: \texttt{map + reduceByKey} en \texttt{topNacionalidades}. &
-      \texttt{join + map}: porcentaje anual.\\[6pt]
-    \enlace{q3c3}{3c.3} &
-      Totales por mes y total nacional: \texttt{map + reduceByKey}. &
-      Trimestres: \texttt{map + reduceByKey} en \texttt{porTrimestre}. &
-      \texttt{map}: participación, diferencia e índice.\\
-    \bottomrule
-  \end{tabularx}
-  \begin{block}{Lectura del flujo}
-    \footnotesize Cada consulta combina agregaciones principales con una reducción de control o apoyo.
-    Después se calcula la razón decimal usando los agregados.
-    Los diagramas distinguen estas ramas del cálculo final: no representan tres reducciones consecutivas del indicador.
-  \end{block}
-  \fuente{Inspección de code/rdd/03c\_1, 03c\_2 y 03c\_3. Estos diagramas describen operaciones del código, no un conteo medido de jobs físicos de Spark.}
-\end{frame}
-
 \begin{frame}[label=captura-pg]{Ítem 4 · Evidencia guardada de PostgreSQL funcionando}
   \centering
   \includegraphics[width=0.94\linewidth,height=5.9cm,keepaspectratio]{../evidencias/pg-conteos.png}
   \fuente{Captura existente: evidencias/pg-conteos.png. Contraste textual: pg-conteos.txt y pg-restauracion.txt.
     \enlace{etl}{Volver al modelo ETL}.}
+\end{frame}
+
+\begin{frame}[label=evidencia-version]{Ítem 4 · Evidencia: versión de PostgreSQL}
+  \centering
+  \includegraphics[width=0.94\linewidth,height=5.8cm,keepaspectratio]{../evidencias/pg-version.png}
+  \fuente{Captura guardada del servidor PostgreSQL utilizado en la solución. \enlace{etl}{Volver al modelo y ETL}.}
+\end{frame}
+
+\begin{frame}[label=evidencia-esquema]{Ítem 4 · Evidencia: tablas y restricciones}
+  \centering
+  \includegraphics[width=0.94\linewidth,height=5.8cm,keepaspectratio]{../evidencias/pg-esquema.png}
+  \fuente{Esquema guardado de la base: contrastar con sql/01\_ddl.sql. \enlace{etl}{Volver al modelo y ETL}.}
+\end{frame}
+
+\begin{frame}[label=evidencia-consulta]{Ítem 4 · Evidencia: consultas sobre la base cargada}
+  \centering
+  \includegraphics[width=0.94\linewidth,height=5.8cm,keepaspectratio]{../evidencias/pg-consulta.png}
+  \fuente{Salida guardada de consultas regionales y departamentales en PostgreSQL. \enlace{etl}{Volver al modelo y ETL}.}
+\end{frame}
+
+\begin{frame}[label=evidencia-restauracion]{Ítem 4 · Evidencia: restauración del respaldo SQL}
+  \centering
+  \includegraphics[width=0.94\linewidth,height=5.8cm,keepaspectratio]{../evidencias/pg-restauracion.png}
+  \fuente{Control guardado tras restaurar el dump: 93\,831 hechos y 121\,427 personas. \enlace{etl}{Volver al modelo y ETL}.}
 \end{frame}
 
 \begin{frame}[label=fuentes]{Fuentes, código y reproducción}

@@ -1,0 +1,113 @@
+# Modelo de tablas PostgreSQL
+
+Diez tablas y 47 columnas extraídas de sql/01_ddl.sql. Las relaciones son no identificantes: las FK no forman la PK del hecho. Geografía es opcional porque ubigeo admite NULL. Staging no tiene FK; se utiliza en el ETL.
+
+```mermaid
+---
+title: Modelo PostgreSQL — LC3
+config:
+  theme: base
+  themeVariables:
+    primaryColor: "#eaf2fb"
+    primaryTextColor: "#143c6e"
+    primaryBorderColor: "#5583af"
+    lineColor: "#356d76"
+---
+erDiagram
+    direction LR
+
+    dim_tiempo {
+        INTEGER anio PK
+        VARCHAR(20) periodo
+        BOOLEAN es_pandemia
+    }
+
+    dim_geografia {
+        CHAR(6) ubigeo PK
+        VARCHAR(60) departamento
+        VARCHAR(60) provincia
+        VARCHAR(80) distrito
+        VARCHAR(10) region_natural
+        CHAR(2) cod_departamento
+        CHAR(4) cod_provincia
+    }
+
+    dim_rango_edad {
+        VARCHAR(20) rango_edad PK
+        VARCHAR(25) grupo_etario
+        SMALLINT orden
+        SMALLINT edad_min
+        SMALLINT edad_max
+    }
+
+    dim_sexo {
+        VARCHAR(15) sexo PK
+        VARCHAR(25) descripcion
+    }
+
+    dim_estado_civil {
+        VARCHAR(25) estado_civil PK
+    }
+
+    dim_nacionalidad {
+        VARCHAR(60) nacionalidad PK
+        BOOLEAN es_extranjera
+    }
+
+    dim_nivel_educativo {
+        VARCHAR(25) nivel_educativo PK
+        SMALLINT orden
+    }
+
+    dim_ocupacion {
+        VARCHAR(80) ocupacion PK
+    }
+
+    hecho_desaparicion {
+        BIGSERIAL id PK
+        INTEGER anio FK
+        SMALLINT mes
+        CHAR(6) ubigeo FK "NULL permitido"
+        VARCHAR(15) sexo FK
+        VARCHAR(20) rango_edad FK
+        VARCHAR(25) estado_civil FK
+        VARCHAR(60) nacionalidad FK
+        VARCHAR(25) nivel_educativo FK
+        VARCHAR(80) ocupacion FK
+        SMALLINT cantidad
+    }
+
+    stg_desaparicion {
+        INTEGER anio
+        INTEGER mes
+        VARCHAR(10) ubigeo_hecho
+        VARCHAR(60) dpto_hecho
+        VARCHAR(60) prov_hecho
+        VARCHAR(80) dist_hecho
+        VARCHAR(15) sexo
+        VARCHAR(20) rango_edad
+        VARCHAR(25) est_civil
+        VARCHAR(60) nacionalidad
+        VARCHAR(25) nivel_educativo
+        VARCHAR(80) ocupacion
+        INTEGER cantidad
+    }
+
+    dim_tiempo ||..o{ hecho_desaparicion : anio
+    dim_geografia |o..o{ hecho_desaparicion : ubigeo
+    dim_rango_edad ||..o{ hecho_desaparicion : rango_edad
+    dim_sexo ||..o{ hecho_desaparicion : sexo
+    dim_estado_civil ||..o{ hecho_desaparicion : estado_civil
+    dim_nacionalidad ||..o{ hecho_desaparicion : nacionalidad
+    dim_nivel_educativo ||..o{ hecho_desaparicion : nivel_educativo
+    dim_ocupacion ||..o{ hecho_desaparicion : ocupacion
+
+    classDef dimension fill:#eaf2fb,stroke:#5583af,color:#143c6e
+    classDef hecho fill:#e2f3ed,stroke:#26745d,color:#153e32
+    classDef staging fill:#fff2dd,stroke:#b87a28,color:#684617
+    class dim_tiempo,dim_geografia,dim_rango_edad,dim_sexo,dim_estado_civil,dim_nacionalidad,dim_nivel_educativo,dim_ocupacion dimension
+    class hecho_desaparicion hecho
+    class stg_desaparicion staging
+```
+
+Referencia de notación: https://mermaid.js.org/syntax/entityRelationshipDiagram.html

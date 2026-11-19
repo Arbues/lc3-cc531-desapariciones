@@ -18,7 +18,7 @@
 \maketitle
 \noindent Los bloques \textbf{Texto para decir} están redactados para leerlos palabra por palabra.
 Las indicaciones azules describen qué señalar y no se pronuncian.
-La primera parte recorre las 36 láminas: explica el origen de las preguntas,
+La primera parte recorre las 39 láminas: explica el origen de las preguntas,
 lee los cuadros de los diagramas, sigue sus flechas y desarrolla el código, las fórmulas y las salidas.
 Después se conserva una ruta breve de las 19 láminas principales, junto con preguntas y demo.
 
@@ -40,7 +40,7 @@ en \texttt{README.md}, dentro de la carpeta de presentación.
 \section*{Reparto de la ruta breve: tiempos objetivo}
 \noindent\textbf{Un solo relevo.} Arbués presenta las láminas 1--10
 (datos y consultas RDD), con un objetivo de 4 min 40 s. Sergio continúa con las láminas
-11--19 (DataFrame, vistas, PostgreSQL, Excel y cierre), con un objetivo de 4 min 50 s.
+11--19 (PostgreSQL, DataFrame, vistas, Excel y cierre), con un objetivo de 4 min 50 s.
 Los anexos quedan a cargo de Sergio si se abren después; ambos pueden responder preguntas.
 \medskip
 {\small
@@ -56,13 +56,13 @@ Los anexos quedan a cargo de Sergio si se abren después; ambos pueden responder
 8 & Arbués & 40 s & 3c.1: menores por departamento\\
 9 & Arbués & 35 s & 3c.2: extranjeros por año\\
 10 & Arbués & 35 s & 3c.3: distribución mensual\\
-11 & Sergio & 25 s & 5a.1: groupBy y filter\\
-12 & Sergio & 20 s & 5b.2: ranking descendente\\
-13 & Sergio & 25 s & 5c.1: INNER JOIN\\
-14 & Sergio & 25 s & 5d.3: funciones de dispersión\\
-15 & Sergio & 30 s & 5e.2: vistas temporales y JOIN\\
-16 & Sergio & 25 s & 5f.1: WHERE, HAVING y ORDER BY\\
-17 & Sergio & 60 s & Modelo estrella y ETL\\
+11 & Sergio & 60 s & Modelo estrella y ETL\\
+12 & Sergio & 25 s & 5a.1: groupBy y filter\\
+13 & Sergio & 20 s & 5b.2: ranking descendente\\
+14 & Sergio & 25 s & 5c.1: INNER JOIN\\
+15 & Sergio & 25 s & 5d.3: funciones de dispersión\\
+16 & Sergio & 30 s & 5e.2: vistas temporales y JOIN\\
+17 & Sergio & 25 s & 5f.1: WHERE, HAVING y ORDER BY\\
 18 & Sergio & 40 s & 5g: exportación Excel con Spark\\
 19 & Sergio & 40 s & Respuestas y cierre\\\midrule
  & & \textbf{570 s} & \textbf{Objetivo: 9 min 30 s, con 30 s de margen}\\\bottomrule
@@ -81,6 +81,8 @@ Las cifras que se dicen a continuación provienen de las salidas del proyecto en
 \input{guion/detallado/01-datos}
 \section{Versión explicada: Scala y MapReduce}
 \input{guion/detallado/02-rdd}
+\section{Versión explicada: PostgreSQL y ETL, punto 4}
+\input{guion/detallado/02b-postgresql}
 \section{Versión explicada: DataFrame y vistas}
 \input{guion/detallado/03-consultas-principales}
 \section{Versión explicada: almacenamiento, entrega y cierre}

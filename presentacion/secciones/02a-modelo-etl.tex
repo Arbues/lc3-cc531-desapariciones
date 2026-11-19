@@ -57,35 +57,6 @@
     Tanto en la base cargada como en la evidencia de restauración del dump.
   \end{columns}
   \fuente{Arquitectura: sql/01\_ddl.sql. Carga: sql/02\_etl.sql. Evidencia: pg-conteos.txt y pg-restauracion.txt.
-    \enlace{captura-pg}{Ver captura de la base}.}
+    \enlace{captura-pg}{Conteos} · \enlace{evidencia-version}{Versión} · \enlace{evidencia-esquema}{Esquema} · \enlace{evidencia-consulta}{Consultas} · \enlace{evidencia-restauracion}{Restauración}.}
   \note{60 s. Definir grano, claves y relación 1:N. Explicar extraer, transformar y cargar. Mostrar el control del ubigeo sin cambiar la suma.}
-\end{frame}
-
-\begin{frame}[label=excel]{5g · Exportar las consultas 5e y 5f con Spark}
-  \small
-  \pregunta{¿Cómo entregamos los resultados de las seis consultas de vistas temporales en Excel?}
-  \flujo{\texttt{spark.sql}\\Consultas 5e y 5f}{DataFrame de resultado\\\texttt{coalesce(1)}}{\texttt{write.format}\\Proveedor spark-excel}{6 libros \texttt{.xlsx}\\Una hoja por consulta}
-  \begin{columns}[T,onlytextwidth]
-    \column{0.52\textwidth}
-    \textbf{Escritura real con Spark}
-    \codigo{sql/05g_excel}{102}{110}
-    \column{0.45\textwidth}
-    \textbf{Salida}\\[5pt]
-    \footnotesize
-    \begin{tabular}{@{}llr@{}}
-      \toprule Consulta & Hoja & Filas\\\midrule
-      5e.1 & \texttt{5e1\_variacion} & 60\\
-      5e.2 & \texttt{5e2\_perfil} & 18\\
-      5e.3 & \texttt{5e3\_region} & 9\\
-      5f.1 & \texttt{5f1\_distritos} & 10\\
-      5f.2 & \texttt{5f2\_nacionalidad} & 12\\
-      5f.3 & \texttt{5f3\_meses} & 12\\\bottomrule
-    \end{tabular}
-    \par\vspace{5pt}Destino: carpeta \texttt{excel/}.\\
-    Proveedor: \texttt{com.crealytics.spark.excel}.
-  \end{columns}
-  \respuesta{El registro de ejecución documenta seis libros escritos desde DataFrames.
-    En 5e.2, el export conserva totales y promedio, pero no incluye la columna de porcentaje nacional de la consulta individual.}
-  \origen{sql}{05g_excel}
-  \note{40 s. Explicar proveedor, cabecera, hoja y archivo. El código recalcula los seis resultados; no transforma archivos de texto en Excel.}
 \end{frame}

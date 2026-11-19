@@ -1,11 +1,11 @@
 # Presentación y guion LC3
 
-- presentacion.tex: Beamer de 36 láminas, con 19 principales y el resto como anexos.
+- presentacion.tex: Beamer de 39 láminas, con 19 principales y el resto como anexos.
 - estilo.tex: estilo, diagramas TikZ y carga de fragmentos del código original.
 - consultas/ y secciones/: contenido de las láminas.
 - guion-exposicion.tex: entrada del guion literal para ambos expositores.
 - [guion-exposicion.md](guion-exposicion.md): copia legible del desarrollo completo, la ruta breve y las preguntas, disponible sin compilar.
-- guion/detallado/: lectura explicada de las 36 láminas, con origen de las preguntas, cuadros, flechas, operaciones, términos, salidas y transiciones.
+- guion/detallado/: lectura explicada de las 39 láminas, con origen de las preguntas, cuadros, flechas, operaciones, términos, salidas y transiciones.
 - guion/01-recorrido.tex: alternativa breve para ensayar diez minutos.
 - guion/02-ampliaciones.tex: explicaciones de reserva.
 - guion/03-anexos-y-preguntas.tex: respuestas al docente y texto para la demo.
@@ -19,8 +19,8 @@ necesita ensayo cronometrado. No se deben leer ambas consecutivamente en diez mi
 
 ## Estado de los PDF
 
-presentacion.pdf tiene 36 láminas. guion-exposicion.pdf tiene 33 páginas con las
-36 láminas explicadas, la ruta breve, las ampliaciones y las respuestas al docente.
+presentacion.pdf tiene 39 láminas. guion-exposicion.pdf tiene 33 páginas con las
+39 láminas explicadas, la ruta breve, las ampliaciones y las respuestas al docente.
 El PDF del guion ya incluye el nuevo reparto por bloques: Arbués presenta las
 láminas 1–10 y Sergio las 11–19, con un solo relevo. Se recompiló por solicitud
 explícita del usuario, junto con la presentación y el informe.
@@ -37,4 +37,6 @@ Los fragmentos de las láminas se leen de ../code/; conservar la estructura del
 repositorio al copiar o compilar. Las cifras proceden de ../evidencias/salidas/
 y de los controles PostgreSQL; esta revisión no cambia las consultas ni sus resultados.
 
-El punto 4 (lámina 17) utiliza el mismo diagrama TikZ del informe, con todos sus campos. El PDF se recompiló con este diagrama y los datos de autor actualizados.
+El punto 4 (lámina 11) utiliza el mismo diagrama TikZ del informe, con todos sus campos. El PDF se recompiló con este diagrama y los datos de autor actualizados.
+
+El punto 4 precede al punto 5 (modelo/ETL en la lámina 11). Se retiró la antigua lámina 34 de respaldo RDD y se incorporaron cinco capturas PostgreSQL en los anexos (34–38). No se actualizó el ZIP.
